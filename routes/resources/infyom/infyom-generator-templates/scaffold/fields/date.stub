@@ -1,0 +1,19 @@
+<!-- $FIELD_NAME_TITLE$ Field -->
+<div class="form-group">
+    {!! Form::label('$FIELD_NAME$', $$MODEL_NAME_CAMEL$->getAttributeLabel('$FIELD_NAME$')) !!}
+    <div class="input-group date">
+        {!! Form::text('$FIELD_NAME$', null, ['class' => 'form-control kt_datepicker '.($errors->has('$FIELD_NAME$') ? 'is-invalid' : ''), 'readonly' => true]) !!}
+        <div class="input-group-append">
+            <span class="input-group-text">
+                <i class="la la-calendar-check-o"></i>
+            </span>
+        </div>
+        @error('$FIELD_NAME$')
+            <div class="error invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+@push('scripts')
+    <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
+@endpush

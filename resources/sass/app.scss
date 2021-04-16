@@ -1,0 +1,19 @@
+//
+.switch label.inline-label{
+    line-height: 30px;
+    margin: 2px 0;
+    height: 30px;
+    padding-left: 10px;
+}
+
+tfoot {
+    display: table-header-group;
+}
+
+.table-responsive > .table-bordered{
+    border: 1px solid #ECF0F3;
+}
+label.required:after {
+    content: ' * ';
+    color: #F64E60;
+}

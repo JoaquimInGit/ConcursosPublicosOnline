@@ -1,0 +1,65 @@
+<?php
+
+namespace $NAMESPACE_MODEL$;
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\LoadDefaults;
+use OwenIt\Auditing\Contracts\Auditable;
+$SOFT_DELETE_IMPORT$
+$DOCS$
+class $MODEL_NAME$ extends Model implements Auditable
+{
+    use LoadDefaults;
+    use \OwenIt\Auditing\Auditable;
+$SOFT_DELETE$
+    public $table = '$TABLE_NAME$';
+    $TIMESTAMPS$
+$SOFT_DELETE_DATES$
+$CONNECTION$
+$PRIMARY$
+    public $fillable = [
+        $FIELDS$
+    ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        $CAST$
+    ];
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        $RULES$
+    ];
+
+    /**
+     * Attribute labels
+     *
+     * @return array
+     */
+    public static function attributeLabels()
+    {
+        return [
+            $ATTRIBUTE_LABELS$
+        ];
+    }
+
+    /**
+     * Return the attribute label
+     * @param string $attribute
+     * @return string
+     */
+    public function getAttributeLabel($attribute){
+        $attributeLabels = static::attributeLabels();
+        return isset($attributeLabels[$attribute]) ? $attributeLabels[$attribute] : __($attribute);
+    }
+
+    $RELATIONS$
+}

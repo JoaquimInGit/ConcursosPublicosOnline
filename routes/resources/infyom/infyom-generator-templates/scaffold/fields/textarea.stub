@@ -1,0 +1,8 @@
+<!-- $FIELD_NAME_TITLE$ Field -->
+<div class="form-group">
+    {!! Form::label('$FIELD_NAME$', $$MODEL_NAME_CAMEL$->getAttributeLabel('$FIELD_NAME$')) !!}
+    {!! Form::textarea('$FIELD_NAME$', null, ['class' => 'form-control '.($errors->has('$FIELD_NAME$') ? 'is-invalid' : '')$SIZE$]) !!}
+    @error('$FIELD_NAME$')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>

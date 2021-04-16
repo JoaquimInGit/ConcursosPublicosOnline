@@ -1,0 +1,5 @@
+<!-- $FIELD_NAME_TITLE$ Field -->
+<tr>
+    <th scope="row">{{ $$MODEL_NAME_CAMEL$->getAttributeLabel('$FIELD_NAME$') }}</th>
+    <td>{{ $$MODEL_NAME_CAMEL$->$FIELD_NAME$ }}</td>
+</tr>

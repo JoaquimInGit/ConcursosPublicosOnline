@@ -1,0 +1,123 @@
+<?php
+
+namespace $NAMESPACE_CONTROLLER$;
+
+use $NAMESPACE_DATATABLES$\$MODEL_NAME$DataTable;
+use Illuminate\Http\Request;
+//use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
+//use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
+use $NAMESPACE_MODEL$\$MODEL_NAME$;
+//use Flash;
+//use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
+use Illuminate\Http\Response;
+
+class $MODEL_NAME$Controller extends Controller
+{
+    /**
+     * Display a listing of the $MODEL_NAME$.
+     *
+     * @param $MODEL_NAME$DataTable $$MODEL_NAME_CAMEL$DataTable
+     * @return Response
+     */
+    public function index($MODEL_NAME$DataTable $$MODEL_NAME_CAMEL$DataTable)
+    {
+        return $$MODEL_NAME_CAMEL$DataTable->render('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.index');
+    }
+
+    /**
+     * Show the form for creating a new $MODEL_NAME$.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $$MODEL_NAME_CAMEL$ = new $MODEL_NAME$();
+        $$MODEL_NAME_CAMEL$->loadDefaultValues();
+        return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.create', compact('$MODEL_NAME_CAMEL$'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validatedAttributes = $this->validateForm($request);
+
+        if(($model = $MODEL_NAME$::create($validatedAttributes)) ) {
+            //flash($MODEL_NAME_HUMAN$ saved successfully.');
+            //Flash::success('$MODEL_NAME_HUMAN$ saved successfully.');
+            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_DASHED$.show', $model));
+        }else
+            return redirect()->back();
+    }
+
+    /**
+     * Display the specified $MODEL_NAME$.
+     *
+     * @param  $MODEL_NAME$  $$MODEL_NAME_CAMEL$
+     * @return Response
+     */
+    public function show($MODEL_NAME$ $$MODEL_NAME_CAMEL$)
+    {
+        return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.show', compact('$MODEL_NAME_CAMEL$'));
+    }
+
+    /**
+     * Show the form for editing the specified $MODEL_NAME$.
+     *
+     * @param  $MODEL_NAME$ $$MODEL_NAME_CAMEL$
+     * @return Response
+     */
+    public function edit($MODEL_NAME$ $$MODEL_NAME_CAMEL$)
+    {
+        return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.edit', compact('$MODEL_NAME_CAMEL$'));
+    }
+
+    /**
+     * Update the specified $MODEL_NAME$ in storage.
+     *
+     * @param  Request  $request
+     * @param  $MODEL_NAME$ $$MODEL_NAME_CAMEL$
+     * @return Response
+     */
+    public function update(Request $request, $MODEL_NAME$ $$MODEL_NAME_CAMEL$)
+    {
+        $validatedAttributes = $this->validateForm($request, $$MODEL_NAME_CAMEL$);
+        $$MODEL_NAME_CAMEL$->fill($validatedAttributes);
+        if($$MODEL_NAME_CAMEL$->save()) {
+            //flash('$MODEL_NAME_HUMAN$ updated successfully.');
+            //Flash::success('$MODEL_NAME_HUMAN$ updated successfully.');
+            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_DASHED$.show', $$MODEL_NAME_CAMEL$));
+        }else{
+            return redirect()->back();
+        }
+    }
+
+     /**
+      * Remove the specified $MODEL_NAME$ from storage.
+      *
+      * @param  \$NAMESPACE_MODEL$\$MODEL_NAME$  $$MODEL_NAME_CAMEL$
+      * @return Response
+      */
+    public function destroy($MODEL_NAME$ $$MODEL_NAME_CAMEL$)
+    {
+        $$MODEL_NAME_CAMEL$->delete();
+        //Flash::success('$MODEL_NAME_HUMAN$ deleted successfully.');
+
+        return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_DASHED$.index'));
+    }
+
+    /**
+     * @return array
+     */
+    public function validateForm(Request $request, $MODEL_NAME$ $model = null): array
+    {
+
+        $validate_array = $MODEL_NAME$::$rules;
+
+        return $request->validate($validate_array, [], $MODEL_NAME$::attributeLabels());
+    }
+}
