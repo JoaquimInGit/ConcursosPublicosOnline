@@ -29,13 +29,14 @@
         "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.5",
         "fzaninotto/faker": "^1.9.1",
-        "laravel/ui": "^3.2",
+        "infyomlabs/adminlte-templates": "8.0.x-dev",
+        "infyomlabs/laravel-generator": "8.0.x-dev",
         "laravel/sail": "^1.0.1",
+        "laravel/ui": "^3.2",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3",
-        "infyomlabs/laravel-generator": "8.0.x-dev",
-        "infyomlabs/adminlte-templates": "8.0.x-dev"
+        "symfony/panther": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,
