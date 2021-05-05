@@ -36,7 +36,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class,'index'])->name('home');
-Route::get('/base', [BaseController::class,'index']);
+Route::get('/base', [BaseController::class,'insertContest']);
 //only users autenticated and with email verified can access the following routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/api-upload', [HomeController::class,'apiUpload'])->name('home.api_upload');
