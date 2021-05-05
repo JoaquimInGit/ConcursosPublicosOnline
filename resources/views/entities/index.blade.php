@@ -1,10 +1,10 @@
 @extends('layout.default')
 <?php
-view()->share('pageTitle', __('Concursos'));
+view()->share('pageTitle', __('Entities'));
 view()->share('hideSubHeader', true);
 ?>
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('concursos.index') }}
+    {{ Breadcrumbs::render('entities.index') }}
 @endsection
 @push('styles')
     <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -19,15 +19,15 @@ view()->share('hideSubHeader', true);
                     <i class="flaticon2-settings text-primary"></i>
                 </span>
                 <h3 class="card-label">
-                    {{ __('Concursos') }}
+                    {{ __('Entities') }}
                 </h3>
             </div>
             <div class="card-toolbar">
                 <div class="dropdown dropdown-inline" id="datatable-buttons">
                 </div>
-                <a href="{{ route('concursos.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
+                <a href="{{ route('entities.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
                     <i class="la la-plus"></i>
-                    {{ __('New Concursos') }}
+                    {{ __('New Entity') }}
                 </a>
             </div>
         </div>
@@ -50,7 +50,7 @@ view()->share('hideSubHeader', true);
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';
             $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-sm btn-default font-weight-bold mr-2';
-            var buttons = new $.fn.dataTable.Buttons(window.LaravelDataTables["concursos-table"], {
+            var buttons = new $.fn.dataTable.Buttons(window.LaravelDataTables["entities-table"], {
                 buttons: [
                     'export',
                 ]
@@ -78,7 +78,7 @@ view()->share('hideSubHeader', true);
                         dataType: 'json',
                         data: {_method: 'DELETE'}
                     }).always(function (data) {
-                        jQuery('#concursos-table').DataTable().draw(false);
+                        jQuery('#entities-table').DataTable().draw(false);
                     });
                 }
             });

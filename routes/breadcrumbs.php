@@ -103,3 +103,72 @@ Breadcrumbs::for('post', function ($trail, $post) {
     $trail->parent('category', $post->category);
     $trail->push($post->title, route('post', $post->id));
 });*/
+
+Breadcrumbs::for('contests.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push(__('Contests'), route('contests.index'));
+});
+Breadcrumbs::for('contests.create', function ($trail) {
+    $trail->parent('contests.index');
+    $trail->push(__('Create'), route('contests.create'));
+});
+Breadcrumbs::for('contests.show', function ($trail, $contest) {
+    $trail->parent('contests.index');
+    $trail->push($contest->num_announcement, route('contests.show', $contest->id));
+});
+Breadcrumbs::for('contests.edit', function ($trail, $contest) {
+    $trail->parent('contests.show', $contest);
+    $trail->push(__('Update'), route('contests.edit', $contest));
+});
+
+
+Breadcrumbs::for('entities.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push(__('Entities'), route('entities.index'));
+});
+Breadcrumbs::for('entities.create', function ($trail) {
+    $trail->parent('entities.index');
+    $trail->push(__('Create'), route('entities.create'));
+});
+Breadcrumbs::for('entities.show', function ($trail, $entity) {
+    $trail->parent('entities.index');
+    $trail->push($entity->designation, route('entities.show', $entity));
+});
+Breadcrumbs::for('entities.edit', function ($trail, $entity) {
+    $trail->parent('entities.show', $entity);
+    $trail->push(__('Update'), route('entities.edit', $entity));
+});
+Breadcrumbs::for('entities.own_show', function ($trail, $entity) {
+    $trail->parent('home');
+    $trail->push($entity->designation, route('entities.show', $entity));
+});
+Breadcrumbs::for('entities.own_edit', function ($trail, $entity) {
+    $trail->parent('entities.own_show', $entity);
+    $trail->push(__('Update'), route('entities.edit', $entity));
+});
+
+
+Breadcrumbs::for('filters.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push(__('Filters'), route('filters.index'));
+});
+Breadcrumbs::for('filters.create', function ($trail) {
+    $trail->parent('filters.index');
+    $trail->push(__('Create'), route('filters.create'));
+});
+Breadcrumbs::for('filters.show', function ($trail, $filter) {
+    $trail->parent('filters.index');
+    $trail->push($filter->filter_name, route('filters.show', $filter));
+});
+Breadcrumbs::for('filters.edit', function ($trail, $filter) {
+    $trail->parent('filters.show', $filter);
+    $trail->push(__('Update'), route('filters.edit', $filter));
+});
+Breadcrumbs::for('filters.own_show', function ($trail, $filter) {
+    $trail->parent('home');
+    $trail->push($filter->filter_name, route('filters.show', $filter));
+});
+Breadcrumbs::for('filters.own_edit', function ($trail, $filter) {
+    $trail->parent('filters.own_show', $filter);
+    $trail->push(__('Update'), route('filters.edit', $filter));
+});

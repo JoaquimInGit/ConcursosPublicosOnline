@@ -2,12 +2,12 @@
 
 namespace App\DataTables;
 
-use App\Models\Concursos;
+use App\Models\Filter;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use App\DataTables\Traits\DatatableColumnSearch;
 
-class ConcursosDataTable extends DataTable
+class FilterDataTable extends DataTable
 {
     use DatatableColumnSearch;
 
@@ -22,10 +22,10 @@ class ConcursosDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
-            ->addColumn('action', function ($concursos) {
-                return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('concursos.show', $concursos) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
-                        <a href="'. route('concursos.edit', $concursos) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
-                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $concursos->id .'" data-delete-url="'. route('concursos.destroy', $concursos) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
+            ->addColumn('action', function ($filter) {
+                return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('filters.show', $filter) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
+                        <a href="'. route('filters.edit', $filter) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
+                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $filter->id .'" data-delete-url="'. route('filters.destroy', $filter) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
             });
             //->editColumn('type', '{{ $this->typeLabel }}')
             /*->editColumn('type', function ($model) {
@@ -36,10 +36,10 @@ class ConcursosDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Concursos $model
+     * @param \App\Models\Filter $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Concursos $model)
+    public function query(Filter $model)
     {
         return $model->newQuery();
     }
@@ -52,7 +52,7 @@ class ConcursosDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('concursos-table')
+            ->setTableId('filters-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive'rt>ip") // Bfrtip
@@ -74,9 +74,19 @@ class ConcursosDataTable extends DataTable
      */
     protected function getColumns()
     {
-        $model = new Concursos();
+        $model = new Filter();
         return [
-
+            Column::make('entity_id')->title($model->getAttributeLabel('entity_id')),
+            Column::make('filter_name')->title($model->getAttributeLabel('filter_name')),
+            Column::make('filter_state')->title($model->getAttributeLabel('filter_state')),
+            Column::make('description_words')->title($model->getAttributeLabel('description_words')),
+            Column::make('contest_entity')->title($model->getAttributeLabel('contest_entity')),
+            Column::make('type_act')->title($model->getAttributeLabel('type_act')),
+            Column::make('type_model')->title($model->getAttributeLabel('type_model')),
+            Column::make('type_contract')->title($model->getAttributeLabel('type_contract')),
+            Column::make('min_price')->title($model->getAttributeLabel('min_price')),
+            Column::make('max_price')->title($model->getAttributeLabel('max_price')),
+            Column::make('cpv')->title($model->getAttributeLabel('cpv')),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -93,6 +103,6 @@ class ConcursosDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'concursos_' . date('YmdHis');
+        return 'filters_' . date('YmdHis');
     }
 }

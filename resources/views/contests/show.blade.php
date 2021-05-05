@@ -1,25 +1,25 @@
 <?php
 /**
  *
- * @var $concursos \App\Models\Concursos
+ * @var $contest \App\Models\Contest
  */
-view()->share('pageTitle', $concursos->id);
+view()->share('pageTitle', $contest->id);
 view()->share('hideSubHeader', true);
 ?>
 @extends('layout.default')
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('concursos.show', $concursos) }}
+    {{ Breadcrumbs::render('contests.show', $contest) }}
 @endsection
 @section('content')
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">
-                    {{ $concursos->id }}
+                    {{ $contest->id }}
                 </h3>
             </div>
             <div class="card-toolbar">
-                <a href="{{ route('concursos.edit', $concursos) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
+                <a href="{{ route('contests.edit', $contest) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
                     <i class="la la-edit"></i>
                     {{ __('Update') }}
                 </a>
@@ -27,7 +27,7 @@ view()->share('hideSubHeader', true);
                     <i class="la la-trash"></i>
                     {{ __('Delete') }}
                 </button>
-                {!! Form::open(['route' => ['concursos.destroy', $concursos], 'method' => 'delete', 'class'=>"d-none", 'id' => 'delete-form']) !!}
+                {!! Form::open(['route' => ['contests.destroy', $contest], 'method' => 'delete', 'class'=>"d-none", 'id' => 'delete-form']) !!}
 
                 {!! Form::close() !!}
             </div>
@@ -35,7 +35,7 @@ view()->share('hideSubHeader', true);
         <div class="card-body">
             <table class="table table-striped">
                 <tbody>
-                    @include('concursos.show_fields')
+                    @include('contests.show_fields')
                 </tbody>
             </table>
         </div>

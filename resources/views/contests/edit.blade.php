@@ -1,30 +1,30 @@
 <?php
 /**
  *
- * @var $concursos \App\Models\Concursos
+ * @var $contest \App\Models\Contest
  * @var $errors Illuminate\View\Middleware\ShareErrorsFromSession
  */
-view()->share('pageTitle', $concursos->id);
+view()->share('pageTitle', $contest->id);
 view()->share('hideSubHeader', true);
 ?>
 @extends('layout.default')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('concursos.edit', $concursos) }}
+    {{ Breadcrumbs::render('contests.edit', $contest) }}
 @endsection
 @section('content')
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">
-                    {{ $concursos->id }}
+                    {{ $contest->id }}
                 </h3>
             </div>
         </div>
-        {!! Form::model($concursos, ['route' => ['concursos.update', $concursos], 'method' => 'patch', 'enctype'=>"multipart/form-data", 'class' => "form"]) !!}
+        {!! Form::model($contest, ['route' => ['contests.update', $contest], 'method' => 'patch', 'enctype'=>"multipart/form-data", 'class' => "form"]) !!}
 
             <div class="card-body">
-                @include('concursos.fields')
+                @include('contests.fields')
              </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary mr-2">{{ __('Save') }}</button>
