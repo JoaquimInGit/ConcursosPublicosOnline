@@ -13,6 +13,17 @@ class CreateOrderItemsTable extends Migration
      */
     public function up()
     {
+        Schema::create('products', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->decimal('price');
+            $table->smallInteger('state');
+            $table->decimal('reduced_price');
+            $table->string('description');
+            $table->string('excerpt');
+            $table->timestamps();
+        });
+
         Schema::create('order_items', function (Blueprint $table) {
             $table->primary(['entity_id','order_id','product_id']);
             $table->foreignId('entity_id');
@@ -52,5 +63,6 @@ class CreateOrderItemsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('order_items');
+        Schema::dropIfExists('products');
     }
 }

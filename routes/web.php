@@ -36,7 +36,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class,'index'])->name('home');
-Route::get('/base', [BaseController::class,'insertContest']);
+Route::get('/base', [BaseController::class,'insertContest2']);
 //only users autenticated and with email verified can access the following routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/api-upload', [HomeController::class,'apiUpload'])->name('home.api_upload');
@@ -89,8 +89,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Quick search dummy route to display html elements in search dropdown (header search)
 //Route::get('/pages/quick-search', 'PagesController@quickSearch')->name('quick-search');
 
-Route::resource('contests', App\Http\Controllers\ContestController::class);
+
 
 Route::resource('entities', App\Http\Controllers\EntityController::class);
 
 Route::resource('filters', App\Http\Controllers\FilterController::class);
+
+Route::resource('contests', App\Http\Controllers\ContestController::class);

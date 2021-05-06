@@ -9,12 +9,14 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class Contest
  * @package App\Models
- * @version May 4, 2021, 6:38 pm UTC
+ * @version May 6, 2021, 2:35 pm UTC
  *
+ * @property \Illuminate\Database\Eloquent\Collection $contestsEntities
+ * @property \Illuminate\Database\Eloquent\Collection $contestsFilters
  * @property string $num_announcement
  * @property string $description
  * @property string $entity
- * @property integer $type_act
+ * @property boolean $type_act
  * @property integer $type_model
  * @property integer $type_contract
  * @property number $price
@@ -33,11 +35,11 @@ class Contest extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'contests';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-
-
+    const STATE_DISABLED = 0;
+    const STATE_ENABLED = 1;
 
 
     public $fillable = [
@@ -68,7 +70,7 @@ class Contest extends Model implements Auditable
         'num_announcement' => 'string',
         'description' => 'string',
         'entity' => 'string',
-        'type_act' => 'integer',
+        'type_act' => 'boolean',
         'type_model' => 'integer',
         'type_contract' => 'integer',
         'price' => 'decimal:2',
@@ -91,7 +93,7 @@ class Contest extends Model implements Auditable
         'num_announcement' => 'required|string|max:255',
         'description' => 'required|string',
         'entity' => 'required|string|max:255',
-        'type_act' => 'required',
+        'type_act' => 'nullable|boolean',
         'type_model' => 'required',
         'type_contract' => 'required',
         'price' => 'nullable|numeric',
@@ -146,5 +148,38 @@ class Contest extends Model implements Auditable
         return isset($attributeLabels[$attribute]) ? $attributeLabels[$attribute] : __($attribute);
     }
 
-    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function contestsEntities()
+    {
+        return $this->hasMany(\App\Models\ContestsEntity::class, 'contest_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function contestsFilters()
+    {
+        return $this->hasMany(\App\Models\ContestsFilter::class, 'contest_id');
+    }
+
+    public static function getStatusArray()
+    {
+        return [
+            self::STATE_DISABLED =>  __('Disabled'),
+            self::STATE_ENABLED =>  __('Approved'),
+        ];
+    }
+
+    public function getStatusOptions()
+    {
+        return static::getStatusArray();
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        $array = self::getStatusOptions();
+        return $array[$this->state];
+    }
 }

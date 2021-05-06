@@ -28,11 +28,12 @@
 <!-- Type Act Field -->
 <div class="form-group">
     {!! Form::label('type_act', $contest->getAttributeLabel('type_act')) !!}
-    {!! Form::number('type_act', null, ['class' => 'form-control '.($errors->has('type_act') ? 'is-invalid' : '')]) !!}
-    @error('type_act')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_act', 0) !!}
+        {!! Form::checkbox('type_act', '1', null) !!}
+    </label>
 </div>
+
 
 <!-- Type Model Field -->
 <div class="form-group">
@@ -93,9 +94,9 @@
 <!-- State Field -->
 <div class="form-group">
     {!! Form::label('state', $contest->getAttributeLabel('state')) !!}
-    {!! Form::number('state', null, ['class' => 'form-control '.($errors->has('state') ? 'is-invalid' : '')]) !!}
+    {!! Form::Select('state',$contest->getStatusArray(), null, ['class' => 'form-control '.($errors->has('state') ? 'is-invalid' : ''),'placeholder' => __('Select a Status')]) !!}
     @error('state')
-        <div class="error invalid-feedback">{{ $message }}</div>
+    <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\Panther\Client;
 
 class BaseController extends Controller
@@ -59,7 +60,7 @@ class BaseController extends Controller
                 'num_announcement' => $table["0"]["1"],
                 'description' => $table["3"]["1"],
                 'entity' => $table["2"]["1"],
-                'type_act' => 1,
+                'type_act' => wqqwe,
                 'type_model' => 1,
                 'type_contract' => 1,
                 'price' => floatval( $preco_conc),
@@ -74,5 +75,41 @@ class BaseController extends Controller
             ]);
         $id--;
         }
+    }
+    public function insertContest2(){
+      /*  $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
+            'type' => 'detail_anuncios',
+            'id' => '263749'
+        ]);
+        $body = explode(",",$response->body());
+        */
+        $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
+            'type'=>'search_anuncios',
+            'query'=>'tipoacto=0&tipomodelo=0&tipocontrato=0',
+            'sort'=>'-drPublicationDate',
+            'size' => 100,
+            //'page'=> 0
+        ]);
+        //$body = explode(",",$response->body());
+        dd( $response->body());
+/*
+        Contest::create([
+            'num_announcement' => $body["0"]["1"],
+            'description' => $body["3"]["1"],
+            'entity' => $table["2"]["1"],
+            'type_act' => Contest::getTipe_act($body[][]),
+            'type_model' => 1,
+            'type_contract' => 1,
+            'price' => floatval( $preco_conc),
+            'publication_date' => date("Y-m-d"),
+            'deadline' => $table[9][1],
+            'state' => 1,
+            'republic_diary' => $body["1"]["1"],
+            'cpv' => $body["8"]["1"],
+            'cpv_description' => $body["8"]["1"],
+            'procedure_parts' => $body["11"]["1"],
+            'pdf_content => "Adicionar Link'
+        ]);
+*/
     }
 }
