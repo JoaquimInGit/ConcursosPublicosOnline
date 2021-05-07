@@ -14,21 +14,17 @@ class CreateContestsFiltersTable extends Migration
     public function up()
     {
         Schema::create('contests_filters', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('contest_id');
-            $table->foreignId('filter_id');
+            $table->id();
+            $table->foreignId('contest_id')
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
+            $table->foreignId('filter_id')
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
             $table->date('date');
             $table->timestamps();
-
-            $table->foreign('contest_id')
-                ->references('id')
-                ->on('contests')
-                ->onDelete('cascade');
-
-            $table->foreign('filter_id')
-                ->references('id')
-                ->on('filters')
-                ->onDelete('cascade');
         });
     }
 

@@ -15,26 +15,27 @@ class CreateEntitiesTable extends Migration
     public function up()
     {
         Schema::create('entities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('user_id');
+            $table->id();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->onDelete('set null');
             $table->string('designation');
             $table->string('country');
             $table->string('district');
             $table->string('address');
-            $table->string('postal_code');
-            $table->string('mobile_phone');
-            $table->string('nif');
-            $table->string('cae')->nullable();
+            $table->string('postal_code',8);
+            $table->string('mobile_phone',12);
+            $table->string('nif',9);
+            $table->string('cae',5)->nullable();
             $table->string('cae_secundario')->nullable();
             $table->string('website')->nullable();
             $table->string('email_entity')->nullable();
-            $table->smallInteger('state');
+            $table->tinyInteger('status')->default(1)->comment(
+                "0 - entidade inativa  | 1 - entidade ativa
+            ");
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 
