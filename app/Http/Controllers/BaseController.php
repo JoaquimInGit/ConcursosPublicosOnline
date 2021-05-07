@@ -77,39 +77,71 @@ class BaseController extends Controller
         }
     }
     public function insertContest2(){
-      /*  $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
-            'type' => 'detail_anuncios',
-            'id' => '263749'
-        ]);
-        $body = explode(",",$response->body());
-        */
+       $ids = $this->discoverids();
+       foreach($ids as $id) {
+           //Faz o pedido á pagina de detalhes com o id do anuncio pretendido
+           $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
+               'type' => 'detail_anuncios',
+               'id' => '' . $id
+           ]);
+           //trasforma em objeto de php o corpo da resposta (json)
+           $body = json_decode($response->body());
+
+           //saca o preço e converte em float
+           $price = explode(' ', $body->basePrice);
+           $price = explode('.', $price[0]);
+           $basePrice = $price[0] . $price[1];
+           $basePrice = str_replace(',', '.', $basePrice);
+           $basePrice = floatval($basePrice);
+           //dd( date("Y-m-d",strtotime($body->drPublicationDate)));
+           //Dias até a deadline inteiros
+           $daysDeadline = explode(' ', $body->proposalDeadline);
+           $daysDeadline = intval($daysDeadline[0]);
+
+           //data de publicação
+           $date = date("Y-m-d", strtotime($body->drPublicationDate));
+           $dateDeadline = date('Y-m-d', strtotime($date . ' + ' . $daysDeadline . ' days'));
+           //dd();
+           $cpv = explode(', ', $body->cpvs);
+
+           Contest::create([
+               'base_id' => $body->id,
+               'num_announcement' => $body->announcementNumber,
+               'description' => $body->contractDesignation,
+               'entity' => $body->contractingEntities[0]->description,/*
+            'type_act' => 'nullable|boolean',
+            'type_model' => 'nullable|boolean',
+            'type_contract' => 'nullable|boolean',*/
+               'price' => $basePrice,
+               'publication_date' => $date,
+               'deadline_date' => $dateDeadline,
+               'status' => 1,
+               'republic_diary_num' => intval($body->dreNumber),
+               'republic_diary_serie' => intval($body->dreSeries),
+               'cpv' => $cpv[0],
+               'cpv_description' => $cpv[1],
+               //'procedure_parts' => ,
+               'link_announcement' => $body->reference,
+               // 'pdf_content' => 'nullable|string'
+           ]);
+           echo "Inserção concluida";
+       }
+    }
+
+    public function discoverids(){
+       //TODO: descobrir o ultimo id da tabela Contests e depois ir contando até la chegar
+       $idArray = [];
         $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
             'type'=>'search_anuncios',
             'query'=>'tipoacto=0&tipomodelo=0&tipocontrato=0',
             'sort'=>'-drPublicationDate',
-            'size' => 100,
+            'size' => 25,
             //'page'=> 0
         ]);
-        //$body = explode(",",$response->body());
-        dd( $response->body());
-/*
-        Contest::create([
-            'num_announcement' => $body["0"]["1"],
-            'description' => $body["3"]["1"],
-            'entity' => $table["2"]["1"],
-            'type_act' => Contest::getTipe_act($body[][]),
-            'type_model' => 1,
-            'type_contract' => 1,
-            'price' => floatval( $preco_conc),
-            'publication_date' => date("Y-m-d"),
-            'deadline' => $table[9][1],
-            'state' => 1,
-            'republic_diary' => $body["1"]["1"],
-            'cpv' => $body["8"]["1"],
-            'cpv_description' => $body["8"]["1"],
-            'procedure_parts' => $body["11"]["1"],
-            'pdf_content => "Adicionar Link'
-        ]);
-*/
+        $body = json_decode($response->body());
+        foreach($body->items as $item){
+            array_push($idArray,$item->id);
+        }
+     return $idArray;
     }
 }
