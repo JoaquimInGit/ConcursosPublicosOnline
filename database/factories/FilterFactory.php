@@ -24,7 +24,7 @@ class FilterFactory extends Factory
         return [
             'entity_id' => $this->faker->word,
         'filter_name' => $this->faker->word,
-        'filter_state' => $this->faker->word,
+        'filter_status' => $this->faker->word,
         'description_words' => $this->faker->word,
         'contest_entity' => $this->faker->word,
         'type_act' => $this->faker->word,

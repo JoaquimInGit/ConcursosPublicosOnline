@@ -1,3 +1,10 @@
+<!-- Base Id Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('base_id') }}</th>
+    <td>{{ $contest->base_id }}</td>
+</tr>
+
+
 <!-- Num Announcement Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('num_announcement') }}</th>
@@ -54,24 +61,31 @@
 </tr>
 
 
-<!-- Deadline Field -->
+<!-- Deadline Date Field -->
 <tr>
-    <th scope="row">{{ $contest->getAttributeLabel('deadline') }}</th>
-    <td>{{ $contest->deadline }}</td>
+    <th scope="row">{{ $contest->getAttributeLabel('deadline_date') }}</th>
+    <td>{{ $contest->deadline_date }}</td>
 </tr>
 
 
-<!-- State Field -->
+<!-- Status Field -->
 <tr>
-    <th scope="row">{{ $contest->getAttributeLabel('state') }}</th>
-    <td>{{ $contest->state }}</td>
+    <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
+    <td>{{ $contest->status }}</td>
 </tr>
 
 
-<!-- Republic Diary Field -->
+<!-- Republic Diary Num Field -->
 <tr>
-    <th scope="row">{{ $contest->getAttributeLabel('republic_diary') }}</th>
-    <td>{{ $contest->republic_diary }}</td>
+    <th scope="row">{{ $contest->getAttributeLabel('republic_diary_num') }}</th>
+    <td>{{ $contest->republic_diary_num }}</td>
+</tr>
+
+
+<!-- Republic Diary Serie Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('republic_diary_serie') }}</th>
+    <td>{{ $contest->republic_diary_serie }}</td>
 </tr>
 
 
@@ -93,6 +107,13 @@
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('procedure_parts') }}</th>
     <td>{{ $contest->procedure_parts }}</td>
+</tr>
+
+
+<!-- Link Announcement Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('link_announcement') }}</th>
+    <td>{{ $contest->link_announcement }}</td>
 </tr>
 
 

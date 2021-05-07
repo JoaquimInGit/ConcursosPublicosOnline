@@ -91,8 +91,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-Route::resource('entities', App\Http\Controllers\EntityController::class);
+
 
 Route::resource('filters', App\Http\Controllers\FilterController::class);
 
+
+
 Route::resource('contests', App\Http\Controllers\ContestController::class);
+
+Route::resource('entities', App\Http\Controllers\EntityController::class);

@@ -9,9 +9,13 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class Entity
  * @package App\Models
- * @version May 4, 2021, 11:42 pm UTC
+ * @version May 7, 2021, 11:10 am UTC
  *
  * @property \App\Models\User $user
+ * @property \Illuminate\Database\Eloquent\Collection $contestsEntities
+ * @property \Illuminate\Database\Eloquent\Collection $filters
+ * @property \Illuminate\Database\Eloquent\Collection $orderItems
+ * @property \Illuminate\Database\Eloquent\Collection $orders
  * @property integer $user_id
  * @property string $designation
  * @property string $country
@@ -24,7 +28,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $cae_secundario
  * @property string $website
  * @property string $email_entity
- * @property integer $state
+ * @property boolean $status
  */
 class Entity extends Model implements Auditable
 {
@@ -52,7 +56,7 @@ class Entity extends Model implements Auditable
         'cae_secundario',
         'website',
         'email_entity',
-        'state'
+        'status'
     ];
 
     /**
@@ -74,7 +78,7 @@ class Entity extends Model implements Auditable
         'cae_secundario' => 'string',
         'website' => 'string',
         'email_entity' => 'string',
-        'state' => 'integer'
+        'status' => 'boolean'
     ];
 
     /**
@@ -83,19 +87,19 @@ class Entity extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        'user_id' => 'required',
+        'user_id' => 'nullable',
         'designation' => 'required|string|max:255',
         'country' => 'required|string|max:255',
         'district' => 'required|string|max:255',
         'address' => 'required|string|max:255',
-        'postal_code' => 'required|string|max:255',
-        'mobile_phone' => 'required|string|max:255',
-        'nif' => 'required|string|max:255',
-        'cae' => 'nullable|string|max:255',
+        'postal_code' => 'required|string|max:8',
+        'mobile_phone' => 'required|string|max:12',
+        'nif' => 'required|string|max:9',
+        'cae' => 'nullable|string|max:5',
         'cae_secundario' => 'nullable|string|max:255',
         'website' => 'nullable|string|max:255',
         'email_entity' => 'nullable|string|max:255',
-        'state' => 'required',
+        'status' => 'required|boolean',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
@@ -121,7 +125,7 @@ class Entity extends Model implements Auditable
         'cae_secundario' => __('Cae Secundario'),
         'website' => __('Website'),
         'email_entity' => __('Email Entity'),
-        'state' => __('State'),
+        'status' => __('Status'),
         'created_at' => __('Created At'),
         'updated_at' => __('Updated At')
         ];
@@ -143,5 +147,37 @@ class Entity extends Model implements Auditable
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function contestsEntities()
+    {
+        return $this->hasMany(\App\Models\ContestsEntity::class, 'entity_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function filters()
+    {
+        return $this->hasMany(\App\Models\Filter::class, 'entity_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function orderItems()
+    {
+        return $this->hasMany(\App\Models\OrderItem::class, 'entity_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class, 'entity_id');
     }
 }

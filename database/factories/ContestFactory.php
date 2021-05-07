@@ -22,7 +22,8 @@ class ContestFactory extends Factory
     public function definition()
     {
         return [
-            'num_announcement' => $this->faker->word,
+            'base_id' => $this->faker->randomDigitNotNull,
+        'num_announcement' => $this->faker->word,
         'description' => $this->faker->text,
         'entity' => $this->faker->word,
         'type_act' => $this->faker->word,
@@ -30,12 +31,14 @@ class ContestFactory extends Factory
         'type_contract' => $this->faker->word,
         'price' => $this->faker->word,
         'publication_date' => $this->faker->word,
-        'deadline' => $this->faker->word,
-        'state' => $this->faker->word,
-        'republic_diary' => $this->faker->word,
+        'deadline_date' => $this->faker->word,
+        'status' => $this->faker->word,
+        'republic_diary_num' => $this->faker->randomDigitNotNull,
+        'republic_diary_serie' => $this->faker->randomDigitNotNull,
         'cpv' => $this->faker->word,
         'cpv_description' => $this->faker->text,
         'procedure_parts' => $this->faker->word,
+        'link_announcement' => $this->faker->word,
         'pdf_content' => $this->faker->text,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')

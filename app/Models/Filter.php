@@ -9,17 +9,18 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class Filter
  * @package App\Models
- * @version May 5, 2021, 2:15 pm UTC
+ * @version May 7, 2021, 11:14 am UTC
  *
  * @property \App\Models\Entity $entity
+ * @property \Illuminate\Database\Eloquent\Collection $contestsFilters
  * @property integer $entity_id
  * @property string $filter_name
- * @property integer $filter_state
+ * @property boolean $filter_status
  * @property string $description_words
  * @property string $contest_entity
- * @property integer $type_act
- * @property integer $type_model
- * @property integer $type_contract
+ * @property boolean $type_act
+ * @property boolean $type_model
+ * @property boolean $type_contract
  * @property number $min_price
  * @property number $max_price
  * @property string $cpv
@@ -40,7 +41,7 @@ class Filter extends Model implements Auditable
     public $fillable = [
         'entity_id',
         'filter_name',
-        'filter_state',
+        'filter_status',
         'description_words',
         'contest_entity',
         'type_act',
@@ -60,12 +61,12 @@ class Filter extends Model implements Auditable
         'id' => 'integer',
         'entity_id' => 'integer',
         'filter_name' => 'string',
-        'filter_state' => 'integer',
+        'filter_status' => 'boolean',
         'description_words' => 'string',
         'contest_entity' => 'string',
-        'type_act' => 'integer',
-        'type_model' => 'integer',
-        'type_contract' => 'integer',
+        'type_act' => 'boolean',
+        'type_model' => 'boolean',
+        'type_contract' => 'boolean',
         'min_price' => 'decimal:2',
         'max_price' => 'decimal:2',
         'cpv' => 'string'
@@ -77,14 +78,14 @@ class Filter extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        'entity_id' => 'required',
+        'entity_id' => 'nullable',
         'filter_name' => 'required|string|max:255',
-        'filter_state' => 'required',
+        'filter_status' => 'nullable|boolean',
         'description_words' => 'nullable|string|max:255',
         'contest_entity' => 'nullable|string|max:255',
-        'type_act' => 'nullable',
-        'type_model' => 'nullable',
-        'type_contract' => 'nullable',
+        'type_act' => 'nullable|boolean',
+        'type_model' => 'nullable|boolean',
+        'type_contract' => 'nullable|boolean',
         'min_price' => 'nullable|numeric',
         'max_price' => 'nullable|numeric',
         'cpv' => 'nullable|string|max:255',
@@ -103,7 +104,7 @@ class Filter extends Model implements Auditable
             'id' => __('Id'),
         'entity_id' => __('Entity Id'),
         'filter_name' => __('Filter Name'),
-        'filter_state' => __('Filter State'),
+        'filter_status' => __('Filter Status'),
         'description_words' => __('Description Words'),
         'contest_entity' => __('Contest Entity'),
         'type_act' => __('Type Act'),
@@ -133,5 +134,13 @@ class Filter extends Model implements Auditable
     public function entity()
     {
         return $this->belongsTo(\App\Models\Entity::class, 'entity_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function contestsFilters()
+    {
+        return $this->hasMany(\App\Models\ContestsFilter::class, 'filter_id');
     }
 }

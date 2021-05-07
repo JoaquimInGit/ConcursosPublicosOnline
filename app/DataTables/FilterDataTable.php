@@ -78,7 +78,7 @@ class FilterDataTable extends DataTable
         return [
             Column::make('entity_id')->title($model->getAttributeLabel('entity_id')),
             Column::make('filter_name')->title($model->getAttributeLabel('filter_name')),
-            Column::make('filter_state')->title($model->getAttributeLabel('filter_state')),
+            Column::make('filter_status')->title($model->getAttributeLabel('filter_status')),
             Column::make('description_words')->title($model->getAttributeLabel('description_words')),
             Column::make('contest_entity')->title($model->getAttributeLabel('contest_entity')),
             Column::make('type_act')->title($model->getAttributeLabel('type_act')),

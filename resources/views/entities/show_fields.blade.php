@@ -82,10 +82,10 @@
 </tr>
 
 
-<!-- State Field -->
+<!-- Status Field -->
 <tr>
-    <th scope="row">{{ $entity->getAttributeLabel('state') }}</th>
-    <td>{{ $entity->state }}</td>
+    <th scope="row">{{ $entity->getAttributeLabel('status') }}</th>
+    <td>{{ $entity->status }}</td>
 </tr>
 
 

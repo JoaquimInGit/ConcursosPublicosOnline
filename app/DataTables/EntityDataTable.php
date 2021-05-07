@@ -88,7 +88,7 @@ class EntityDataTable extends DataTable
             Column::make('cae_secundario')->title($model->getAttributeLabel('cae_secundario')),
             Column::make('website')->title($model->getAttributeLabel('website')),
             Column::make('email_entity')->title($model->getAttributeLabel('email_entity')),
-            Column::make('state')->title($model->getAttributeLabel('state')),
+            Column::make('status')->title($model->getAttributeLabel('status')),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

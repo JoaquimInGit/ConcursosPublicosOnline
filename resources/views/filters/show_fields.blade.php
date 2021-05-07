@@ -12,10 +12,10 @@
 </tr>
 
 
-<!-- Filter State Field -->
+<!-- Filter Status Field -->
 <tr>
-    <th scope="row">{{ $filter->getAttributeLabel('filter_state') }}</th>
-    <td>{{ $filter->filter_state }}</td>
+    <th scope="row">{{ $filter->getAttributeLabel('filter_status') }}</th>
+    <td>{{ $filter->filter_status }}</td>
 </tr>
 
 

@@ -34,7 +34,7 @@ class EntityFactory extends Factory
         'cae_secundario' => $this->faker->word,
         'website' => $this->faker->word,
         'email_entity' => $this->faker->word,
-        'state' => $this->faker->word,
+        'status' => $this->faker->word,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
         'updated_at' => $this->faker->date('Y-m-d H:i:s')
         ];

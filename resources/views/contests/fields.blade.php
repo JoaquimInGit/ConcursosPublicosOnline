@@ -1,3 +1,12 @@
+<!-- Base Id Field -->
+<div class="form-group">
+    {!! Form::label('base_id', $contest->getAttributeLabel('base_id')) !!}
+    {!! Form::number('base_id', null, ['class' => 'form-control '.($errors->has('base_id') ? 'is-invalid' : '')]) !!}
+    @error('base_id')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
 <!-- Num Announcement Field -->
 <div class="form-group">
     {!! Form::label('num_announcement', $contest->getAttributeLabel('num_announcement')) !!}
@@ -38,20 +47,22 @@
 <!-- Type Model Field -->
 <div class="form-group">
     {!! Form::label('type_model', $contest->getAttributeLabel('type_model')) !!}
-    {!! Form::number('type_model', null, ['class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
-    @error('type_model')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_model', 0) !!}
+        {!! Form::checkbox('type_model', '1', null) !!}
+    </label>
 </div>
+
 
 <!-- Type Contract Field -->
 <div class="form-group">
     {!! Form::label('type_contract', $contest->getAttributeLabel('type_contract')) !!}
-    {!! Form::number('type_contract', null, ['class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
-    @error('type_contract')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_contract', 0) !!}
+        {!! Form::checkbox('type_contract', '1', null) !!}
+    </label>
 </div>
+
 
 <!-- Price Field -->
 <div class="form-group">
@@ -82,29 +93,50 @@
     <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
 @endpush
 
-<!-- Deadline Field -->
+<!-- Deadline Date Field -->
 <div class="form-group">
-    {!! Form::label('deadline', $contest->getAttributeLabel('deadline')) !!}
-    {!! Form::text('deadline', null, ['class' => 'form-control '.($errors->has('deadline') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
-    @error('deadline')
+    {!! Form::label('deadline_date', $contest->getAttributeLabel('deadline_date')) !!}
+    <div class="input-group date">
+        {!! Form::text('deadline_date', null, ['class' => 'form-control kt_datepicker '.($errors->has('deadline_date') ? 'is-invalid' : ''), 'readonly' => true]) !!}
+        <div class="input-group-append">
+            <span class="input-group-text">
+                <i class="la la-calendar-check-o"></i>
+            </span>
+        </div>
+        @error('deadline_date')
+            <div class="error invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+@push('scripts')
+    <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
+@endpush
+
+<!-- Status Field -->
+<div class="form-group">
+    {!! Form::label('status', $contest->getAttributeLabel('status')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('status', 0) !!}
+        {!! Form::checkbox('status', '1', null) !!}
+    </label>
+</div>
+
+
+<!-- Republic Diary Num Field -->
+<div class="form-group">
+    {!! Form::label('republic_diary_num', $contest->getAttributeLabel('republic_diary_num')) !!}
+    {!! Form::number('republic_diary_num', null, ['class' => 'form-control '.($errors->has('republic_diary_num') ? 'is-invalid' : '')]) !!}
+    @error('republic_diary_num')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
 
-<!-- State Field -->
+<!-- Republic Diary Serie Field -->
 <div class="form-group">
-    {!! Form::label('state', $contest->getAttributeLabel('state')) !!}
-    {!! Form::Select('state',$contest->getStatusArray(), null, ['class' => 'form-control '.($errors->has('state') ? 'is-invalid' : ''),'placeholder' => __('Select a Status')]) !!}
-    @error('state')
-    <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
-
-<!-- Republic Diary Field -->
-<div class="form-group">
-    {!! Form::label('republic_diary', $contest->getAttributeLabel('republic_diary')) !!}
-    {!! Form::text('republic_diary', null, ['class' => 'form-control '.($errors->has('republic_diary') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
-    @error('republic_diary')
+    {!! Form::label('republic_diary_serie', $contest->getAttributeLabel('republic_diary_serie')) !!}
+    {!! Form::number('republic_diary_serie', null, ['class' => 'form-control '.($errors->has('republic_diary_serie') ? 'is-invalid' : '')]) !!}
+    @error('republic_diary_serie')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
@@ -132,6 +164,15 @@
     {!! Form::label('procedure_parts', $contest->getAttributeLabel('procedure_parts')) !!}
     {!! Form::text('procedure_parts', null, ['class' => 'form-control '.($errors->has('procedure_parts') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
     @error('procedure_parts')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<!-- Link Announcement Field -->
+<div class="form-group">
+    {!! Form::label('link_announcement', $contest->getAttributeLabel('link_announcement')) !!}
+    {!! Form::text('link_announcement', null, ['class' => 'form-control '.($errors->has('link_announcement') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    @error('link_announcement')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>

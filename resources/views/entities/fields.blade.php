@@ -46,7 +46,7 @@
 <!-- Postal Code Field -->
 <div class="form-group">
     {!! Form::label('postal_code', $entity->getAttributeLabel('postal_code')) !!}
-    {!! Form::text('postal_code', null, ['class' => 'form-control '.($errors->has('postal_code') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    {!! Form::text('postal_code', null, ['class' => 'form-control '.($errors->has('postal_code') ? 'is-invalid' : ''),'maxlength' => 8]) !!}
     @error('postal_code')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
@@ -55,7 +55,7 @@
 <!-- Mobile Phone Field -->
 <div class="form-group">
     {!! Form::label('mobile_phone', $entity->getAttributeLabel('mobile_phone')) !!}
-    {!! Form::text('mobile_phone', null, ['class' => 'form-control '.($errors->has('mobile_phone') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    {!! Form::text('mobile_phone', null, ['class' => 'form-control '.($errors->has('mobile_phone') ? 'is-invalid' : ''),'maxlength' => 12]) !!}
     @error('mobile_phone')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
@@ -64,7 +64,7 @@
 <!-- Nif Field -->
 <div class="form-group">
     {!! Form::label('nif', $entity->getAttributeLabel('nif')) !!}
-    {!! Form::text('nif', null, ['class' => 'form-control '.($errors->has('nif') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    {!! Form::text('nif', null, ['class' => 'form-control '.($errors->has('nif') ? 'is-invalid' : ''),'maxlength' => 9]) !!}
     @error('nif')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
@@ -73,7 +73,7 @@
 <!-- Cae Field -->
 <div class="form-group">
     {!! Form::label('cae', $entity->getAttributeLabel('cae')) !!}
-    {!! Form::text('cae', null, ['class' => 'form-control '.($errors->has('cae') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    {!! Form::text('cae', null, ['class' => 'form-control '.($errors->has('cae') ? 'is-invalid' : ''),'maxlength' => 5]) !!}
     @error('cae')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
@@ -106,11 +106,11 @@
     @enderror
 </div>
 
-<!-- State Field -->
+<!-- Status Field -->
 <div class="form-group">
-    {!! Form::label('state', $entity->getAttributeLabel('state')) !!}
-    {!! Form::number('state', null, ['class' => 'form-control '.($errors->has('state') ? 'is-invalid' : '')]) !!}
-    @error('state')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    {!! Form::label('status', $entity->getAttributeLabel('status')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('status', 0) !!}
+        {!! Form::checkbox('status', '1', null) !!}
+    </label>
 </div>

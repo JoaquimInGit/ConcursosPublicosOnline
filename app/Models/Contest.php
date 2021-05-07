@@ -9,24 +9,27 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class Contest
  * @package App\Models
- * @version May 6, 2021, 2:35 pm UTC
+ * @version May 7, 2021, 11:10 am UTC
  *
  * @property \Illuminate\Database\Eloquent\Collection $contestsEntities
  * @property \Illuminate\Database\Eloquent\Collection $contestsFilters
+ * @property integer $base_id
  * @property string $num_announcement
  * @property string $description
  * @property string $entity
  * @property boolean $type_act
- * @property integer $type_model
- * @property integer $type_contract
+ * @property boolean $type_model
+ * @property boolean $type_contract
  * @property number $price
  * @property string $publication_date
- * @property string $deadline
- * @property integer $state
- * @property string $republic_diary
+ * @property string $deadline_date
+ * @property boolean $status
+ * @property integer $republic_diary_num
+ * @property integer $republic_diary_serie
  * @property string $cpv
  * @property string $cpv_description
  * @property string $procedure_parts
+ * @property string $link_announcement
  * @property string $pdf_content
  */
 class Contest extends Model implements Auditable
@@ -35,14 +38,15 @@ class Contest extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'contests';
-
+    
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
-    const STATE_DISABLED = 0;
-    const STATE_ENABLED = 1;
+
+
 
 
     public $fillable = [
+        'base_id',
         'num_announcement',
         'description',
         'entity',
@@ -51,12 +55,14 @@ class Contest extends Model implements Auditable
         'type_contract',
         'price',
         'publication_date',
-        'deadline',
-        'state',
-        'republic_diary',
+        'deadline_date',
+        'status',
+        'republic_diary_num',
+        'republic_diary_serie',
         'cpv',
         'cpv_description',
         'procedure_parts',
+        'link_announcement',
         'pdf_content'
     ];
 
@@ -67,20 +73,23 @@ class Contest extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
+        'base_id' => 'integer',
         'num_announcement' => 'string',
         'description' => 'string',
         'entity' => 'string',
         'type_act' => 'boolean',
-        'type_model' => 'integer',
-        'type_contract' => 'integer',
+        'type_model' => 'boolean',
+        'type_contract' => 'boolean',
         'price' => 'decimal:2',
         'publication_date' => 'date',
-        'deadline' => 'string',
-        'state' => 'integer',
-        'republic_diary' => 'string',
+        'deadline_date' => 'date',
+        'status' => 'boolean',
+        'republic_diary_num' => 'integer',
+        'republic_diary_serie' => 'integer',
         'cpv' => 'string',
         'cpv_description' => 'string',
         'procedure_parts' => 'string',
+        'link_announcement' => 'string',
         'pdf_content' => 'string'
     ];
 
@@ -90,20 +99,23 @@ class Contest extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        'num_announcement' => 'required|string|max:255',
+        'base_id' => 'required|integer',
+        'num_announcement' => 'nullable|string|max:255',
         'description' => 'required|string',
         'entity' => 'required|string|max:255',
         'type_act' => 'nullable|boolean',
-        'type_model' => 'required',
-        'type_contract' => 'required',
+        'type_model' => 'nullable|boolean',
+        'type_contract' => 'nullable|boolean',
         'price' => 'nullable|numeric',
         'publication_date' => 'required',
-        'deadline' => 'required|string|max:255',
-        'state' => 'required',
-        'republic_diary' => 'required|string|max:255',
-        'cpv' => 'required|string|max:255',
-        'cpv_description' => 'required|string',
+        'deadline_date' => 'required',
+        'status' => 'required|boolean',
+        'republic_diary_num' => 'nullable|integer',
+        'republic_diary_serie' => 'nullable|integer',
+        'cpv' => 'nullable|string|max:255',
+        'cpv_description' => 'nullable|string',
         'procedure_parts' => 'nullable|string|max:255',
+        'link_announcement' => 'nullable|string|max:255',
         'pdf_content' => 'nullable|string',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
@@ -118,6 +130,7 @@ class Contest extends Model implements Auditable
     {
         return [
             'id' => __('Id'),
+        'base_id' => __('Base Id'),
         'num_announcement' => __('Num Announcement'),
         'description' => __('Description'),
         'entity' => __('Entity'),
@@ -126,12 +139,14 @@ class Contest extends Model implements Auditable
         'type_contract' => __('Type Contract'),
         'price' => __('Price'),
         'publication_date' => __('Publication Date'),
-        'deadline' => __('Deadline'),
-        'state' => __('State'),
-        'republic_diary' => __('Republic Diary'),
+        'deadline_date' => __('Deadline Date'),
+        'status' => __('Status'),
+        'republic_diary_num' => __('Republic Diary Num'),
+        'republic_diary_serie' => __('Republic Diary Serie'),
         'cpv' => __('Cpv'),
         'cpv_description' => __('Cpv Description'),
         'procedure_parts' => __('Procedure Parts'),
+        'link_announcement' => __('Link Announcement'),
         'pdf_content' => __('Pdf Content'),
         'created_at' => __('Created At'),
         'updated_at' => __('Updated At')
@@ -162,24 +177,5 @@ class Contest extends Model implements Auditable
     public function contestsFilters()
     {
         return $this->hasMany(\App\Models\ContestsFilter::class, 'contest_id');
-    }
-
-    public static function getStatusArray()
-    {
-        return [
-            self::STATE_DISABLED =>  __('Disabled'),
-            self::STATE_ENABLED =>  __('Approved'),
-        ];
-    }
-
-    public function getStatusOptions()
-    {
-        return static::getStatusArray();
-    }
-
-    public function getStatusLabelAttribute()
-    {
-        $array = self::getStatusOptions();
-        return $array[$this->state];
     }
 }

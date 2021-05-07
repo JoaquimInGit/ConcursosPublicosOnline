@@ -16,14 +16,15 @@
     @enderror
 </div>
 
-<!-- Filter State Field -->
+<!-- Filter Status Field -->
 <div class="form-group">
-    {!! Form::label('filter_state', $filter->getAttributeLabel('filter_state')) !!}
-    {!! Form::number('filter_state', null, ['class' => 'form-control '.($errors->has('filter_state') ? 'is-invalid' : '')]) !!}
-    @error('filter_state')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    {!! Form::label('filter_status', $filter->getAttributeLabel('filter_status')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('filter_status', 0) !!}
+        {!! Form::checkbox('filter_status', '1', null) !!}
+    </label>
 </div>
+
 
 <!-- Description Words Field -->
 <div class="form-group">
@@ -46,29 +47,32 @@
 <!-- Type Act Field -->
 <div class="form-group">
     {!! Form::label('type_act', $filter->getAttributeLabel('type_act')) !!}
-    {!! Form::number('type_act', null, ['class' => 'form-control '.($errors->has('type_act') ? 'is-invalid' : '')]) !!}
-    @error('type_act')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_act', 0) !!}
+        {!! Form::checkbox('type_act', '1', null) !!}
+    </label>
 </div>
+
 
 <!-- Type Model Field -->
 <div class="form-group">
     {!! Form::label('type_model', $filter->getAttributeLabel('type_model')) !!}
-    {!! Form::number('type_model', null, ['class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
-    @error('type_model')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_model', 0) !!}
+        {!! Form::checkbox('type_model', '1', null) !!}
+    </label>
 </div>
+
 
 <!-- Type Contract Field -->
 <div class="form-group">
     {!! Form::label('type_contract', $filter->getAttributeLabel('type_contract')) !!}
-    {!! Form::number('type_contract', null, ['class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
-    @error('type_contract')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_contract', 0) !!}
+        {!! Form::checkbox('type_contract', '1', null) !!}
+    </label>
 </div>
+
 
 <!-- Min Price Field -->
 <div class="form-group">
