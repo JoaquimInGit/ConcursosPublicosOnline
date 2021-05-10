@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Base;
 use App\Models\Contest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Spatie\PdfToText\Pdf;
 use Symfony\Component\Panther\Client;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\Support\MediaStream;
 
 class BaseController extends Controller
 {
@@ -123,7 +127,19 @@ class BaseController extends Controller
                //'procedure_parts' => ,
                'link_announcement' => $body->reference,
                // 'pdf_content' => 'nullable|string'
-           ]);
+           ])
+               ->addMediaFromUrl($body->reference)//saca o pdf
+               ->toMediaCollection('pdfs');//coloca-o na coleção
+
+           $cont = Contest::last();//get ultimo contest
+           $cont->getMedia('pdfs')->count();//get media
+           $url = $cont->getFirstMediaUrl('pdfs');//encontra localização do pdf
+           //ddd($url);
+           //transforma a informação do pfd em string (não está a funcionar)
+           $text = (new Pdf())
+               ->setPdf(public_path() .$url)
+               ->text();
+           ddd($text);
            echo "Inserção concluida";
        }
     }
@@ -144,4 +160,5 @@ class BaseController extends Controller
         }
      return $idArray;
     }
+    //s3 //composer require league/flysystem-aws-s3-v3 ^1.0
 }

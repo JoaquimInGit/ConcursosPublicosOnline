@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * Class Contest
@@ -32,18 +34,34 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $link_announcement
  * @property string $pdf_content
  */
-class Contest extends Model implements Auditable
+class Contest extends Model implements Auditable,HasMedia
 {
     use LoadDefaults;
     use \OwenIt\Auditing\Auditable;
+    use InteractsWithMedia;
 
     public $table = 'contests';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
+    /**
+     * ultimo registo
+     * @return mixed
+     */
+    public static function last(){
+        return static::all()->last();
+    }
 
-
+    /**
+     * Registar uma coleção de media
+     */
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('pdfs')
+            ->singleFile();
+    }
 
     public $fillable = [
         'base_id',
