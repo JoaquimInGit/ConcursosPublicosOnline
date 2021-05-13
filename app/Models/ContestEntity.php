@@ -9,21 +9,21 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class ContestEntity
  * @package App\Models
- * @version May 7, 2021, 11:18 am UTC
+ * @version May 13, 2021, 11:20 am UTC
  *
  * @property \App\Models\Contest $contest
  * @property \App\Models\Entity $entity
  * @property integer $contest_id
  * @property integer $entity_id
  * @property boolean $follow
- * @property boolean $viewed
+ * @property string|\Carbon\Carbon $viewed_at
  */
 class ContestEntity extends Model implements Auditable
 {
     use LoadDefaults;
     use \OwenIt\Auditing\Auditable;
 
-    public $table = 'contests_entities';
+    public $table = 'contest_entity';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -35,7 +35,7 @@ class ContestEntity extends Model implements Auditable
         'contest_id',
         'entity_id',
         'follow',
-        'viewed'
+        'viewed_at'
     ];
 
     /**
@@ -48,7 +48,7 @@ class ContestEntity extends Model implements Auditable
         'contest_id' => 'integer',
         'entity_id' => 'integer',
         'follow' => 'boolean',
-        'viewed' => 'boolean'
+        'viewed_at' => 'datetime'
     ];
 
     /**
@@ -59,8 +59,8 @@ class ContestEntity extends Model implements Auditable
     public static $rules = [
         'contest_id' => 'nullable',
         'entity_id' => 'nullable',
-        'follow' => 'required|boolean',
-        'viewed' => 'required|boolean',
+        'follow' => 'nullable|boolean',
+        'viewed_at' => 'nullable',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
@@ -77,7 +77,7 @@ class ContestEntity extends Model implements Auditable
         'contest_id' => __('Contest Id'),
         'entity_id' => __('Entity Id'),
         'follow' => __('Follow'),
-        'viewed' => __('Viewed'),
+        'viewed_at' => __('Viewed At'),
         'created_at' => __('Created At'),
         'updated_at' => __('Updated At')
         ];

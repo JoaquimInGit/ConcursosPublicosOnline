@@ -5,10 +5,10 @@
 </tr>
 
 
-<!-- Designation Field -->
+<!-- Name Field -->
 <tr>
-    <th scope="row">{{ $entity->getAttributeLabel('designation') }}</th>
-    <td>{{ $entity->designation }}</td>
+    <th scope="row">{{ $entity->getAttributeLabel('name') }}</th>
+    <td>{{ $entity->name }}</td>
 </tr>
 
 

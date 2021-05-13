@@ -12,13 +12,6 @@
 </tr>
 
 
-<!-- Filter Status Field -->
-<tr>
-    <th scope="row">{{ $filter->getAttributeLabel('filter_status') }}</th>
-    <td>{{ $filter->filter_status }}</td>
-</tr>
-
-
 <!-- Description Words Field -->
 <tr>
     <th scope="row">{{ $filter->getAttributeLabel('description_words') }}</th>
@@ -30,6 +23,34 @@
 <tr>
     <th scope="row">{{ $filter->getAttributeLabel('contest_entity') }}</th>
     <td>{{ $filter->contest_entity }}</td>
+</tr>
+
+
+<!-- District Field -->
+<tr>
+    <th scope="row">{{ $filter->getAttributeLabel('district') }}</th>
+    <td>{{ $filter->district }}</td>
+</tr>
+
+
+<!-- Min Price Field -->
+<tr>
+    <th scope="row">{{ $filter->getAttributeLabel('min_price') }}</th>
+    <td>{{ $filter->min_price }}</td>
+</tr>
+
+
+<!-- Max Price Field -->
+<tr>
+    <th scope="row">{{ $filter->getAttributeLabel('max_price') }}</th>
+    <td>{{ $filter->max_price }}</td>
+</tr>
+
+
+<!-- Cpv Field -->
+<tr>
+    <th scope="row">{{ $filter->getAttributeLabel('cpv') }}</th>
+    <td>{{ $filter->cpv }}</td>
 </tr>
 
 
@@ -54,24 +75,10 @@
 </tr>
 
 
-<!-- Min Price Field -->
+<!-- Filter Status Field -->
 <tr>
-    <th scope="row">{{ $filter->getAttributeLabel('min_price') }}</th>
-    <td>{{ $filter->min_price }}</td>
-</tr>
-
-
-<!-- Max Price Field -->
-<tr>
-    <th scope="row">{{ $filter->getAttributeLabel('max_price') }}</th>
-    <td>{{ $filter->max_price }}</td>
-</tr>
-
-
-<!-- Cpv Field -->
-<tr>
-    <th scope="row">{{ $filter->getAttributeLabel('cpv') }}</th>
-    <td>{{ $filter->cpv }}</td>
+    <th scope="row">{{ $filter->getAttributeLabel('filter_status') }}</th>
+    <td>{{ $filter->filter_status }}</td>
 </tr>
 
 

@@ -7,11 +7,11 @@
     @enderror
 </div>
 
-<!-- Designation Field -->
+<!-- Name Field -->
 <div class="form-group">
-    {!! Form::label('designation', $entity->getAttributeLabel('designation')) !!}
-    {!! Form::text('designation', null, ['class' => 'form-control '.($errors->has('designation') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
-    @error('designation')
+    {!! Form::label('name', $entity->getAttributeLabel('name')) !!}
+    {!! Form::text('name', null, ['class' => 'form-control '.($errors->has('name') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    @error('name')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
@@ -55,7 +55,7 @@
 <!-- Mobile Phone Field -->
 <div class="form-group">
     {!! Form::label('mobile_phone', $entity->getAttributeLabel('mobile_phone')) !!}
-    {!! Form::text('mobile_phone', null, ['class' => 'form-control '.($errors->has('mobile_phone') ? 'is-invalid' : ''),'maxlength' => 12]) !!}
+    {!! Form::text('mobile_phone', null, ['class' => 'form-control '.($errors->has('mobile_phone') ? 'is-invalid' : ''),'maxlength' => 32]) !!}
     @error('mobile_phone')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
@@ -64,7 +64,7 @@
 <!-- Nif Field -->
 <div class="form-group">
     {!! Form::label('nif', $entity->getAttributeLabel('nif')) !!}
-    {!! Form::text('nif', null, ['class' => 'form-control '.($errors->has('nif') ? 'is-invalid' : ''),'maxlength' => 9]) !!}
+    {!! Form::text('nif', null, ['class' => 'form-control '.($errors->has('nif') ? 'is-invalid' : ''),'maxlength' => 32]) !!}
     @error('nif')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror

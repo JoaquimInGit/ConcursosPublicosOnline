@@ -9,21 +9,20 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class ContestFilter
  * @package App\Models
- * @version May 7, 2021, 11:18 am UTC
+ * @version May 13, 2021, 11:21 am UTC
  *
  * @property \App\Models\Contest $contest
- * @property \App\Models\Entity $entity
+ * @property \App\Models\Filter $filter
  * @property integer $contest_id
- * @property integer $entity_id
- * @property boolean $follow
- * @property boolean $viewed
+ * @property integer $filter_id
+ * @property string $date
  */
 class ContestFilter extends Model implements Auditable
 {
     use LoadDefaults;
     use \OwenIt\Auditing\Auditable;
 
-    public $table = 'contests_entities';
+    public $table = 'contest_filter';
     
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -33,9 +32,8 @@ class ContestFilter extends Model implements Auditable
 
     public $fillable = [
         'contest_id',
-        'entity_id',
-        'follow',
-        'viewed'
+        'filter_id',
+        'date'
     ];
 
     /**
@@ -46,9 +44,8 @@ class ContestFilter extends Model implements Auditable
     protected $casts = [
         'id' => 'integer',
         'contest_id' => 'integer',
-        'entity_id' => 'integer',
-        'follow' => 'boolean',
-        'viewed' => 'boolean'
+        'filter_id' => 'integer',
+        'date' => 'date'
     ];
 
     /**
@@ -58,9 +55,8 @@ class ContestFilter extends Model implements Auditable
      */
     public static $rules = [
         'contest_id' => 'nullable',
-        'entity_id' => 'nullable',
-        'follow' => 'required|boolean',
-        'viewed' => 'required|boolean',
+        'filter_id' => 'nullable',
+        'date' => 'required',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
@@ -75,9 +71,8 @@ class ContestFilter extends Model implements Auditable
         return [
             'id' => __('Id'),
         'contest_id' => __('Contest Id'),
-        'entity_id' => __('Entity Id'),
-        'follow' => __('Follow'),
-        'viewed' => __('Viewed'),
+        'filter_id' => __('Filter Id'),
+        'date' => __('Date'),
         'created_at' => __('Created At'),
         'updated_at' => __('Updated At')
         ];
@@ -104,8 +99,8 @@ class ContestFilter extends Model implements Auditable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function entity()
+    public function filter()
     {
-        return $this->belongsTo(\App\Models\Entity::class, 'entity_id');
+        return $this->belongsTo(\App\Models\Filter::class, 'filter_id');
     }
 }

@@ -77,7 +77,7 @@ class EntityDataTable extends DataTable
         $model = new Entity();
         return [
             Column::make('user_id')->title($model->getAttributeLabel('user_id')),
-            Column::make('designation')->title($model->getAttributeLabel('designation')),
+            Column::make('name')->title($model->getAttributeLabel('name')),
             Column::make('country')->title($model->getAttributeLabel('country')),
             Column::make('district')->title($model->getAttributeLabel('district')),
             Column::make('address')->title($model->getAttributeLabel('address')),

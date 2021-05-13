@@ -23,7 +23,7 @@ class EntityFactory extends Factory
     {
         return [
             'user_id' => $this->faker->word,
-        'designation' => $this->faker->word,
+        'name' => $this->faker->word,
         'country' => $this->faker->word,
         'district' => $this->faker->word,
         'address' => $this->faker->word,
