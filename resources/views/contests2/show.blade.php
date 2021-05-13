@@ -6,7 +6,7 @@
 view()->share('pageTitle', $contest->id);
 view()->share('hideSubHeader', true);
 ?>
-@extends('layout2.default')
+@extends('layout.default')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('contests.show', $contest) }}
 @endsection
@@ -35,7 +35,7 @@ view()->share('hideSubHeader', true);
         <div class="card-body">
             <table class="table table-striped">
                 <tbody>
-                    @include('contests.show_fields')
+                @include('contests.show_fields')
                 </tbody>
             </table>
         </div>

@@ -6,10 +6,12 @@ use App\Models\Base;
 use App\Models\Contest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Smalot\PdfParser\Parser;
 use Spatie\PdfToText\Pdf;
 use Symfony\Component\Panther\Client;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
+require ('../vendor/autoload.php');
 
 class BaseController extends Controller
 {
@@ -81,7 +83,18 @@ class BaseController extends Controller
         }
     }
     public function insertContest2(){
-       $ids = $this->discoverids();
+        //ddd(Pdf::getText(public_path('/media/130/163036536.pdf')));
+        /*$parser = new Parser();
+           $pdf = $parser->parseFile(public_path() .'/media/130/163036536.pdf');
+           $text = $pdf->getText();
+           ddd($text);*/
+        /*$rawdata = file_get_contents('../public/media/130/163036536.pdf');
+        $cfg = array('ignore_filter_errors' => true);
+        $pdf = new \Com\Tecnick\Pdf\Parser\Parser($cfg);
+        $data = $pdf->parse($rawdata);
+        ddd($data);*/
+
+        $ids = $this->discoverids();
        foreach($ids as $id) {
            //Faz o pedido á pagina de detalhes com o id do anuncio pretendido
            $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
@@ -132,14 +145,26 @@ class BaseController extends Controller
                ->toMediaCollection('pdfs');//coloca-o na coleção
 
            $cont = Contest::last();//get ultimo contest
+           //dd($cont);
            $cont->getMedia('pdfs')->count();//get media
            $url = $cont->getFirstMediaUrl('pdfs');//encontra localização do pdf
            //ddd($url);
+           ddd(Pdf::getText(public_path().'/sample.pdf'));
            //transforma a informação do pfd em string (não está a funcionar)
            $text = (new Pdf())
                ->setPdf(public_path() .$url)
-               ->text();
+             ->text();
            ddd($text);
+
+
+           /*$dados = chunk_split(base64_encode(file_get_contents(public_path() .$url)));
+           ddd($dados);*/
+
+           /*$parser = new Parser();
+           $pdf = $parser->parseFile(public_path() .$url);
+           $text = $pdf->getText();*/
+
+           //ddd($dados);
            echo "Inserção concluida";
        }
     }
@@ -161,4 +186,21 @@ class BaseController extends Controller
      return $idArray;
     }
     //s3 //composer require league/flysystem-aws-s3-v3 ^1.0
+
+    function pdf_parser($filepath){
+        $parser = new Parser();
+        try {
+            $parser->parseFile($filepath);
+        }
+        catch (Exception $e) {
+            if ($e->getMessage()) {
+                echo 'Returned: '.$e->getMessage();
+                return FALSE;
+            }
+        }
+        $pdf = $parser->parseFile($filepath);
+        //$text = $pdf->getText();
+        /* do anything else here...*/
+        return true;
+    }
 }

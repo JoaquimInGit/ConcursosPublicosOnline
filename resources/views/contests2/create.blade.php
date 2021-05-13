@@ -7,7 +7,7 @@
 view()->share('pageTitle', __('Create Contest'));
 view()->share('hideSubHeader', true);
 ?>
-@extends('layout2.default')
+@extends('layout.default')
 
 @section('breadcrumbs')
     {{ Breadcrumbs::render('contests.create') }}
@@ -22,13 +22,13 @@ view()->share('hideSubHeader', true);
             </div>
         </div>
         {!! Form::model($contest, ['route' => ['contests.store'], 'method' => 'post', 'enctype'=>"multipart/form-data", 'class' => "form"]) !!}
-            <div class="card-body">
-                @include('contests.fields')
-             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary mr-2">{{ __('Save') }}</button>
-                <!--<button type="reset" class="btn btn-secondary">Cancel</button>-->
-            </div>
+        <div class="card-body">
+            @include('contests.fields')
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-2">{{ __('Save') }}</button>
+            <!--<button type="reset" class="btn btn-secondary">Cancel</button>-->
+        </div>
         {!! Form::close() !!}
     </div>
 @endsection

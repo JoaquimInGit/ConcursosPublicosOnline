@@ -10,6 +10,8 @@ use App\Models\Contest;
 //use Flash;
 //use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+
 
 class ContestController extends Controller
 {
@@ -19,9 +21,12 @@ class ContestController extends Controller
      * @param ContestDataTable $contestDataTable
      * @return Response
      */
-    public function index(ContestDataTable $contestDataTable)
+    public function index(ContestDataTable $contestDataTable,Request $request)
     {
-        return $contestDataTable->render('contests.index');
+        //return $contestDataTable->render('contests.index');
+        return $request->isMethod('post') ? $this->create($request) : $contestDataTable->render('contests.index');
+        /*$contests = DB::table('contests')->get();
+        return view('contests.index', ['contests' => $contests]);*/
     }
 
     /**
