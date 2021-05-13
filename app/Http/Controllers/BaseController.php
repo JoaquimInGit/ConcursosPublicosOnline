@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ContestDataTable;
 use App\Models\Base;
 use App\Models\Contest;
 use Illuminate\Http\Request;
@@ -10,9 +11,14 @@ use Spatie\PdfToText\Pdf;
 use Symfony\Component\Panther\Client;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
-
+use App\Helpers\ContestBusinessLogic;
 class BaseController extends Controller
 {
+    public function show(ContestDataTable $contestDataTable)
+    {
+        return $contestDataTable->render('contests_show.index');
+    }
+
    public function  index(){
 
        $id = 263674;
@@ -81,84 +87,8 @@ class BaseController extends Controller
         }
     }
     public function insertContest2(){
-       $ids = $this->discoverids();
-       foreach($ids as $id) {
-           //Faz o pedido á pagina de detalhes com o id do anuncio pretendido
-           $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
-               'type' => 'detail_anuncios',
-               'id' => '' . $id
-           ]);
-           //trasforma em objeto de php o corpo da resposta (json)
-           $body = json_decode($response->body());
-
-           //saca o preço e converte em float
-           $price = explode(' ', $body->basePrice);
-           $price = explode('.', $price[0]);
-           $basePrice = $price[0] . $price[1];
-           $basePrice = str_replace(',', '.', $basePrice);
-           $basePrice = floatval($basePrice);
-           //dd( date("Y-m-d",strtotime($body->drPublicationDate)));
-           //Dias até a deadline inteiros
-           $daysDeadline = explode(' ', $body->proposalDeadline);
-           $daysDeadline = intval($daysDeadline[0]);
-
-           //data de publicação
-           $date = date("Y-m-d", strtotime($body->drPublicationDate));
-           $dateDeadline = date('Y-m-d', strtotime($date . ' + ' . $daysDeadline . ' days'));
-           //dd();
-           $cpv = explode(', ', $body->cpvs);
-
-           Contest::create([
-               'base_id' => $body->id,
-               'num_announcement' => $body->announcementNumber,
-               'description' => $body->contractDesignation,
-               'entity' => $body->contractingEntities[0]->description,/*
-            'type_act' => 'nullable|boolean',
-            'type_model' => 'nullable|boolean',
-            'type_contract' => 'nullable|boolean',*/
-               'price' => $basePrice,
-               'publication_date' => $date,
-               'deadline_date' => $dateDeadline,
-               'status' => 1,
-               'republic_diary_num' => intval($body->dreNumber),
-               'republic_diary_serie' => intval($body->dreSeries),
-               'cpv' => $cpv[0],
-               'cpv_description' => $cpv[1],
-               //'procedure_parts' => ,
-               'link_announcement' => $body->reference,
-               // 'pdf_content' => 'nullable|string'
-           ])
-               ->addMediaFromUrl($body->reference)//saca o pdf
-               ->toMediaCollection('pdfs');//coloca-o na coleção
-
-           $cont = Contest::last();//get ultimo contest
-           $cont->getMedia('pdfs')->count();//get media
-           $url = $cont->getFirstMediaUrl('pdfs');//encontra localização do pdf
-           //ddd($url);
-           //transforma a informação do pfd em string (não está a funcionar)
-           $text = (new Pdf())
-               ->setPdf(public_path() .$url)
-               ->text();
-           ddd($text);
-           echo "Inserção concluida";
-       }
+        ContestBusinessLogic::pdfToJSON();
+        echo "done";
     }
 
-    public function discoverids(){
-       //TODO: descobrir o ultimo id da tabela Contests e depois ir contando até la chegar
-       $idArray = [];
-        $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
-            'type'=>'search_anuncios',
-            'query'=>'tipoacto=0&tipomodelo=0&tipocontrato=0',
-            'sort'=>'-drPublicationDate',
-            'size' => 25,
-            //'page'=> 0
-        ]);
-        $body = json_decode($response->body());
-        foreach($body->items as $item){
-            array_push($idArray,$item->id);
-        }
-     return $idArray;
-    }
-    //s3 //composer require league/flysystem-aws-s3-v3 ^1.0
 }
