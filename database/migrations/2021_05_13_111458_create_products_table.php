@@ -17,10 +17,13 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price');
-            $table->smallInteger('status')->nullable();
             $table->decimal('reduced_price')->nullable();
             $table->string('description')->nullable();
             $table->string('excerpt')->nullable();
+            $table->smallInteger('status')
+                ->nullable()
+                ->default(1)
+                ->comment("-1 - deleted | 0 - disable | 1 - active");
             $table->timestamps();
         });
     }

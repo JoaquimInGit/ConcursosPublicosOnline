@@ -16,16 +16,6 @@
     @enderror
 </div>
 
-<!-- Filter Status Field -->
-<div class="form-group">
-    {!! Form::label('filter_status', $filter->getAttributeLabel('filter_status')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('filter_status', 0) !!}
-        {!! Form::checkbox('filter_status', '1', null) !!}
-    </label>
-</div>
-
-
 <!-- Description Words Field -->
 <div class="form-group">
     {!! Form::label('description_words', $filter->getAttributeLabel('description_words')) !!}
@@ -40,6 +30,42 @@
     {!! Form::label('contest_entity', $filter->getAttributeLabel('contest_entity')) !!}
     {!! Form::text('contest_entity', null, ['class' => 'form-control '.($errors->has('contest_entity') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
     @error('contest_entity')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<!-- District Field -->
+<div class="form-group">
+    {!! Form::label('district', $filter->getAttributeLabel('district')) !!}
+    {!! Form::text('district', null, ['class' => 'form-control '.($errors->has('district') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    @error('district')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<!-- Min Price Field -->
+<div class="form-group">
+    {!! Form::label('min_price', $filter->getAttributeLabel('min_price')) !!}
+    {!! Form::number('min_price', null, ['class' => 'form-control '.($errors->has('min_price') ? 'is-invalid' : '')]) !!}
+    @error('min_price')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<!-- Max Price Field -->
+<div class="form-group">
+    {!! Form::label('max_price', $filter->getAttributeLabel('max_price')) !!}
+    {!! Form::number('max_price', null, ['class' => 'form-control '.($errors->has('max_price') ? 'is-invalid' : '')]) !!}
+    @error('max_price')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<!-- Cpv Field -->
+<div class="form-group">
+    {!! Form::label('cpv', $filter->getAttributeLabel('cpv')) !!}
+    {!! Form::text('cpv', null, ['class' => 'form-control '.($errors->has('cpv') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    @error('cpv')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
@@ -74,29 +100,11 @@
 </div>
 
 
-<!-- Min Price Field -->
+<!-- Filter Status Field -->
 <div class="form-group">
-    {!! Form::label('min_price', $filter->getAttributeLabel('min_price')) !!}
-    {!! Form::number('min_price', null, ['class' => 'form-control '.($errors->has('min_price') ? 'is-invalid' : '')]) !!}
-    @error('min_price')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
-
-<!-- Max Price Field -->
-<div class="form-group">
-    {!! Form::label('max_price', $filter->getAttributeLabel('max_price')) !!}
-    {!! Form::number('max_price', null, ['class' => 'form-control '.($errors->has('max_price') ? 'is-invalid' : '')]) !!}
-    @error('max_price')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
-
-<!-- Cpv Field -->
-<div class="form-group">
-    {!! Form::label('cpv', $filter->getAttributeLabel('cpv')) !!}
-    {!! Form::text('cpv', null, ['class' => 'form-control '.($errors->has('cpv') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
-    @error('cpv')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+    {!! Form::label('filter_status', $filter->getAttributeLabel('filter_status')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('filter_status', 0) !!}
+        {!! Form::checkbox('filter_status', '1', null) !!}
+    </label>
 </div>

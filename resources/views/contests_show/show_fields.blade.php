@@ -26,6 +26,27 @@
 </tr>
 
 
+<!-- Type Act Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('type_act') }}</th>
+    <td>{{ $contest->type_act }}</td>
+</tr>
+
+
+<!-- Type Model Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('type_model') }}</th>
+    <td>{{ $contest->type_model }}</td>
+</tr>
+
+
+<!-- Type Contract Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('type_contract') }}</th>
+    <td>{{ $contest->type_contract }}</td>
+</tr>
+
+
 <!-- Price Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('price') }}</th>
@@ -47,10 +68,10 @@
 </tr>
 
 
-<!-- Proposal Time Limit Field -->
+<!-- Status Field -->
 <tr>
-    <th scope="row">{{ $contest->getAttributeLabel('proposal_time_limit') }}</th>
-    <td>{{ $contest->proposal_time_limit }}</td>
+    <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
+    <td>{{ $contest->status }}</td>
 </tr>
 
 
@@ -100,34 +121,6 @@
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('pdf_content') }}</th>
     <td>{{ $contest->pdf_content }}</td>
-</tr>
-
-
-<!-- Type Act Field -->
-<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('type_act') }}</th>
-    <td>{{ $contest->type_act }}</td>
-</tr>
-
-
-<!-- Type Model Field -->
-<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('type_model') }}</th>
-    <td>{{ $contest->type_model }}</td>
-</tr>
-
-
-<!-- Type Contract Field -->
-<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('type_contract') }}</th>
-    <td>{{ $contest->type_contract }}</td>
-</tr>
-
-
-<!-- Status Field -->
-<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
-    <td>{{ $contest->status }}</td>
 </tr>
 
 

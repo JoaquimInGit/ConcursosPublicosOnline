@@ -9,21 +9,22 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class Filter
  * @package App\Models
- * @version May 7, 2021, 11:14 am UTC
+ * @version May 13, 2021, 11:19 am UTC
  *
  * @property \App\Models\Entity $entity
- * @property \Illuminate\Database\Eloquent\Collection $contestsFilters
+ * @property \Illuminate\Database\Eloquent\Collection $contestFilters
  * @property integer $entity_id
  * @property string $filter_name
- * @property boolean $filter_status
  * @property string $description_words
  * @property string $contest_entity
- * @property boolean $type_act
- * @property boolean $type_model
- * @property boolean $type_contract
+ * @property string $district
  * @property number $min_price
  * @property number $max_price
  * @property string $cpv
+ * @property boolean $type_act
+ * @property boolean $type_model
+ * @property boolean $type_contract
+ * @property boolean $filter_status
  */
 class Filter extends Model implements Auditable
 {
@@ -41,15 +42,16 @@ class Filter extends Model implements Auditable
     public $fillable = [
         'entity_id',
         'filter_name',
-        'filter_status',
         'description_words',
         'contest_entity',
+        'district',
+        'min_price',
+        'max_price',
+        'cpv',
         'type_act',
         'type_model',
         'type_contract',
-        'min_price',
-        'max_price',
-        'cpv'
+        'filter_status'
     ];
 
     /**
@@ -61,15 +63,16 @@ class Filter extends Model implements Auditable
         'id' => 'integer',
         'entity_id' => 'integer',
         'filter_name' => 'string',
-        'filter_status' => 'boolean',
         'description_words' => 'string',
         'contest_entity' => 'string',
+        'district' => 'string',
+        'min_price' => 'decimal:2',
+        'max_price' => 'decimal:2',
+        'cpv' => 'string',
         'type_act' => 'boolean',
         'type_model' => 'boolean',
         'type_contract' => 'boolean',
-        'min_price' => 'decimal:2',
-        'max_price' => 'decimal:2',
-        'cpv' => 'string'
+        'filter_status' => 'boolean'
     ];
 
     /**
@@ -80,15 +83,16 @@ class Filter extends Model implements Auditable
     public static $rules = [
         'entity_id' => 'nullable',
         'filter_name' => 'required|string|max:255',
-        'filter_status' => 'nullable|boolean',
         'description_words' => 'nullable|string|max:255',
         'contest_entity' => 'nullable|string|max:255',
-        'type_act' => 'nullable|boolean',
-        'type_model' => 'nullable|boolean',
-        'type_contract' => 'nullable|boolean',
+        'district' => 'nullable|string|max:255',
         'min_price' => 'nullable|numeric',
         'max_price' => 'nullable|numeric',
         'cpv' => 'nullable|string|max:255',
+        'type_act' => 'required|boolean',
+        'type_model' => 'required|boolean',
+        'type_contract' => 'required|boolean',
+        'filter_status' => 'required|boolean',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
@@ -104,15 +108,16 @@ class Filter extends Model implements Auditable
             'id' => __('Id'),
         'entity_id' => __('Entity Id'),
         'filter_name' => __('Filter Name'),
-        'filter_status' => __('Filter Status'),
         'description_words' => __('Description Words'),
         'contest_entity' => __('Contest Entity'),
-        'type_act' => __('Type Act'),
-        'type_model' => __('Type Model'),
-        'type_contract' => __('Type Contract'),
+        'district' => __('District'),
         'min_price' => __('Min Price'),
         'max_price' => __('Max Price'),
         'cpv' => __('Cpv'),
+        'type_act' => __('Type Act'),
+        'type_model' => __('Type Model'),
+        'type_contract' => __('Type Contract'),
+        'filter_status' => __('Filter Status'),
         'created_at' => __('Created At'),
         'updated_at' => __('Updated At')
         ];
@@ -139,8 +144,8 @@ class Filter extends Model implements Auditable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function contestsFilters()
+    public function contestFilters()
     {
-        return $this->hasMany(\App\Models\ContestsFilter::class, 'filter_id');
+        return $this->hasMany(\App\Models\ContestFilter::class, 'filter_id');
     }
 }

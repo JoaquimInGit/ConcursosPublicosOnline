@@ -19,22 +19,21 @@ class CreateEntitiesTable extends Migration
                 ->nullable()
                 ->constrained()
                 ->onDelete('set null');
-            $table->string('designation');
-            $table->string('country');
-            $table->string('district');
+            //name = designation
+            $table->string('name');
+            $table->string('country')->nullable();
+            $table->string('district')->nullable();
             $table->string('address');
             $table->string('postal_code',8);
-            $table->string('mobile_phone',12);
-            $table->string('nif',9);
+            $table->string('mobile_phone',32);
+            $table->string('nif',32);
             $table->string('cae',5)->nullable();
             $table->string('cae_secundario')->nullable();
             $table->string('website')->nullable();
             $table->string('email_entity')->nullable();
             $table->tinyInteger('status')->default(1)->comment(
-                "0 - entidade inativa  | 1 - entidade ativa
-            ");
+                "0 - entidade inativa  | 1 - entidade ativa");
             $table->timestamps();
-
         });
     }
 

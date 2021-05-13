@@ -9,15 +9,15 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class Entity
  * @package App\Models
- * @version May 7, 2021, 11:10 am UTC
+ * @version May 13, 2021, 11:17 am UTC
  *
  * @property \App\Models\User $user
- * @property \Illuminate\Database\Eloquent\Collection $contestsEntities
+ * @property \Illuminate\Database\Eloquent\Collection $contestEntities
  * @property \Illuminate\Database\Eloquent\Collection $filters
  * @property \Illuminate\Database\Eloquent\Collection $orderItems
  * @property \Illuminate\Database\Eloquent\Collection $orders
  * @property integer $user_id
- * @property string $designation
+ * @property string $name
  * @property string $country
  * @property string $district
  * @property string $address
@@ -45,7 +45,7 @@ class Entity extends Model implements Auditable
 
     public $fillable = [
         'user_id',
-        'designation',
+        'name',
         'country',
         'district',
         'address',
@@ -67,7 +67,7 @@ class Entity extends Model implements Auditable
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'designation' => 'string',
+        'name' => 'string',
         'country' => 'string',
         'district' => 'string',
         'address' => 'string',
@@ -88,13 +88,13 @@ class Entity extends Model implements Auditable
      */
     public static $rules = [
         'user_id' => 'nullable',
-        'designation' => 'required|string|max:255',
-        'country' => 'required|string|max:255',
-        'district' => 'required|string|max:255',
+        'name' => 'required|string|max:255',
+        'country' => 'nullable|string|max:255',
+        'district' => 'nullable|string|max:255',
         'address' => 'required|string|max:255',
         'postal_code' => 'required|string|max:8',
-        'mobile_phone' => 'required|string|max:12',
-        'nif' => 'required|string|max:9',
+        'mobile_phone' => 'required|string|max:32',
+        'nif' => 'required|string|max:32',
         'cae' => 'nullable|string|max:5',
         'cae_secundario' => 'nullable|string|max:255',
         'website' => 'nullable|string|max:255',
@@ -114,7 +114,7 @@ class Entity extends Model implements Auditable
         return [
             'id' => __('Id'),
         'user_id' => __('User Id'),
-        'designation' => __('Designation'),
+        'name' => __('Name'),
         'country' => __('Country'),
         'district' => __('District'),
         'address' => __('Address'),
@@ -152,9 +152,9 @@ class Entity extends Model implements Auditable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function contestsEntities()
+    public function contestEntities()
     {
-        return $this->hasMany(\App\Models\ContestsEntity::class, 'entity_id');
+        return $this->hasMany(\App\Models\ContestEntity::class, 'entity_id');
     }
 
     /**

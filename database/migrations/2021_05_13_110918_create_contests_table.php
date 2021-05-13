@@ -15,15 +15,26 @@ class CreateContestsTable extends Migration
     {
         Schema::create('contests', function (Blueprint $table) {
             $table->id();
-            $table->integer("base_id")->unique();
-            $table->string('num_announcement')->nullable()->unique();
-            $table->text('description');
-            $table->string('entity');
-            $table->tinyInteger('type_act')->nullable()->default(1)->comment(
+            $table->integer("base_id");
+            $table->string('num_announcement')->nullable();
+            $table->text('description')->nullable();
+            $table->string('entity')->nullable();
+            $table->decimal('price',13,2)->nullable();
+            $table->date('publication_date')->nullable();
+            $table->date('deadline_date')->nullable();
+            $table->string('proposal_time_limit')->nullable();
+            $table->integer('republic_diary_num')->nullable();
+            $table->integer('republic_diary_serie')->nullable();
+            $table->string('cpv')->nullable();
+            $table->text('cpv_description')->nullable();
+            $table->string('procedure_parts')->nullable();
+            $table->string("link_announcement")->nullable();
+            $table->json('pdf_content')->nullable();
+            $table->tinyInteger('type_act')->nullable()->default(0)->comment(
                 "0 - Todos | 1 - Anúncio de procedimento | 2 - Anúncio de concurso urgente
                 | 3 - Declaração de retificação de anúncio | 4 - Aviso de prorrogação de prazo"
             );
-            $table->tinyInteger('type_model')->nullable()->default(1)->comment(
+            $table->tinyInteger('type_model')->nullable()->default(0)->comment(
                 "0 - Todos | 1 - Concursos público | 2 - Concursos público urgente
                 | 3 - Concursos limitado por prévia qualificação | 4 - Procedimento de negociação
                 | 5 - Diálogo concorrencial | 6 - Concurso de concepção | 7 - Anúncio simplificado
@@ -35,28 +46,18 @@ class CreateContestsTable extends Migration
                 | 14 - Aquisição de Serviços Sociais e de Outros Serviços Específicos
                 | 15 - Anúncio de Adjudicação de Aquisição de Serviços Sociais e de Outros Serviços Específicos"
             );
-            $table->tinyInteger('type_contract')->nullable()->default(1)->comment(
+            $table->tinyInteger('type_contract')->nullable()->default(0)->comment(
                 "0 - Todos | 1 - Aquisição de bens móveis | 2 - Aquisição de serviços
                 | 3 - Concessão de obras públicas | 4 - Concessão de serviços públicos
                 | 5 - Empreitadas de obras públicas | 6 - Localização de bens móveis
                 | 7 - Sociedade | 8 - Outros
             ");
-            $table->decimal('price')->nullable();
-            $table->date('publication_date');
-            $table->date('deadline_date');
             $table->tinyInteger('status')->default(1)->comment(
                 "0 - fora do prazo | 1 - dentro do prazo
             ");
-            $table->integer('republic_diary_num')->nullable();
-            $table->integer('republic_diary_serie')->nullable();
-            $table->string('cpv')->nullable();
-            $table->text('cpv_description')->nullable();
-            $table->string('procedure_parts')->nullable();
-            $table->string("link_announcement")->nullable();
-            $table->json('pdf_content')->nullable();
+
             $table->timestamps();
         });
-
     }
 
     /**

@@ -118,24 +118,25 @@ class ContestDataTable extends DataTable
     {
         $model = new Contest();
         return [
-            //Column::make('base_id')->title($model->getAttributeLabel('base_id')),
+            Column::make('base_id')->title($model->getAttributeLabel('base_id')),
             Column::make('num_announcement')->title($model->getAttributeLabel('num_announcement')),
             Column::make('description')->title($model->getAttributeLabel('description')),
             Column::make('entity')->title($model->getAttributeLabel('entity')),
-            Column::make('type_act')->title($model->getAttributeLabel('type_act')),
-            Column::make('type_model')->title($model->getAttributeLabel('type_model')),
-            Column::make('type_contract')->title($model->getAttributeLabel('type_contract')),
             Column::make('price')->title($model->getAttributeLabel('price')),
             Column::make('publication_date')->title($model->getAttributeLabel('publication_date')),
             Column::make('deadline_date')->title($model->getAttributeLabel('deadline_date')),
-            Column::make('status')->title($model->getAttributeLabel('status')),
-            //Column::make('republic_diary_num')->title($model->getAttributeLabel('republic_diary_num')),
-            //Column::make('republic_diary_serie')->title($model->getAttributeLabel('republic_diary_serie')),
+            Column::make('proposal_time_limit')->title($model->getAttributeLabel('proposal_time_limit')),
+            Column::make('republic_diary_num')->title($model->getAttributeLabel('republic_diary_num')),
+            Column::make('republic_diary_serie')->title($model->getAttributeLabel('republic_diary_serie')),
             Column::make('cpv')->title($model->getAttributeLabel('cpv')),
             Column::make('cpv_description')->title($model->getAttributeLabel('cpv_description')),
-            //Column::make('procedure_parts')->title($model->getAttributeLabel('procedure_parts')),
-            //Column::make('link_announcement')->title($model->getAttributeLabel('link_announcement')),
-            //Column::make('pdf_content')->title($model->getAttributeLabel('pdf_content')),
+            Column::make('procedure_parts')->title($model->getAttributeLabel('procedure_parts')),
+            Column::make('link_announcement')->title($model->getAttributeLabel('link_announcement')),
+            Column::make('pdf_content')->title($model->getAttributeLabel('pdf_content')),
+            Column::make('type_act')->title($model->getAttributeLabel('type_act')),
+            Column::make('type_model')->title($model->getAttributeLabel('type_model')),
+            Column::make('type_contract')->title($model->getAttributeLabel('type_contract')),
+            Column::make('status')->title($model->getAttributeLabel('status')),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

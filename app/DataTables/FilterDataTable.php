@@ -78,15 +78,16 @@ class FilterDataTable extends DataTable
         return [
             Column::make('entity_id')->title($model->getAttributeLabel('entity_id')),
             Column::make('filter_name')->title($model->getAttributeLabel('filter_name')),
-            Column::make('filter_status')->title($model->getAttributeLabel('filter_status')),
             Column::make('description_words')->title($model->getAttributeLabel('description_words')),
             Column::make('contest_entity')->title($model->getAttributeLabel('contest_entity')),
-            Column::make('type_act')->title($model->getAttributeLabel('type_act')),
-            Column::make('type_model')->title($model->getAttributeLabel('type_model')),
-            Column::make('type_contract')->title($model->getAttributeLabel('type_contract')),
+            Column::make('district')->title($model->getAttributeLabel('district')),
             Column::make('min_price')->title($model->getAttributeLabel('min_price')),
             Column::make('max_price')->title($model->getAttributeLabel('max_price')),
             Column::make('cpv')->title($model->getAttributeLabel('cpv')),
+            Column::make('type_act')->title($model->getAttributeLabel('type_act')),
+            Column::make('type_model')->title($model->getAttributeLabel('type_model')),
+            Column::make('type_contract')->title($model->getAttributeLabel('type_contract')),
+            Column::make('filter_status')->title($model->getAttributeLabel('filter_status')),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

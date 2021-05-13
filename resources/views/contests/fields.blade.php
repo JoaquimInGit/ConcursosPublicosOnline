@@ -34,36 +34,6 @@
     @enderror
 </div>
 
-<!-- Type Act Field -->
-<div class="form-group">
-    {!! Form::label('type_act', $contest->getAttributeLabel('type_act')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('type_act', 0) !!}
-        {!! Form::checkbox('type_act', '1', null) !!}
-    </label>
-</div>
-
-
-<!-- Type Model Field -->
-<div class="form-group">
-    {!! Form::label('type_model', $contest->getAttributeLabel('type_model')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('type_model', 0) !!}
-        {!! Form::checkbox('type_model', '1', null) !!}
-    </label>
-</div>
-
-
-<!-- Type Contract Field -->
-<div class="form-group">
-    {!! Form::label('type_contract', $contest->getAttributeLabel('type_contract')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('type_contract', 0) !!}
-        {!! Form::checkbox('type_contract', '1', null) !!}
-    </label>
-</div>
-
-
 <!-- Price Field -->
 <div class="form-group">
     {!! Form::label('price', $contest->getAttributeLabel('price')) !!}
@@ -113,15 +83,14 @@
     <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
 @endpush
 
-<!-- Status Field -->
+<!-- Proposal Time Limit Field -->
 <div class="form-group">
-    {!! Form::label('status', $contest->getAttributeLabel('status')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('status', 0) !!}
-        {!! Form::checkbox('status', '1', null) !!}
-    </label>
+    {!! Form::label('proposal_time_limit', $contest->getAttributeLabel('proposal_time_limit')) !!}
+    {!! Form::text('proposal_time_limit', null, ['class' => 'form-control '.($errors->has('proposal_time_limit') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+    @error('proposal_time_limit')
+        <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
-
 
 <!-- Republic Diary Num Field -->
 <div class="form-group">
@@ -184,4 +153,43 @@
     @error('pdf_content')
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
+</div>
+
+<!-- Type Act Field -->
+<div class="form-group">
+    {!! Form::label('type_act', $contest->getAttributeLabel('type_act')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_act', 0) !!}
+        {!! Form::checkbox('type_act', '1', null) !!}
+    </label>
+</div>
+
+
+<!-- Type Model Field -->
+<div class="form-group">
+    {!! Form::label('type_model', $contest->getAttributeLabel('type_model')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_model', 0) !!}
+        {!! Form::checkbox('type_model', '1', null) !!}
+    </label>
+</div>
+
+
+<!-- Type Contract Field -->
+<div class="form-group">
+    {!! Form::label('type_contract', $contest->getAttributeLabel('type_contract')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('type_contract', 0) !!}
+        {!! Form::checkbox('type_contract', '1', null) !!}
+    </label>
+</div>
+
+
+<!-- Status Field -->
+<div class="form-group">
+    {!! Form::label('status', $contest->getAttributeLabel('status')) !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('status', 0) !!}
+        {!! Form::checkbox('status', '1', null) !!}
+    </label>
 </div>

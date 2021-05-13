@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\AuthPermissionCommand;
+use App\Helpers\ContestBusinessLogic;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        //corre o InsertContests a cada minuto
+        //TODO:Mudar para o tempo que queremos
+        $schedule->call(function(){
+            ContestBusinessLogic::insertContests();
+        })->everyMinute();
     }
 
     /**

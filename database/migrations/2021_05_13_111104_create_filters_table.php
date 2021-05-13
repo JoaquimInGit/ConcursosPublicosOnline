@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContestsFiltersTable extends Migration
+class CreateFiltersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -20,16 +20,17 @@ class CreateContestsFiltersTable extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('filter_name');
-            $table->tinyInteger('filter_status')->nullable()->default(1)->comment(
-                "0 - filtro inativo | 1 - ativo com notificações | 2 - ativo sem notificações"
-            );
             $table->string('description_words')->nullable();
             $table->string('contest_entity')->nullable();
-            $table->tinyInteger('type_act')->nullable()->default(0)->comment(
+            $table->string('district')->nullable();
+            $table->decimal('min_price')->nullable();
+            $table->decimal('max_price')->nullable();
+            $table->string('cpv')->nullable();
+            $table->tinyInteger('type_act')->comment(
                 "0 - Todos | 1 - Anúncio de procedimento | 2 - Anúncio de concurso urgente
                 | 3 - Declaração de retificação de anúncio | 4 - Aviso de prorrogação de prazo"
             );
-            $table->tinyInteger('type_model')->nullable()->default(0)->comment(
+            $table->tinyInteger('type_model')->comment(
                 "0 - Todos | 1 - Concursos público | 2 - Concursos público urgente
                 | 3 - Concursos limitado por prévia qualificação | 4 - Procedimento de negociação
                 | 5 - Diálogo concorrencial | 6 - Concurso de concepção | 7 - Anúncio simplificado
@@ -41,30 +42,15 @@ class CreateContestsFiltersTable extends Migration
                 | 14 - Aquisição de Serviços Sociais e de Outros Serviços Específicos
                 | 15 - Anúncio de Adjudicação de Aquisição de Serviços Sociais e de Outros Serviços Específicos"
             );
-            $table->tinyInteger('type_contract')->nullable()->default(0)->comment(
+            $table->tinyInteger('type_contract')->comment(
                 "0 - Todos | 1 - Aquisição de bens móveis | 2 - Aquisição de serviços
                 | 3 - Concessão de obras públicas | 4 - Concessão de serviços públicos
                 | 5 - Empreitadas de obras públicas | 6 - Localização de bens móveis
                 | 7 - Sociedade | 8 - Outros
             ");
-            $table->decimal('min_price')->nullable();
-            $table->decimal('max_price')->nullable();
-            $table->string('cpv')->nullable();
-            $table->timestamps();
-        });
-
-
-        Schema::create('contests_filters', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('contest_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('set null');
-            $table->foreignId('filter_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('set null');
-            $table->date('date');
+            $table->tinyInteger('filter_status')->comment(
+                "0 - filtro inativo | 1 - ativo com notificações | 2 - ativo sem notificações"
+            );
             $table->timestamps();
         });
     }
@@ -76,7 +62,6 @@ class CreateContestsFiltersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contests_filters');
         Schema::dropIfExists('filters');
     }
 }
