@@ -87,7 +87,7 @@ class BaseController extends Controller
         }
     }
     public function insertContest2(){
-        ContestBusinessLogic::pdfToJSON();
+        ContestBusinessLogic::insertContests();
         echo "done";
     }
 

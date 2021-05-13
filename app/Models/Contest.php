@@ -39,7 +39,7 @@ class Contest extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'contests';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -182,5 +182,94 @@ class Contest extends Model implements Auditable
     public function contestFilters()
     {
         return $this->hasMany(\App\Models\ContestFilter::class, 'contest_id');
+    }
+    /*
+ * retira da BD o base_id com maior valor
+ */
+    public static function getLastBaseId(){
+
+        return DB::table('contests')->latest()->pluck('base_id')->max();
+    }
+
+    public static function typeActConverter($typeAct){
+        switch ($typeAct){
+            //case 'Todos':
+              //  return 0;
+            case 'Anúncio de procedimento':
+                return 1;
+            case 'Anúncio de concurso urgente':
+                return 2;
+            case 'Declaração de retificação de anúncio':
+                return 3;
+            case 'Aviso de prorrogação de prazo':
+                return 4;
+            default;
+                return 0;
+        }
+    }
+
+    public static function typeModelConverter($typeModel)
+    {
+        switch ($typeModel) {
+           // case 'Todos':
+              //  return 0;
+            case 'Concurso público':
+                return 1;
+            case'Concurso público urgente':
+                return 2;
+            case 'Concurso limitado por prévia qualificação':
+                return 3;
+            case 'Procedimento de negociação':
+                return 4;
+            case 'Diálogo concorrencial':
+                return 5;
+            case 'Concurso de concepção':
+                return 6;
+            case 'Anúncio simplificado':
+                return 7;
+            case 'Instituição de sistema de qualificação':
+                return 8;
+            case 'Intenção de celebração de empreitadas de obras publicas por concessionários que não sejam entidades adjudicantes':
+                return 9;
+            case 'Parceria para a inovação':
+                return 10;
+            case 'Concurso de ideias':
+                return 11;
+            case 'Instituição de sistema de aquisição dinâmico':
+                return 12;
+            case 'Hasta Pública de Alienação de Bens Móveis':
+                return 13;
+            case 'Aquisição de Serviços Sociais e de Outros Serviços Específicos':
+                return 14;
+            case 'Anúncio de Adjudicação de Aquisição de Serviços Sociais e de Outros Serviços Específicos':
+                return 15;
+            default;
+                return 0;
+        }
+    }
+
+    public static function typeContractConverter($typeContract){
+        switch ($typeContract){
+         //   case 'Todos':
+            //    return 0;
+            case 'Aquisição de bens móveis':
+                return 1;
+            case 'Aquisição de serviços':
+                return 2;
+            case 'Concessão de obras públicas':
+                return 3;
+            case 'Concessão de serviços públicos':
+                return 4;
+            case 'Empreitadas de obras públicas':
+                return 5;
+            case 'Locação de bens móveis':
+                return 6;
+            case 'Sociedade':
+                return 7;
+            case 'Outros':
+                return 8;
+            default;
+                return 0;
+        }
     }
 }
