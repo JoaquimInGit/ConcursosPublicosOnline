@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContestsEntitiesTable extends Migration
+class CreateContestFilterTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateContestsEntitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('contests_entities', function (Blueprint $table) {
+        Schema::create('contest_filter', function (Blueprint $table) {
             $table->id();
             $table->foreignId('contest_id')
                 ->nullable()
                 ->constrained()
                 ->onDelete('set null');
-            $table->foreignId('entity_id')
+            $table->foreignId('filter_id')
                 ->nullable()
                 ->constrained()
                 ->onDelete('set null');
-            $table->boolean('follow');
-            $table->boolean('viewed');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreateContestsEntitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contests_entities');
+        Schema::dropIfExists('contest_filter');
     }
 }

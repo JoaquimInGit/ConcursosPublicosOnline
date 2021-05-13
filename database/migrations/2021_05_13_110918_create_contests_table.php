@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContestsFiltersTable extends Migration
+class CreateContestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,23 @@ class CreateContestsFiltersTable extends Migration
      */
     public function up()
     {
-        Schema::create('filters', function (Blueprint $table) {
+        Schema::create('contests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('cascade');
-            $table->string('filter_name');
-            $table->tinyInteger('filter_status')->nullable()->default(1)->comment(
-                "0 - filtro inativo | 1 - ativo com notificações | 2 - ativo sem notificações"
-            );
-            $table->string('description_words')->nullable();
-            $table->string('contest_entity')->nullable();
+            $table->integer("base_id");
+            $table->string('num_announcement')->nullable();
+            $table->text('description')->nullable();
+            $table->string('entity')->nullable();
+            $table->decimal('price',13,2)->nullable();
+            $table->date('publication_date')->nullable();
+            $table->date('deadline_date')->nullable();
+            $table->string('proposal_time_limit')->nullable();
+            $table->integer('republic_diary_num')->nullable();
+            $table->integer('republic_diary_serie')->nullable();
+            $table->string('cpv')->nullable();
+            $table->text('cpv_description')->nullable();
+            $table->string('procedure_parts')->nullable();
+            $table->string("link_announcement")->nullable();
+            $table->json('pdf_content')->nullable();
             $table->tinyInteger('type_act')->nullable()->default(0)->comment(
                 "0 - Todos | 1 - Anúncio de procedimento | 2 - Anúncio de concurso urgente
                 | 3 - Declaração de retificação de anúncio | 4 - Aviso de prorrogação de prazo"
@@ -47,24 +52,10 @@ class CreateContestsFiltersTable extends Migration
                 | 5 - Empreitadas de obras públicas | 6 - Localização de bens móveis
                 | 7 - Sociedade | 8 - Outros
             ");
-            $table->decimal('min_price')->nullable();
-            $table->decimal('max_price')->nullable();
-            $table->string('cpv')->nullable();
-            $table->timestamps();
-        });
+            $table->tinyInteger('status')->default(1)->comment(
+                "0 - fora do prazo | 1 - dentro do prazo
+            ");
 
-
-        Schema::create('contests_filters', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('contest_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('set null');
-            $table->foreignId('filter_id')
-                ->nullable()
-                ->constrained()
-                ->onDelete('set null');
-            $table->date('date');
             $table->timestamps();
         });
     }
@@ -76,7 +67,6 @@ class CreateContestsFiltersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contests_filters');
-        Schema::dropIfExists('filters');
+        Schema::dropIfExists('contests');
     }
 }
