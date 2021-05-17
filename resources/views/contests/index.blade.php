@@ -1,4 +1,4 @@
-@extends('layout2.default')
+@extends('layout.default')
 <?php
 view()->share('pageTitle', __('Contests'));
 view()->share('hideSubHeader', true);
@@ -47,13 +47,48 @@ view()->share('hideSubHeader', true);
                     </div>
                     <div class="form-group row">
                         <label class="col-2 col-form-label">Tipo de Ato</label>
-                        <div class="col-10">
+                        <div class="col-2">
                             <select class="form-control" id="type_act">
                                 <option value="0">Todos</option>
                                 <option value="1">Anúncio de procedimento</option>
                                 <option value="2">Anúncio de concurso urgente</option>
                                 <option value="3">Declaração de retificação de anúncio</option>
                                 <option value="4">Aviso de prorrogação de prazo</option>
+                            </select>
+                        </div>
+                        <label class="col-2 col-form-label">Tipo de Modelo</label>
+                        <div class="col-2">
+                            <select class="form-control" id="type_model">
+                                <option value="0">Todos</option>
+                                <option value="1">Concursos público</option>
+                                <option value="2">Concursos público urgente</option>
+                                <option value="3">Concursos limitado por prévia qualificação</option>
+                                <option value="4">Procedimento de negociação</option>
+                                <option value="5">Diálogo concorrencial</option>
+                                <option value="6">Concurso de concepção</option>
+                                <option value="7">Anúncio simplificado</option>
+                                <option value="8">Instituição de sistema de qualificação</option>
+                                <option value="9">Intenção de celebração de empreitadas de obras publicas por concessionários que não sejam entidades adjudicantes</option>
+                                <option value="10">Parceria para a inovação</option>
+                                <option value="11">Concurso de ideias</option>
+                                <option value="12">Instituição de sistema de aquisição dinâmico</option>
+                                <option value="13">Hasta Pública de Alienaçãode Bens Móveis</option>
+                                <option value="14">Aquisição de Serviços Sociais e de Outros Serviços Específicos</option>
+                                <option value="15">Anúncio de Adjudicação de Aquisição de Serviços Sociais e de Outros Serviços Específicos</option>
+                            </select>
+                        </div>
+                        <label class="col-2 col-form-label">Tipo de Contrato</label>
+                        <div class="col-2">
+                            <select class="form-control" id="type_contract">
+                                <option value="0">Todos</option>
+                                <option value="1">Aquisição de bens móveis</option>
+                                <option value="2">Aquisição de serviços</option>
+                                <option value="3">Concessão de obras públicas</option>
+                                <option value="4">Concessão de serviços públicos</option>
+                                <option value="5">Empreitadas de obras públicas</option>
+                                <option value="6">Localização de bens móveis</option>
+                                <option value="7">Sociedade</option>
+                                <option value="8">Outros</option>
                             </select>
                         </div>
                     </div>
@@ -75,6 +110,12 @@ view()->share('hideSubHeader', true);
                         <label for="example-date-input" class="col-2 col-form-label">Entre</label>
                         <div class="col-4">
                             <input class="form-control" type="date" id="deadline_date_between"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2 col-sm-12">Preço Minimo</label>
+                        <div class="col-lg-3 col-md-9 col-sm-12">
+                            <input id="min_price_1" type="text" class="form-control text-center" value="100000" name="demo0" placeholder="Select time"/>
                         </div>
                     </div>
                 </div>
@@ -118,10 +159,13 @@ view()->share('hideSubHeader', true);
             data.description = $('#description').val();
             data.entity = $('#entity').val();
             data.type_act = $('#type_act').val();
+            data.type_model = $('#type_model').val();
+            data.type_contract = $('#type_contract').val();
             data.publication_date = $('#publication_date').val();
             data.publication_date_between = $('#publication_date_between').val();
             data.deadline_date = $('#deadline_date').val();
             data.deadline_date_between = $('#deadline_date_between').val();
+            data.min_price = $('#min_price_1').val();
 
         });
 
@@ -135,10 +179,13 @@ view()->share('hideSubHeader', true);
                 data.description = '';
                 data.entity = '';
                 data.type_act = '';
+                data.type_model = '';
+                data.type_contract = '';
                 data.publication_date = '';
                 data.publication_date_between = '';
                 data.deadline_date = '';
                 data.deadline_date_between = '';
+                data.min_price_1 = '';
             });
             table.DataTable().ajax.reload();
             return false;
@@ -147,6 +194,23 @@ view()->share('hideSubHeader', true);
         $('#type_act').on('change',function (){
             table.DataTable().ajax.reload();
         })
+        $('#type_model').on('change',function (){
+            table.DataTable().ajax.reload();
+        })
+        $('#type_contract').on('change',function (){
+            table.DataTable().ajax.reload();
+        })
+        $('#min_price_1, #min_price_2_1').TouchSpin({
+            buttondown_class: 'btn btn-secondary',
+            buttonup_class: 'btn btn-secondary',
+
+            min: 0,
+            max: 10000000000,
+            step: 10000.0,
+            decimals: 2,
+            boostat: 5,
+            maxboostedstep: 10,
+        });
 
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';

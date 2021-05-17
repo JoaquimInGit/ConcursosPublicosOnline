@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Entity;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Traits\HasRoles;
 
 class RegisterController extends Controller
 {
@@ -50,6 +52,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'entity_name' => ['required','string','max:255'],
+            'country' => ['nullable','string','max:255'],
+            'district' => ['nullable','string','max:255'],
+            'address' => ['required','string','max:255'],
+            'postal_code' => ['required','string','max:8'],
+            'mobile_phone' => ['required','string','max:32'],
+            'nif' => ['required','string','max:32'],
+            'cae' => ['nullable','string','max:5'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -64,11 +74,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        //cria um novo user
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        //cria uma nova entidade
+        Entity::create([
+            'user_id' => $user->id,
+            'name' => $data['entity_name'],
+            'country' => $data['country'],
+            'district' => $data['district'],
+            'address' => $data['address'],
+            'postal_code' => $data['postal_code'],
+            'mobile_phone' => $data['mobile_phone'],
+            'nif' => $data['nif'],
+            'cae' => $data['cae'],
+            'status' => 1,
+        ]);
+
+        //cria o user com o role do tipo User(4)
+        $user->syncRoles(4);
+
+        return $user;
     }
 
     /**

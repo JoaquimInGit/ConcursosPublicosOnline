@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ContestDataTable;
+use App\Models\ContestEntity;
+use App\Models\Entity;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 //use App\Http\Requests\CreateContestRequest;
 //use App\Http\Requests\UpdateContestRequest;
@@ -67,6 +70,27 @@ class ContestController extends Controller
      */
     public function show(Contest $contest)
     {
+        //procura entidade do user logado
+        $entity = DB::table('entities')->select('id')->where('user_id', auth()->user()->id)->first();
+
+        //se o user tiver permissões de acesso de user
+        if(auth()->user()->can('accessAsUser')){
+            //verifica se ja existe registo entre contest e entidade
+            $valor = DB::table('contest_entity')->where([['contest_id', $contest->id],['entity_id', $entity->id]]);
+            if(!$valor->exists()){
+                //se não existir então cria um registo
+                ContestEntity::create([
+                    'contest_id' =>  $contest->id,
+                    'entity_id' => $entity->id,
+                ]);
+            }else{
+                //se existir então atualiza a hora de visualização
+                $valor->update([
+                    'viewed_at' => Carbon::now(),
+                ]);
+            }
+        }
+
         return view('contests.show', compact('contest'));
     }
 

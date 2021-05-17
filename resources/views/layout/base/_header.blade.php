@@ -1,5 +1,9 @@
 {{-- Header --}}
-<div id="kt_header" class="header {{ Metronic::printClasses('header', false) }}" {{ Metronic::printAttrs('header') }}>
+@if(auth()->user()->can('accessAsUser'))
+    <div id="kt_header" class="header" {{ Metronic::printAttrs('header') }}>
+@else
+    <div id="kt_header" class="header {{ Metronic::printClasses('header', false) }}" {{ Metronic::printAttrs('header') }}>
+@endif
 
     {{-- Container --}}
     <div class="container-fluid d-flex align-items-center justify-content-between">

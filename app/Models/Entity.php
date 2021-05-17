@@ -36,7 +36,7 @@ class Entity extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'entities';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 

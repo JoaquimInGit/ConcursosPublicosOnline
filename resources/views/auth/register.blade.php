@@ -15,9 +15,94 @@
             </div>
             <form  method="POST" action="{{ route('register') }}" class="form">
                 @csrf
+                <h3>{{ __('Entity') }}</h3>
                 <div class="form-group mb-5">
                     <div>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Name') }}" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <input id="entity_name" type="text" class="form-control @error('entity_name') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Name Entity') }}" name="entity_name" value="{{ old('entity_name') }}" required autocomplete="entity_name" autofocus>
+                        @error('entity_name')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="country" type="text" class="form-control @error('country') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Country') }}" name="country" value="{{ old('country') }}" required autocomplete="country">
+                        @error('country')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="district" type="text" class="form-control @error('district') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('District') }}" name="district" value="{{ old('entity_name') }}" required autocomplete="district">
+                        @error('district')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="address" type="text" class="form-control @error('address') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Address') }}" name="address" value="{{ old('address') }}" required autocomplete="address">
+                        @error('address')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="postal_code" type="text" class="form-control @error('postal_code') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Postal Code') }}" name="postal_code" value="{{ old('postal_code') }}" required autocomplete="postal_code">
+                        @error('postal_code')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="mobile_phone" type="text" class="form-control @error('mobile_phone') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Mobile Phone') }}" name="mobile_phone" value="{{ old('mobile_phone') }}" required autocomplete="mobile_phone">
+                        @error('mobile_phone')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="nif" type="text" class="form-control @error('nif') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('NIF') }}" name="nif" value="{{ old('nif') }}" required autocomplete="nif">
+                        @error('nif')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="cae" type="text" class="form-control @error('cae') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('CAE') }}" name="cae" value="{{ old('cae') }}" required autocomplete="cae">
+                        @error('cae')
+                        <div class="fv-plugins-message-container">
+                            <div class="fv-help-block">{{ $message }}</div>
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="mt-20">
+                    <h3>{{ __('User') }}</h3>
+                </div>
+                <div class="form-group mb-5">
+                    <div>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Name') }}" name="name" value="{{ old('name') }}" required autocomplete="name">
                         @error('name')
                         <div class="fv-plugins-message-container">
                             <div class="fv-help-block">{{ $message }}</div>

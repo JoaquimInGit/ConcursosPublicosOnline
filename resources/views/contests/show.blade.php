@@ -6,7 +6,7 @@
 view()->share('pageTitle', $contest->id);
 view()->share('hideSubHeader', true);
 ?>
-@extends('layout2.default')
+@extends('layout.default')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('contests.show', $contest) }}
 @endsection

@@ -7,7 +7,7 @@
 view()->share('pageTitle', __('Create Contest'));
 view()->share('hideSubHeader', true);
 ?>
-@extends('layout2.default')
+@extends('layout.default')
 
 @section('breadcrumbs')
     {{ Breadcrumbs::render('contests.create') }}
