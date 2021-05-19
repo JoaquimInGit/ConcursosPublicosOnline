@@ -2,6 +2,7 @@
 /**
  *
  * @var $contest \App\Models\Contest
+ * @var $contestentity \App\Models\ContestEntity
  */
 view()->share('pageTitle', $contest->id);
 view()->share('hideSubHeader', true);
@@ -19,6 +20,21 @@ view()->share('hideSubHeader', true);
                 </h3>
             </div>
             <div class="card-toolbar">
+                @if(auth()->user()->can('accessAsUser'))
+                    <!--<button class="btn btn-sm btn-light-danger font-weight-bold" onclick="updateRelationship(this)">
+                        <i class="la la-trash"></i>
+                        {{ __('Follow') }}
+                    </button>
+                    -->
+                    <a href="{{ route('contests.follow', $contest) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
+                        <i class="la la-start"></i>
+                        @if($contestentity->follow == '0')
+                            {{ __('Seguir') }}
+                        @else
+                            {{ __('Deixar de Seguir') }}
+                        @endif
+                    </a>
+                @else
                 <a href="{{ route('contests.edit', $contest) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
                     <i class="la la-edit"></i>
                     {{ __('Update') }}
@@ -30,6 +46,8 @@ view()->share('hideSubHeader', true);
                 {!! Form::open(['route' => ['contests.destroy', $contest], 'method' => 'delete', 'class'=>"d-none", 'id' => 'delete-form']) !!}
 
                 {!! Form::close() !!}
+
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -55,6 +73,10 @@ view()->share('hideSubHeader', true);
                     document.getElementById('delete-form').submit();
                 }
             });
+
         }
+        /*function updateRelationship(e){
+                document.getElementById('updade-form').submit();
+        }*/
     </script>
 @endpush

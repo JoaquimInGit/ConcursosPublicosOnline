@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -24,7 +26,7 @@ class ContestEntity extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'contest_entity';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -107,5 +109,15 @@ class ContestEntity extends Model implements Auditable
     public function entity()
     {
         return $this->belongsTo(\App\Models\Entity::class, 'entity_id');
+    }
+
+    /**
+     * procura registo entre o contest e a entidade
+     * @param $contest
+     * @param $entity
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public static function getRegisto(Contest $contest,Entity $entity){
+        return ContestEntity::where([['contest_id', $contest->id],['entity_id', $entity->id]]);
     }
 }

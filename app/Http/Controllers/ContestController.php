@@ -70,14 +70,14 @@ class ContestController extends Controller
      */
     public function show(Contest $contest)
     {
-        //procura entidade do user logado
-        $entity = DB::table('entities')->select('id')->where('user_id', auth()->user()->id)->first();
+        //recebe a entidade do user autenticado
+        $entity = Entity::getCurrentEntity();
 
         //se o user tiver permissões de acesso de user
         if(auth()->user()->can('accessAsUser')){
-            //verifica se ja existe registo entre contest e entidade
-            $valor = DB::table('contest_entity')->where([['contest_id', $contest->id],['entity_id', $entity->id]]);
-            if(!$valor->exists()){
+            //recebe se existir o registo entre contest e entidade
+            $contestentity = ContestEntity::getRegisto($contest,$entity);
+            if(!$contestentity->exists()){
                 //se não existir então cria um registo
                 ContestEntity::create([
                     'contest_id' =>  $contest->id,
@@ -85,13 +85,52 @@ class ContestController extends Controller
                 ]);
             }else{
                 //se existir então atualiza a hora de visualização
-                $valor->update([
+                $contestentity->update([
                     'viewed_at' => Carbon::now(),
                 ]);
             }
         }
+        $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
+        return view('contests.show', compact('contest','contestentity'));
+    }
 
-        return view('contests.show', compact('contest'));
+    /**
+     * Follow the specified Contest.
+     *
+     * @param  Contest  $contest
+     * @return Response
+     */
+    public static function follow(Contest $contest)
+    {
+        //recebe a entidade do user autenticado
+        $entity = Entity::getCurrentEntity();
+
+        //se o user tiver permissões de acesso de user
+        if(auth()->user()->can('accessAsUser')){
+            //recebe se existir o registo entre contest e entidade
+            $valor = ContestEntity::getRegisto($contest,$entity);
+            if(!$valor->exists()){
+                //se não existir então cria um registo
+                ContestEntity::create([
+                    'contest_id' =>  $contest->id,
+                    'entity_id' => $entity->id,
+                    'follow' => 1,
+                ]);
+            }else{
+                //se existir altera o valor no atributo follow(segue(1) e não segue(0))
+                $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
+                if ($contestentity->follow == '0'){
+                    $contestentity->update([
+                        'follow' => 1,
+                    ]);
+                }else{
+                    $contestentity->update([
+                        'follow' => 0,
+                    ]);
+                }
+            }
+        }
+        return redirect()->back();
     }
 
     /**

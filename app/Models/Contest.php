@@ -273,4 +273,5 @@ class Contest extends Model implements Auditable
                 return 0;
         }
     }
+
 }

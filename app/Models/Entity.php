@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -179,5 +180,13 @@ class Entity extends Model implements Auditable
     public function orders()
     {
         return $this->hasMany(\App\Models\Order::class, 'entity_id');
+    }
+
+    /**
+     * procura entidade do user autenticado
+     * @return Model|\Illuminate\Database\Query\Builder|object|null
+     */
+    public static function getCurrentEntity(){
+        return Entity::where('user_id', auth()->user()->id)->first();
     }
 }

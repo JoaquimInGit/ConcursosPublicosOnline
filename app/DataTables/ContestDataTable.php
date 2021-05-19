@@ -27,7 +27,7 @@ class ContestDataTable extends DataTable
             ->addColumn('action', function ($contest) {
                 if(auth()->user()->can('accessAsUser')){
                     return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
-                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('Follow') .'"><i class="la la-star"></i></a>';
+                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.follow', $contest) .'" title="'. __('Follow') .'"><i class="la la-star"></i></a>';
                 }else{
                     return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
                         <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.edit', $contest) .'"  title="'. __('Edit') .'"><i class="la la-edit"></i></a>

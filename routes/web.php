@@ -66,6 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/contests', [ContestController::class,'store'])->name('contests.store');
     Route::get('/contests/create', [ContestController::class,'create'])->name('contests.create');
     Route::get('/contests/{contest}', [ContestController::class,'show'])->name('contests.show');
+    Route::get('/contests/{contest}/follow', [ContestController::class,'follow'])->name('contests.follow');
     Route::get('/contests/{contest}/edit', [ContestController::class,'edit'])->name('contests.edit');
 
     Route::get('/entities', [EntityController::class,'index'])->name('entities.index');
