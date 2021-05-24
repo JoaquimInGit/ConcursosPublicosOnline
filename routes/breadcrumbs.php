@@ -132,7 +132,7 @@ Breadcrumbs::for('entities.create', function ($trail) {
 });
 Breadcrumbs::for('entities.show', function ($trail, $entity) {
     $trail->parent('entities.index');
-    $trail->push($entity->designation, route('entities.show', $entity));
+    $trail->push($entity->name, route('entities.show', $entity));
 });
 Breadcrumbs::for('entities.edit', function ($trail, $entity) {
     $trail->parent('entities.show', $entity);
@@ -140,7 +140,7 @@ Breadcrumbs::for('entities.edit', function ($trail, $entity) {
 });
 Breadcrumbs::for('entities.own_show', function ($trail, $entity) {
     $trail->parent('home');
-    $trail->push($entity->designation, route('entities.show', $entity));
+    $trail->push($entity->name, route('entities.show', $entity));
 });
 Breadcrumbs::for('entities.own_edit', function ($trail, $entity) {
     $trail->parent('entities.own_show', $entity);

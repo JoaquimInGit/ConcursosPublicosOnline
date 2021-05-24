@@ -85,7 +85,7 @@
 <!-- Status Field -->
 <tr>
     <th scope="row">{{ $entity->getAttributeLabel('status') }}</th>
-    <td>{{ $entity->status }}</td>
+    <td>{{ $entity->getStatusLabelAttribute() }}</td>
 </tr>
 
 

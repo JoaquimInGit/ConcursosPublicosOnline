@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Contest;
+use App\Models\Entity;
+use App\Models\Policies\EntityPolicy;
 use App\Models\Policies\SettingPolicy;
+use App\Models\Policies\ContestPolicy;
 use App\Models\Setting;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -15,8 +19,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
-        Setting::class => SettingPolicy::class
+         'App\Model' => 'App\Policies\ModelPolicy',
+        Setting::class => SettingPolicy::class,
+        Entity::class => EntityPolicy::class,
+        Contest::class => ContestPolicy::class,
     ];
 
     /**

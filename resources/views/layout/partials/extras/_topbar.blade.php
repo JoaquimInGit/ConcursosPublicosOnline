@@ -1,6 +1,15 @@
 {{-- Topbar --}}
 <div class="topbar">
-
+    <div class="topbar-item mr-5">
+        <a href="{{ route('contests.index') }}">
+            <h3>Contests</h3>
+        </a>
+    </div>
+    <div class="topbar-item mr-5 ">
+        <a href="{{ route('filters.index') }}">
+            <h3>Filters</h3>
+        </a>
+    </div>
     {{-- Search --}}
     @if (config('layout.extras.search.display'))
         @if (config('layout.extras.search.layout') == 'offcanvas')
@@ -10,6 +19,7 @@
                 </div>
             </div>
         @else
+
             <div class="dropdown" id="kt_quick_search_toggle">
                 {{-- Toggle --}}
                 <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">

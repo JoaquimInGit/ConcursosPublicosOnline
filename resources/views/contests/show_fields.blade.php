@@ -106,28 +106,32 @@
 <!-- Type Act Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('type_act') }}</th>
-    <td>{{ $contest->type_act }}</td>
+    <td>{{ $contest->getTypeActLabelAttribute() }}</td>
 </tr>
 
 
 <!-- Type Model Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('type_model') }}</th>
-    <td>{{ $contest->type_model }}</td>
+    <td>{{ $contest->getTypeModelLabelAttribute() }}</td>
 </tr>
 
 
 <!-- Type Contract Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('type_contract') }}</th>
-    <td>{{ $contest->type_contract }}</td>
+    <td>{{ $contest->getTypeContractLabelAttribute() }}</td>
 </tr>
 
 
 <!-- Status Field -->
-<tr>
+<!--<tr>
     <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
     <td>{{ $contest->status }}</td>
+</tr>-->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
+    <td>{{ $contest->getStatusLabelAttribute() }}</td>
 </tr>
 
 

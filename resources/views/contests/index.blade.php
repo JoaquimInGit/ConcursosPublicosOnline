@@ -46,51 +46,31 @@ view()->share('hideSubHeader', true);
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-2 col-form-label">Tipo de Ato</label>
+
+                        {!! Form::label('type_act', \App\Models\Contest::getAttributeLabel('type_act'),['class'=>'col-2 col-form-label']) !!}
                         <div class="col-2">
-                            <select class="form-control" id="type_act">
-                                <option value="0">Todos</option>
-                                <option value="1">Anúncio de procedimento</option>
-                                <option value="2">Anúncio de concurso urgente</option>
-                                <option value="3">Declaração de retificação de anúncio</option>
-                                <option value="4">Aviso de prorrogação de prazo</option>
-                            </select>
+                            {!! Form::select('type_act',\App\Models\Contest::getTypeActArray(), null, ['id' => 'type_act','class' => 'form-control '.($errors->has('type_act') ? 'is-invalid' : '')]) !!}
+                            @error('type_act')
+                            <div class="error invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <label class="col-2 col-form-label">Tipo de Modelo</label>
+
+                        {!! Form::label('type_model', \App\Models\Contest::getAttributeLabel('type_model'),['class'=>'col-2 col-form-label']) !!}
                         <div class="col-2">
-                            <select class="form-control" id="type_model">
-                                <option value="0">Todos</option>
-                                <option value="1">Concursos público</option>
-                                <option value="2">Concursos público urgente</option>
-                                <option value="3">Concursos limitado por prévia qualificação</option>
-                                <option value="4">Procedimento de negociação</option>
-                                <option value="5">Diálogo concorrencial</option>
-                                <option value="6">Concurso de concepção</option>
-                                <option value="7">Anúncio simplificado</option>
-                                <option value="8">Instituição de sistema de qualificação</option>
-                                <option value="9">Intenção de celebração de empreitadas de obras publicas por concessionários que não sejam entidades adjudicantes</option>
-                                <option value="10">Parceria para a inovação</option>
-                                <option value="11">Concurso de ideias</option>
-                                <option value="12">Instituição de sistema de aquisição dinâmico</option>
-                                <option value="13">Hasta Pública de Alienaçãode Bens Móveis</option>
-                                <option value="14">Aquisição de Serviços Sociais e de Outros Serviços Específicos</option>
-                                <option value="15">Anúncio de Adjudicação de Aquisição de Serviços Sociais e de Outros Serviços Específicos</option>
-                            </select>
+                            {!! Form::select('type_model',\App\Models\Contest::getTypeModelArray(), null, ['id' => 'type_model','class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
+                            @error('type_model')
+                            <div class="error invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <label class="col-2 col-form-label">Tipo de Contrato</label>
+
+                        {!! Form::label('type_contract', \App\Models\Contest::getAttributeLabel('type_contract'),['class'=>'col-2 col-form-label']) !!}
                         <div class="col-2">
-                            <select class="form-control" id="type_contract">
-                                <option value="0">Todos</option>
-                                <option value="1">Aquisição de bens móveis</option>
-                                <option value="2">Aquisição de serviços</option>
-                                <option value="3">Concessão de obras públicas</option>
-                                <option value="4">Concessão de serviços públicos</option>
-                                <option value="5">Empreitadas de obras públicas</option>
-                                <option value="6">Localização de bens móveis</option>
-                                <option value="7">Sociedade</option>
-                                <option value="8">Outros</option>
-                            </select>
+                            {!! Form::select('type_contract',\App\Models\Contest::getTypeContractArray(), null, ['id' => 'type_contract','class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
+                            @error('type_contract')
+                            <div class="error invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+
                     </div>
                     <div class="form-group row">
                         <label for="example-date-input" class="col-2 col-form-label">Data de Publicação</label>
@@ -115,8 +95,18 @@ view()->share('hideSubHeader', true);
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2 col-sm-12">Preço Minimo</label>
                         <div class="col-lg-3 col-md-9 col-sm-12">
-                            <input id="min_price_1" type="text" class="form-control text-center" value="100000" name="demo0" placeholder="Select time"/>
+                            <input id="min_price_1" type="text" class="form-control text-center" value="0.00" name="demo0" placeholder="Select time"/>
                         </div>
+                        <label class="col-form-label col-lg-3 col-sm-12 checkbox checkbox-lg">
+                            Anúncio visto
+                            <input type="checkbox" name="viewed_at" id="viewed_at"/>
+                            <span></span>
+                        </label>
+                        <label class="col-form-label col-lg-3 col-sm-12 checkbox checkbox-lg">
+                            A Seguir Anúncio
+                            <input type="checkbox" name="follow" id="follow"/>
+                            <span></span>
+                        </label>
                     </div>
                 </div>
                 <div class="card-footer">

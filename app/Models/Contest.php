@@ -44,7 +44,43 @@ class Contest extends Model implements Auditable
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
+    //type_act
+    const TODOS = 0;
+    const ANUNCIO_PROCEDIMENTO = 1;
+    const ANUNCIO_CONCURSO_URGENTE = 2;
+    const DECLARACAO_RETIFICACAO_ANUNCIO = 3;
+    const AVISO_PRORROCACAO_PRAZO = 4;
 
+    //type_model
+    const CONCURSO_PUBLICO = 1;
+    const CONCURSOS_PUBLICO_URGENTE = 2;
+    const CONCURSOS_LIMITADO_POR_PREVIA_QUALIFICACAO = 3;
+    const PROCEDIMENTO_DE_NEGOCIACAO = 4;
+    const DIALOGO_CONCORRENCIAL = 5;
+    const CONCURSO_DE_CONCEPCAO = 6;
+    const ANUNCIO_SIMPLIFICADO = 7;
+    const INSTITUICAO_DE_SISTEMA_DE_QUALIFICACAO = 8;
+    const INTENCAO_DE_CELEBRACAO_DE_EMPREITADAS_DE_OBRAS_PUBLICAS_POR_CONCESSIONARIOS_QUE_NAO_SEJAM_ENTIDADES_ADJUDICANTES = 9;
+    const PARCERIA_PARA_A_INOVACAO = 10;
+    const CONCURSO_DE_IDEIAS = 11;
+    const INSTITUICAO_DE_SISTEMA_DE_AQUISICAO_DINAMICO = 12;
+    const HASTA_PUBLICA_DE_ALIENACAO_DE_BENS_MOVEIS = 13;
+    const AQUISICAO_DE_SERVICOS_SOCIAIS_E_DE_OUTROS_SERVICOS_ESPECIFICOS = 14;
+    const ANUNCIO_DE_ADJUDICACAO_DE_AQUISICAO_DE_SERVICOS_SOCIAIS_E_DE_OUTROS_SERVICOS_ESPECIFICOS = 15;
+
+    //type_contract
+    const AQUISICAO_DE_BENS_MOVEIS = 1;
+    const AQUISICAO_DE_SERVICOS = 2;
+    const CONCESSAO_DE_OBRAS_PUBLICAS = 3;
+    const CONCESSAO_DE_SERVICOS_PUBLICOS = 4;
+    const EMPREITADAS_DE_OBRAS_PUBLICAS = 5;
+    const LOCALIZACAO_DE_BENS_MOVEIS = 6;
+    const TC_SOCIEDADE = 7;
+    const TC_OUTROS = 8;
+
+    //status
+    const STATUS_ACTIVE = 1;
+    const STATUS_OFF = 0;
 
 
     public $fillable = [
@@ -164,7 +200,7 @@ class Contest extends Model implements Auditable
      * @param string $attribute
      * @return string
      */
-    public function getAttributeLabel($attribute){
+    public static function getAttributeLabel($attribute){
         $attributeLabels = static::attributeLabels();
         return isset($attributeLabels[$attribute]) ? $attributeLabels[$attribute] : __($attribute);
     }
@@ -274,4 +310,99 @@ class Contest extends Model implements Auditable
         }
     }
 
+    //status
+    public static function getStatusArray()
+    {
+        return [
+            self::STATUS_ACTIVE=>  __('Ativo'),
+            self::STATUS_OFF =>  __('Desativo'),
+        ];
+    }
+    public function getStatusOptions()
+    {
+        return static::getStatusArray();
+    }
+    public function getStatusLabelAttribute()
+    {
+        $array = self::getStatusOptions();
+        return $array[$this->status];
+    }
+
+    //TypeAct
+    public static function getTypeActArray()
+    {
+        return [
+            self::TODOS =>  __('Todos'),
+            self::ANUNCIO_PROCEDIMENTO =>  __('Anúncio de procedimento'),
+            self::ANUNCIO_CONCURSO_URGENTE =>  __('Anúncio de concurso urgente'),
+            self::DECLARACAO_RETIFICACAO_ANUNCIO =>  __('Declaração de retificação de anúncio'),
+            self::AVISO_PRORROCACAO_PRAZO =>  __('Aviso de prorrogação de prazo'),
+        ];
+    }
+    public function getTypeActOptions()
+    {
+        return static::getTypeActArray();
+    }
+    public function getTypeActLabelAttribute()
+    {
+        $array = self::getTypeActOptions();
+        return $array[$this->status];
+    }
+
+    //TypeModel
+    public static function getTypeModelArray()
+    {
+        return [
+            self::TODOS =>  __('Todos'),
+            self::CONCURSO_PUBLICO =>  __('Concurso público'),
+            self::CONCURSOS_PUBLICO_URGENTE =>  __('Concurso público urgente'),
+            self::CONCURSOS_LIMITADO_POR_PREVIA_QUALIFICACAO =>  __('Concurso limitado por prévia qualificação'),
+            self::PROCEDIMENTO_DE_NEGOCIACAO =>  __('Procedimento de negociação'),
+            self::DIALOGO_CONCORRENCIAL =>  __('Diálogo concorrencial'),
+            self::CONCURSO_DE_CONCEPCAO =>  __('Concurso de concepção'),
+            self::ANUNCIO_SIMPLIFICADO =>  __('Anúncio simplificado'),
+            self::INSTITUICAO_DE_SISTEMA_DE_QUALIFICACAO =>  __('Instituição de sistema de qualificação'),
+            self::INTENCAO_DE_CELEBRACAO_DE_EMPREITADAS_DE_OBRAS_PUBLICAS_POR_CONCESSIONARIOS_QUE_NAO_SEJAM_ENTIDADES_ADJUDICANTES =>  __('Intenção de celebração de empreitadas de obras publicas por concessionários que não sejam entidades adjudicantes'),
+            self::PARCERIA_PARA_A_INOVACAO =>  __('Parceria para a inovação'),
+            self::CONCURSO_DE_IDEIAS =>  __('Concurso de ideias'),
+            self::INSTITUICAO_DE_SISTEMA_DE_AQUISICAO_DINAMICO =>  __('Instituição de sistema de aquisição dinâmico'),
+            self::HASTA_PUBLICA_DE_ALIENACAO_DE_BENS_MOVEIS =>  __('Hasta Pública de Alienação de Bens Móveis'),
+            self::AQUISICAO_DE_SERVICOS_SOCIAIS_E_DE_OUTROS_SERVICOS_ESPECIFICOS =>  __('Aquisição de Serviços Sociais e de Outros Serviços Específicos'),
+            self::ANUNCIO_DE_ADJUDICACAO_DE_AQUISICAO_DE_SERVICOS_SOCIAIS_E_DE_OUTROS_SERVICOS_ESPECIFICOS =>  __('Anúncio de Adjudicação de Aquisição de Serviços Sociais e de Outros Serviços Específicos'),
+        ];
+    }
+    public function getTypeModelOptions()
+    {
+        return static::getTypeModelArray();
+    }
+    public function getTypeModelLabelAttribute()
+    {
+        $array = self::getTypeModelOptions();
+        return $array[$this->status];
+    }
+
+    //TypeContract
+    public static function getTypeContractArray()
+    {
+        return [
+            self::TODOS =>  __('Todos'),
+            self::AQUISICAO_DE_BENS_MOVEIS =>  __('Aquisição de bens móveis'),
+            self::AQUISICAO_DE_SERVICOS =>  __('Aquisição de serviços'),
+            self::CONCESSAO_DE_OBRAS_PUBLICAS =>  __('Concessão de obras públicas'),
+            self::CONCESSAO_DE_SERVICOS_PUBLICOS =>  __('Concessão de serviços públicos'),
+            self::EMPREITADAS_DE_OBRAS_PUBLICAS =>  __('Empreitadas de obras públicas'),
+            self::LOCALIZACAO_DE_BENS_MOVEIS =>  __('Localização de bens móveis'),
+            self::TC_SOCIEDADE =>  __('Sociedade'),
+            self::TC_OUTROS =>  __('Outros'),
+        ];
+    }
+    public function getTypeContractOptions()
+    {
+        return static::getTypeContractArray();
+    }
+    public function getTypeContractLabelAttribute()
+    {
+        $array = self::getTypeContractOptions();
+        return $array[$this->status];
+    }
 }

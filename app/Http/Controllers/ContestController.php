@@ -19,6 +19,16 @@ use Illuminate\Support\Facades\DB;
 class ContestController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Contest::class, 'contest');
+    }
+
+    /**
      * Display a listing of the Contest.
      *
      * @param ContestDataTable $contestDataTable
@@ -27,7 +37,8 @@ class ContestController extends Controller
     public function index(ContestDataTable $contestDataTable,Request $request)
     {
         //return $contestDataTable->render('contests.index');
-        return $request->isMethod('post') ? $this->create($request) : $contestDataTable->render('contests.index');
+        //$contest = DB::table('contests')->last()->get();
+        return $request->isMethod('post') ? $this->create($request) : $contestDataTable->render('contests.index'/*,compact('contest')*/);
         /*$contests = DB::table('contests')->get();
         return view('contests.index', ['contests' => $contests]);*/
     }
@@ -70,18 +81,21 @@ class ContestController extends Controller
      */
     public function show(Contest $contest)
     {
-        //recebe a entidade do user autenticado
-        $entity = Entity::getCurrentEntity();
-
         //se o user tiver permissões de acesso de user
         if(auth()->user()->can('accessAsUser')){
+
+            //recebe a entidade do user autenticado
+            $entity = Entity::getCurrentEntity();
+
             //recebe se existir o registo entre contest e entidade
             $contestentity = ContestEntity::getRegisto($contest,$entity);
+
             if(!$contestentity->exists()){
                 //se não existir então cria um registo
                 ContestEntity::create([
                     'contest_id' =>  $contest->id,
                     'entity_id' => $entity->id,
+                    'viewed_at' => Carbon::now(),
                 ]);
             }else{
                 //se existir então atualiza a hora de visualização
@@ -89,8 +103,11 @@ class ContestController extends Controller
                     'viewed_at' => Carbon::now(),
                 ]);
             }
+            $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
+        }else{
+            $contestentity = false;
         }
-        $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
+
         return view('contests.show', compact('contest','contestentity'));
     }
 

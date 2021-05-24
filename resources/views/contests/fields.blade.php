@@ -157,39 +157,46 @@
 
 <!-- Type Act Field -->
 <div class="form-group">
-    {!! Form::label('type_act', $contest->getAttributeLabel('type_act')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('type_act', 0) !!}
-        {!! Form::checkbox('type_act', '1', null) !!}
-    </label>
+    {!! Form::label('type_act', $contest->getTypeActLabelAttribute()) !!}
+    {!! Form::select('type_act',$contest->getTypeActArray(), null, ['class' => 'form-control '.($errors->has('type_act') ? 'is-invalid' : '')]) !!}
+    @error('type_act')
+    <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
 
 
 <!-- Type Model Field -->
 <div class="form-group">
-    {!! Form::label('type_model', $contest->getAttributeLabel('type_model')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('type_model', 0) !!}
-        {!! Form::checkbox('type_model', '1', null) !!}
-    </label>
+    {!! Form::label('type_model', $contest->getTypeModelLabelAttribute()) !!}
+    {!! Form::select('type_model',$contest->getTypeModelArray(), null, ['class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
+    @error('type_model')
+    <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
 
 
 <!-- Type Contract Field -->
 <div class="form-group">
-    {!! Form::label('type_contract', $contest->getAttributeLabel('type_contract')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('type_contract', 0) !!}
-        {!! Form::checkbox('type_contract', '1', null) !!}
-    </label>
+    {!! Form::label('type_contract', $contest->getTypeContractLabelAttribute()) !!}
+    {!! Form::select('type_contract',$contest->getTypeContractArray(), null, ['class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
+    @error('type_contract')
+    <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
 
 
 <!-- Status Field -->
-<div class="form-group">
+<!--<div class="form-group">
     {!! Form::label('status', $contest->getAttributeLabel('status')) !!}
     <label class="checkbox-inline">
         {!! Form::hidden('status', 0) !!}
         {!! Form::checkbox('status', '1', null) !!}
     </label>
+</div>-->
+<div class="form-group">
+    {!! Form::label('status', $contest->getAttributeLabel('status')) !!}
+    {!! Form::select('status',$contest->getStatusArray(), null, ['class' => 'form-control '.($errors->has('status') ? 'is-invalid' : ''),'placeholder' => __('Select a Status')]) !!}
+    @error('status')
+    <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>

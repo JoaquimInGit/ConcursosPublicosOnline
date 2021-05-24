@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
+use Cache;
 
 /**
  * Class Entity
@@ -41,6 +42,26 @@ class Entity extends Model implements Auditable
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
+    const STATUS_DISABLED = 0;
+    const STATUS_APPROVED = 1;
+    public static function getStatusArray()
+    {
+        return [
+            self::STATUS_DISABLED =>  __('Disabled'),
+            self::STATUS_APPROVED =>  __('Approved'),
+        ];
+    }
+
+    public function getStatusOptions()
+    {
+        return static::getStatusArray();
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        $array = self::getStatusOptions();
+        return $array[$this->status];
+    }
 
 
 

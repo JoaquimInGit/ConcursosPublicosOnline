@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Contest;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
@@ -24,6 +25,12 @@ class ContestDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
+            ->editColumn('publication_date', function ($contest){
+                return !empty($contest->publication_date) ? Carbon::Parse($contest->publication_date)->format('Y-m-d') : '';
+            })
+            ->editColumn('deadline_date', function ($contest){
+                return !empty($contest->deadline_date) ? Carbon::Parse($contest->deadline_date)->format('Y-m-d') : '';
+            })
             ->addColumn('action', function ($contest) {
                 if(auth()->user()->can('accessAsUser')){
                     return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>

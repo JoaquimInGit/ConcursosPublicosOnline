@@ -14,6 +14,16 @@ use Illuminate\Http\Response;
 class EntityController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Entity::class, 'entity');
+    }
+
+    /**
      * Display a listing of the Entity.
      *
      * @param EntityDataTable $entityDataTable

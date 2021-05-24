@@ -30,7 +30,7 @@
 {{-- Nav --}}
 <div class="navi navi-spacer-x-0 pt-5">
     {{-- Item --}}
-    <a href="{{ route('users.edit', Auth::user()) }}" class="navi-item px-8">
+    <a href="{{ route('users.show', Auth::user()) }}" class="navi-item px-8">
         <div class="navi-link">
             <div class="navi-icon mr-2">
                 <i class="flaticon2-calendar-3 text-success"></i>
@@ -47,22 +47,23 @@
         </div>
     </a>
     {{-- Item --}}
-    <!--<a href="#"  class="navi-item px-8">
+    @if(auth()->user()->can('accessAsUser'))
+    <a href="{{ route('entities.show', \App\Models\Entity::getCurrentEntity()) }}"  class="navi-item px-8">
         <div class="navi-link">
             <div class="navi-icon mr-2">
                 <i class="flaticon2-mail text-warning"></i>
             </div>
             <div class="navi-text">
                 <div class="font-weight-bold">
-                    My Messages
+                    {{ __('My Entity') }}
                 </div>
                 <div class="text-muted">
-                    Inbox and tasks
+                    {{ __('Entity information') }}
                 </div>
             </div>
         </div>
-    </a>-->
-
+    </a>
+    @endif
     {{-- Item --}}
     <!--<a href="#"  class="navi-item px-8">
         <div class="navi-link">
