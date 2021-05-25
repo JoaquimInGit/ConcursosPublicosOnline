@@ -29,9 +29,13 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         //corre o InsertContests a cada minuto
         //TODO:Mudar para o tempo que queremos
+      /*  $schedule->call(function(){
+            ContestBusinessLogic::insertContests();
+        })->everyMinute();*/
+
         $schedule->call(function(){
             ContestBusinessLogic::insertContests();
-        })->everyMinute();
+        })->twiceDaily(8, 14);;
     }
 
     /**
