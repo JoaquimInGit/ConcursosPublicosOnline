@@ -14,6 +14,7 @@
 
 <!-- Description Words Field -->
 <tr>
+
     <th scope="row">{{ $filter->getAttributeLabel('description_words') }}</th>
     <td>{{ $filter->description_words }}</td>
 </tr>
@@ -57,28 +58,28 @@
 <!-- Type Act Field -->
 <tr>
     <th scope="row">{{ $filter->getAttributeLabel('type_act') }}</th>
-    <td>{{ $filter->type_act }}</td>
+    <td>{{ $filter->getTypeActLabelAttribute() }}</td>
 </tr>
 
 
 <!-- Type Model Field -->
 <tr>
     <th scope="row">{{ $filter->getAttributeLabel('type_model') }}</th>
-    <td>{{ $filter->type_model }}</td>
+    <td>{{ $filter->getTypeModelLabelAttribute() }}</td>
 </tr>
 
 
 <!-- Type Contract Field -->
 <tr>
     <th scope="row">{{ $filter->getAttributeLabel('type_contract') }}</th>
-    <td>{{ $filter->type_contract }}</td>
+    <td>{{ $filter->getTypeContractLabelAttribute() }}</td>
 </tr>
 
 
 <!-- Filter Status Field -->
 <tr>
     <th scope="row">{{ $filter->getAttributeLabel('filter_status') }}</th>
-    <td>{{ $filter->filter_status }}</td>
+    <td>{{ $filter->getFilterStatusLabelAttribute() }}</td>
 </tr>
 
 

@@ -14,6 +14,16 @@ use Illuminate\Http\Response;
 class FilterController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Filter::class, 'filter');
+    }
+
+    /**
      * Display a listing of the Filter.
      *
      * @param FilterDataTable $filterDataTable

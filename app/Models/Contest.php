@@ -127,10 +127,10 @@ class Contest extends Model implements Auditable
         'procedure_parts' => 'string',
         'link_announcement' => 'string',
         'pdf_content' => 'string',
-        'type_act' => 'boolean',
-        'type_model' => 'boolean',
-        'type_contract' => 'boolean',
-        'status' => 'boolean'
+        'type_act' => 'integer',
+        'type_model' => 'integer',
+        'type_contract' => 'integer',
+        'status' => 'integer'
     ];
 
     /**
@@ -154,10 +154,10 @@ class Contest extends Model implements Auditable
         'procedure_parts' => 'nullable|string|max:255',
         'link_announcement' => 'nullable|string|max:255',
         'pdf_content' => 'nullable|string',
-        'type_act' => 'nullable|boolean',
-        'type_model' => 'nullable|boolean',
-        'type_contract' => 'nullable|boolean',
-        'status' => 'required|boolean',
+        'type_act' => 'nullable|integer',
+        'type_model' => 'nullable|integer',
+        'type_contract' => 'nullable|integer',
+        'status' => 'required|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];
@@ -196,16 +196,6 @@ class Contest extends Model implements Auditable
     }
 
     /**
-     * Return the attribute label
-     * @param string $attribute
-     * @return string
-     */
-    public static function getAttributeLabel($attribute){
-        $attributeLabels = static::attributeLabels();
-        return isset($attributeLabels[$attribute]) ? $attributeLabels[$attribute] : __($attribute);
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
     public function contestEntities()
@@ -219,13 +209,6 @@ class Contest extends Model implements Auditable
     public function contestFilters()
     {
         return $this->hasMany(\App\Models\ContestFilter::class, 'contest_id');
-    }
-    /*
- * retira da BD o base_id com maior valor
- */
-    public static function getLastBaseId(){
-
-        return DB::table('contests')->latest()->pluck('base_id')->max();
     }
 
     public static function typeActConverter($typeAct){
@@ -346,7 +329,7 @@ class Contest extends Model implements Auditable
     public function getTypeActLabelAttribute()
     {
         $array = self::getTypeActOptions();
-        return $array[$this->status];
+        return $array[$this->type_act];
     }
 
     //TypeModel
@@ -378,7 +361,7 @@ class Contest extends Model implements Auditable
     public function getTypeModelLabelAttribute()
     {
         $array = self::getTypeModelOptions();
-        return $array[$this->status];
+        return $array[$this->type_model];
     }
 
     //TypeContract
@@ -403,6 +386,26 @@ class Contest extends Model implements Auditable
     public function getTypeContractLabelAttribute()
     {
         $array = self::getTypeContractOptions();
-        return $array[$this->status];
+        return $array[$this->type_contract];
     }
+
+    /**
+     * Return the attribute label
+     * @param string $attribute
+     * @return string
+     */
+    public static function getAttributeLabel($attribute){
+        $attributeLabels = static::attributeLabels();
+        return isset($attributeLabels[$attribute]) ? $attributeLabels[$attribute] : __($attribute);
+    }
+
+    /**
+     * retira da BD o base_id com maior valor
+     * @return mixed
+     */
+    public static function getLastBaseId(){
+
+        return DB::table('contests')->latest()->pluck('base_id')->max();
+    }
+
 }

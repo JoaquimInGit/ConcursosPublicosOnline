@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Models\Contest;
 use App\Models\Entity;
+use App\Models\Filter;
 use App\Models\Policies\EntityPolicy;
+use App\Models\Policies\FilterPolicy;
 use App\Models\Policies\SettingPolicy;
 use App\Models\Policies\ContestPolicy;
 use App\Models\Setting;
@@ -23,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         Setting::class => SettingPolicy::class,
         Entity::class => EntityPolicy::class,
         Contest::class => ContestPolicy::class,
+        Filter::class => FilterPolicy::class,
     ];
 
     /**

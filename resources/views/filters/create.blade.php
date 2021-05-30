@@ -21,7 +21,7 @@ view()->share('hideSubHeader', true);
                 </h3>
             </div>
         </div>
-        {!! Form::model($filter, ['route' => ['filters.store'], 'method' => 'post', 'enctype'=>"multipart/form-data", 'class' => "form"]) !!}
+        {!! Form::model($filter, ['id'=>'form','route' => ['filters.store'], 'method' => 'post', 'enctype'=>"multipart/form-data", 'class' => "form"]) !!}
             <div class="card-body">
                 @include('filters.fields')
              </div>
@@ -31,4 +31,13 @@ view()->share('hideSubHeader', true);
             </div>
         {!! Form::close() !!}
     </div>
+    <script>
+        jQuery(document).keypress(function(e) {
+
+            //Enter key
+            if (e.which == 13) {
+                return false;
+            }
+        });
+    </script>
 @endsection

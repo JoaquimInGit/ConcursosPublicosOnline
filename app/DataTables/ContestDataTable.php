@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Contest;
+use App\Models\Entity;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Services\DataTable;
@@ -67,6 +68,8 @@ class ContestDataTable extends DataTable
         $deadline_date = $this->request()->get('deadline_date');
         $deadline_date_between = $this->request()->get('deadline_date_between');
         $min_price = $this->request()->get('min_price');
+        $viewed_at = $this->request()->get('viewed_at');
+        $follow = $this->request()->get('follow');
         $query = $model->newQuery();
 
 
@@ -105,6 +108,21 @@ class ContestDataTable extends DataTable
         if(!empty($min_price)){
             $query = $query->where('price','>=',$min_price);
         }
+        if($viewed_at == true){
+            $query = $query->whereIn('id', function($query){
+                    $query->select('contest_id')
+                        ->from('contest_entity')
+                        ->where([['entity_id', Entity::getCurrentEntity()->id],['viewed_at','!=',null]]);
+                });
+        }
+        if($follow == true){
+            $query = $query->whereIn('id', function($query){
+                $query->select('contest_id')
+                    ->from('contest_entity')
+                    ->where([['entity_id', Entity::getCurrentEntity()->id],['follow',1]]);
+            });
+        }
+
         return $query;
     }
 

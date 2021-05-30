@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Entity;
 use App\Models\Filter;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
@@ -9,7 +10,7 @@ use App\DataTables\Traits\DatatableColumnSearch;
 
 class FilterDataTable extends DataTable
 {
-    use DatatableColumnSearch;
+    //use DatatableColumnSearch;
 
     /**
      * Build DataTable class.
@@ -22,6 +23,9 @@ class FilterDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
+            ->editColumn('filter_status', function ($filter){
+                return $filter->getFilterStatusLabelAttribute();
+            })
             ->addColumn('action', function ($filter) {
                 return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('filters.show', $filter) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
                         <a href="'. route('filters.edit', $filter) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
@@ -41,7 +45,12 @@ class FilterDataTable extends DataTable
      */
     public function query(Filter $model)
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+        if(auth()->user()->can('accessAsUser')){
+            $entity = $model->getEntity();
+            $query = $query->where('entity_id',$entity);
+        }
+        return $query;
     }
 
     /**
@@ -76,17 +85,17 @@ class FilterDataTable extends DataTable
     {
         $model = new Filter();
         return [
-            Column::make('entity_id')->title($model->getAttributeLabel('entity_id')),
+            //Column::make('entity_id')->title($model->getAttributeLabel('entity_id')),
             Column::make('filter_name')->title($model->getAttributeLabel('filter_name')),
-            Column::make('description_words')->title($model->getAttributeLabel('description_words')),
-            Column::make('contest_entity')->title($model->getAttributeLabel('contest_entity')),
-            Column::make('district')->title($model->getAttributeLabel('district')),
-            Column::make('min_price')->title($model->getAttributeLabel('min_price')),
-            Column::make('max_price')->title($model->getAttributeLabel('max_price')),
-            Column::make('cpv')->title($model->getAttributeLabel('cpv')),
-            Column::make('type_act')->title($model->getAttributeLabel('type_act')),
-            Column::make('type_model')->title($model->getAttributeLabel('type_model')),
-            Column::make('type_contract')->title($model->getAttributeLabel('type_contract')),
+            //Column::make('description_words')->title($model->getAttributeLabel('description_words')),
+            //Column::make('contest_entity')->title($model->getAttributeLabel('contest_entity')),
+            //Column::make('district')->title($model->getAttributeLabel('district')),
+            //Column::make('min_price')->title($model->getAttributeLabel('min_price')),
+            //Column::make('max_price')->title($model->getAttributeLabel('max_price')),
+            //Column::make('cpv')->title($model->getAttributeLabel('cpv')),
+            //Column::make('type_act')->title($model->getAttributeLabel('type_act')),
+            //Column::make('type_model')->title($model->getAttributeLabel('type_model')),
+            //Column::make('type_contract')->title($model->getAttributeLabel('type_contract')),
             Column::make('filter_status')->title($model->getAttributeLabel('filter_status')),
             Column::computed('action')
                 ->exportable(false)

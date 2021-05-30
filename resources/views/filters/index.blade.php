@@ -23,8 +23,6 @@ view()->share('hideSubHeader', true);
                 </h3>
             </div>
             <div class="card-toolbar">
-                <div class="dropdown dropdown-inline" id="datatable-buttons">
-                </div>
                 <a href="{{ route('filters.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
                     <i class="la la-plus"></i>
                     {{ __('New Filter') }}
@@ -33,7 +31,7 @@ view()->share('hideSubHeader', true);
         </div>
         <div class="card-body">
             <!--begin: Datatable classes table dataTable no-footer -->
-            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], true)}}
+            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], false)}}
             <!--end: Datatable -->
         </div>
     </div>
@@ -46,6 +44,10 @@ view()->share('hideSubHeader', true);
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     {{$dataTable->scripts()}}
     <script>
+
+        jQuery(document).ready(function() {
+            $('#filters-table_filter').css('display', 'none');
+        });
 
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';
