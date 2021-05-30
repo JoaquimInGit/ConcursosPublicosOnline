@@ -82,7 +82,7 @@ class BaseController extends Controller
         }
     }
     public function insertContest2(){
-        ContestBusinessLogic::insertContests();
+        ContestBusinessLogic::dreText();
         echo "done";
     }
 

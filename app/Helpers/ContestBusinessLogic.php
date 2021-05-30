@@ -7,6 +7,7 @@ namespace App\Helpers;
 use App\Models\Contest;
 use Dompdf\Helpers;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades;
 use Smalot\PdfParser\Parser;
 use Spatie\PdfToText\Pdf;
 use Symfony\Component\Panther\Client;
@@ -93,7 +94,7 @@ class ContestBusinessLogic
                 'cpv_description' => $cpv[1],
                 //'procedure_parts' => ,
                 'link_announcement' => $body->reference == null ? null: $body->reference,
-                // 'pdf_content' => 'nullable|string'
+                'pdf_content' => self::getdreText($body->announcementNumber, $body->type),
                 'type_act' => Contest::typeActConverter($body->type),
                 'type_model' => Contest::typeModelConverter($body->modelType),
                 'type_contract' => Contest::typeContractConverter($body->contractType),
@@ -101,7 +102,6 @@ class ContestBusinessLogic
             ]);
                // ->addMediaFromUrl($body->reference)//saca o pdf
               //  ->toMediaCollection('pdfs');//coloca-o na coleção
-
        }
 
     }
@@ -119,7 +119,7 @@ class ContestBusinessLogic
             'type' => 'search_anuncios',
             'query' => 'tipoacto=0&tipomodelo=0&tipocontrato=0',
             'sort' => '-drPublicationDate',
-            'size' => 100,
+            'size' => 1000,
             //'page'=> 0
         ]);
         //dd(json_decode($response->body()));
@@ -132,6 +132,42 @@ class ContestBusinessLogic
         }
         return $idArray;
     }
+
+    /***
+     * @param $annuncementNumber  numero do anuncio com uma barra no meio
+     * @param $type type of annuncement
+     * @return json|null
+     */
+    public static function getdreText($annuncementNumber, $type){
+
+        $q2 = str_replace ( ' ' , '+' , $type  );
+        $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q='.$annuncementNumber.'+' . $q2);
+        $dre = [];
+        if(str_contains ( $response2->body() , '<div class="result">' ))
+        {
+            $pos = stripos($response2->body(), '<div class="result">',);
+            $stri = substr($response2->body(), $pos, 250);
+            $pos = stripos($stri, '<a href',);
+            $stri = substr($stri, $pos, 250);
+            $pos = stripos($stri, '"');
+            $pos++;
+            $stri = substr($stri, $pos, 250);
+            $stri = explode('"', $stri);
+
+            $response = Http::get($stri[0]);
+            //dd($response->body());
+            $dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
+            //dd($dre);
+            $position = strpos($dre[1], '<</li></ul></div>');
+            $final = substr($dre[1], 0, -1 * $position);
+            return json_encode($final);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     //TODO:
     public static function pdfToJSON()
     {
