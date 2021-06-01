@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ContestDataTable;
+use App\Helpers\FiltersLogic;
 use App\Models\Base;
 use App\Models\Contest;
 use Illuminate\Http\Request;
@@ -83,6 +84,11 @@ class BaseController extends Controller
     }
     public function insertContest2(){
         ContestBusinessLogic::dreText();
+        echo "done";
+    }
+
+    public function filterNotification(){
+       FiltersLogic::sendNotifications();
         echo "done";
     }
 
