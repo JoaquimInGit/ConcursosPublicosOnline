@@ -78,7 +78,7 @@ class FiltersLogic
                 $contests = $contests->toArray();
                 $contests = json_encode($contests);
                 $contests = json_decode($contests);
-                dd($contests);
+                //dd($contests);
                 foreach ($contests as $contest) {
                     //dd($contest);
                     ContestFilter::create([

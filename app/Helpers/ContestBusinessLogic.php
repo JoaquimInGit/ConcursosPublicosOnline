@@ -19,6 +19,7 @@ class ContestBusinessLogic
     public static function insertContests()
     {
         $ids = ContestBusinessLogic::discoverContests();
+        $ids = array_flip($ids);
         //dd($ids);
         foreach ($ids as $id) {
             //Faz o pedido á pagina de detalhes com o id do anuncio pretendido
@@ -121,6 +122,7 @@ class ContestBusinessLogic
         // dd($lastid);
         $idArray = [];
         //TODO:penso que nao esteja a ir buscar 1000 anuncios joaquim
+        //TODO:N
         $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
             'type' => 'search_anuncios',
             'query' => 'tipoacto=0&tipomodelo=0&tipocontrato=0',
