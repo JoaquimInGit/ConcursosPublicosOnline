@@ -8,6 +8,7 @@ use App\Models\Contest;
 use Dompdf\Helpers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades;
+use mysql_xdevapi\Exception;
 use Smalot\PdfParser\Parser;
 use Spatie\PdfToText\Pdf;
 use Symfony\Component\Panther\Client;
@@ -126,7 +127,7 @@ class ContestBusinessLogic
             'type' => 'search_anuncios',
             'query' => 'tipoacto=0&tipomodelo=0&tipocontrato=0',
             'sort' => '-drPublicationDate',
-            'size' => 1000,
+            'size' => 100,
             //'page'=> 0
         ]);
         //dd(json_decode($response->body()));
@@ -191,32 +192,33 @@ class ContestBusinessLogic
        // $response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/164501465/details/normal?q=7289%2F2021');
         //$dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
        // dd($response->body());
-         $q2 = str_replace ( ' ' , '+' , $type  );
-         $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q='.$annuncementNumber.'+' . $q2);
-         $dre = [];
-         if(str_contains ( $response2->body() , '<div class="result">' ))
-         {
-        $pos = stripos($response2->body(), '<div class="result">',);
-        $stri = substr($response2->body(), $pos, 250);
-        $pos = stripos($stri, '<a href',);
-        $stri = substr($stri, $pos, 250);
-        $pos = stripos($stri, '"');
-        $pos++;
-        $stri = substr($stri, $pos, 250);
-        $stri = explode('"', $stri);
+        try {
+            $q2 = str_replace(' ', '+', $type);
+            $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q=' . $annuncementNumber . '+' . $q2);
+            $dre = [];
+            if (str_contains($response2->body(), '<div class="result">')) {
+                $pos = stripos($response2->body(), '<div class="result">',);
+                $stri = substr($response2->body(), $pos, 250);
+                $pos = stripos($stri, '<a href',);
+                $stri = substr($stri, $pos, 250);
+                $pos = stripos($stri, '"');
+                $pos++;
+                $stri = substr($stri, $pos, 250);
+                $stri = explode('"', $stri);
 
-        $response = Http::get($stri[0]);
-        //dd($response->body());
-        $dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
-        //dd($dre);
-        $position = strpos($dre[1], '<</li></ul></div>');
-        $final = substr($dre[1], 0, -1 * $position);
-        return json_encode($final);
-         }
-           else
-           {
-               return null;
-           }
+                $response = Http::get($stri[0]);
+                //dd($response->body());
+                $dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
+                //dd($dre);
+                $position = strpos($dre[1], '<</li></ul></div>');
+                $final = substr($dre[1], 0, -1 * $position);
+                return json_encode($final);
+            } else {
+                return null;
+            }
+        }catch (Exception $e){
+            return null;
+        }
     }
 
 }
