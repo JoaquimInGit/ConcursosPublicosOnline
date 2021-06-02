@@ -19,7 +19,7 @@ class ContestBusinessLogic
     public static function insertContests()
     {
         $ids = ContestBusinessLogic::discoverContests();
-        $ids = array_reverse($ids);
+
         //dd($ids);
         foreach ($ids as $id) {
             //Faz o pedido á pagina de detalhes com o id do anuncio pretendido
@@ -121,8 +121,7 @@ class ContestBusinessLogic
         }
         // dd($lastid);
         $idArray = [];
-        //TODO:penso que nao esteja a ir buscar 1000 anuncios joaquim
-        //TODO:N
+        //TODO:penso que nao esteja a ir buscar 1000 anuncios
         $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
             'type' => 'search_anuncios',
             'query' => 'tipoacto=0&tipomodelo=0&tipocontrato=0',
@@ -138,6 +137,7 @@ class ContestBusinessLogic
             }
 
         }
+        $idArray = array_reverse($idArray);
         return $idArray;
     }
 
@@ -146,39 +146,41 @@ class ContestBusinessLogic
      * @param $type type of annuncement
      * @return json|null
      */
-    public static function getdreText2(/*$annuncementNumber, $type*/){
+    public static function getdreText2($annuncementNumber, $type){
     //https://dre.pt/web/guest/pesquisa/-/search/164501469/details/normal?q=7292%2F2021
         //debaixo é o que funciona
         //https://dre.pt/web/guest/pesquisa/-/search/164505026/details/normal?q=7280%2F2021
-        $response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/164501465/details/normal?q=7289%2F2021');
+        //$response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/164501465/details/normal?q=7289%2F2021');
         //$dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
-        dd($response->body());
-       /* $q2 = str_replace ( ' ' , '+' , $type  );
-        $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q='.$annuncementNumber.'+' . $q2);
-        $dre = [];
-        if(str_contains ( $response2->body() , '<div class="result">' ))
-        {*/
-            $pos = stripos($response2->body(), '<div class="result">',);
-            $stri = substr($response2->body(), $pos, 250);
-            $pos = stripos($stri, '<a href',);
-            $stri = substr($stri, $pos, 250);
-            $pos = stripos($stri, '"');
-            $pos++;
-            $stri = substr($stri, $pos, 250);
-            $stri = explode('"', $stri);
+        //dd($response->body());
+        try {
+            $q2 = str_replace(' ', '+', $type);
+            $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q=' . $annuncementNumber . '+' . $q2);
+            $dre = [];
+            if (str_contains($response2->body(), '<div class="result">')) {
+                $pos = stripos($response2->body(), '<div class="result">',);
+                $stri = substr($response2->body(), $pos, 250);
+                $pos = stripos($stri, '<a href',);
+                $stri = substr($stri, $pos, 250);
+                $pos = stripos($stri, '"');
+                $pos++;
+                $stri = substr($stri, $pos, 250);
+                $stri = explode('"', $stri);
 
-            $response = Http::get($stri[0]);
-            //dd($response->body());
-            $dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
-            //dd($dre);
-            $position = strpos($dre[1], '<</li></ul></div>');
-            $final = substr($dre[1], 0, -1 * $position);
-            return json_encode($final);
-     /*  }
-        else
-        {
+                $response = Http::get($stri[0]);
+                //dd($response->body());
+                $dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
+                //dd($dre);
+                $position = strpos($dre[1], '<</li></ul></div>');
+                $final = substr($dre[1], 0, -1 * $position);
+                return json_encode($final);
+            } else {
+                return null;
+            }
+        }catch(Exception $e){
+            //TODO:fazer log da exceção
             return null;
-        }*/
+        }
     }
 
 
