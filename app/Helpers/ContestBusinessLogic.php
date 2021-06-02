@@ -19,7 +19,7 @@ class ContestBusinessLogic
     public static function insertContests()
     {
         $ids = ContestBusinessLogic::discoverContests();
-        $ids = array_flip($ids);
+        $ids = array_reverse($ids);
         //dd($ids);
         foreach ($ids as $id) {
             //Faz o pedido á pagina de detalhes com o id do anuncio pretendido
