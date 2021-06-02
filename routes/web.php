@@ -37,6 +37,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 Route::get('/base', [BaseController::class,'insertContest2']);
+Route::get('/basefiltro', [BaseController::class,'applyfilter']);
 Route::get('/mail', [BaseController::class,'filterNotification']);
 //only users autenticated and with email verified can access the following routes
 Route::middleware(['auth', 'verified'])->group(function () {

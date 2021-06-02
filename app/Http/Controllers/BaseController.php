@@ -83,7 +83,8 @@ class BaseController extends Controller
         }
     }
     public function insertContest2(){
-        ContestBusinessLogic::dreText();
+        ContestBusinessLogic::insertContests();
+       // ContestBusinessLogic::getdreText();
         echo "done";
     }
 
@@ -92,4 +93,7 @@ class BaseController extends Controller
         echo "done";
     }
 
+    public function applyfilter(){
+        FiltersLogic::applyFilter();
+    }
 }

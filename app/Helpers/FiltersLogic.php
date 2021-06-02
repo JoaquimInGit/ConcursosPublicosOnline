@@ -39,7 +39,7 @@ class FiltersLogic
             //por cada filtro
             foreach ($filtros as $filtro){
                 //encontra registos da relação Contest Filter
-                $contests = ContestFilter::where([['filter_id',$filtro->id],['date','2021-05-30']])->get();
+                $contests = ContestFilter::where([['filter_id',$filtro->id],['date',today()->toDate()]])->get();
 
                 //se o resultado da query anterior não for null
                 if (!empty($contests)){

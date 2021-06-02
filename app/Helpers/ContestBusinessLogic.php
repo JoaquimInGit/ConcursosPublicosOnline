@@ -19,6 +19,7 @@ class ContestBusinessLogic
     public static function insertContests()
     {
         $ids = ContestBusinessLogic::discoverContests();
+        //dd($ids);
         foreach ($ids as $id) {
             //Faz o pedido á pagina de detalhes com o id do anuncio pretendido
             $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
@@ -112,9 +113,14 @@ class ContestBusinessLogic
      */
     public static function discoverContests()
     {
-        $lastid = Contest::getLastBaseId();
+        if(Contest::count() != 0) {
+            $lastid = Contest::getLastBaseId();
+        }else{
+            $lastid = 0;
+        }
         // dd($lastid);
         $idArray = [];
+        //TODO:penso que nao esteja a ir buscar 1000 anuncios joaquim
         $response = Http::asForm()->post('https://www.base.gov.pt/Base4/pt/resultados/', [
             'type' => 'search_anuncios',
             'query' => 'tipoacto=0&tipomodelo=0&tipocontrato=0',
@@ -138,13 +144,18 @@ class ContestBusinessLogic
      * @param $type type of annuncement
      * @return json|null
      */
-    public static function getdreText($annuncementNumber, $type){
-
-        $q2 = str_replace ( ' ' , '+' , $type  );
+    public static function getdreText2(/*$annuncementNumber, $type*/){
+    //https://dre.pt/web/guest/pesquisa/-/search/164501469/details/normal?q=7292%2F2021
+        //debaixo é o que funciona
+        //https://dre.pt/web/guest/pesquisa/-/search/164505026/details/normal?q=7280%2F2021
+        $response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/164501465/details/normal?q=7289%2F2021');
+        //$dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
+        dd($response->body());
+       /* $q2 = str_replace ( ' ' , '+' , $type  );
         $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q='.$annuncementNumber.'+' . $q2);
         $dre = [];
         if(str_contains ( $response2->body() , '<div class="result">' ))
-        {
+        {*/
             $pos = stripos($response2->body(), '<div class="result">',);
             $stri = substr($response2->body(), $pos, 250);
             $pos = stripos($stri, '<a href',);
@@ -161,77 +172,47 @@ class ContestBusinessLogic
             $position = strpos($dre[1], '<</li></ul></div>');
             $final = substr($dre[1], 0, -1 * $position);
             return json_encode($final);
-        }
+     /*  }
         else
         {
             return null;
-        }
+        }*/
     }
 
-    //TODO:
-    public static function pdfToJSON()
-    {
-        $response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/163240299/details/normal?q=6278%2F2021', ['q' => '6278%2F2021' ]);
-        //$response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/163240299/details/normal?q=6278%2F2021');
-        dd($response->body());
-    //   dd($response);
-      //  $html = file_get_html('https://dre.pt/web/guest/pesquisa/-/search/163240299/details/normal?q=6278%2F2021');
-       // $body = json_decode($response->body());
-      //  dd($html);
-        $cont = Contest::last();//get ultimo contest
 
-        // dd($cont->getFirstMedia('pdfs')->getFullUrl());
-       //dd( asset('media/logos/163036493.pdf'));
-        //dd(Pdf::getText(asset('media/logos/163036493.pdf')) );
-        $cont->getMedia('pdfs')->count();//get media
-        // dd($cont);
-        $url = $cont->getFirstMediaUrl('pdfs');//encontra localização do pdf
+    public static function getdreText($annuncementNumber, $type){
+        //https://dre.pt/web/guest/pesquisa/-/search/164501469/details/normal?q=7292%2F2021
+        //debaixo é o que funciona
+        //https://dre.pt/web/guest/pesquisa/-/search/164505026/details/normal?q=7280%2F2021
+       // $response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/164501465/details/normal?q=7289%2F2021');
+        //$dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
+       // dd($response->body());
+         $q2 = str_replace ( ' ' , '+' , $type  );
+         $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q='.$annuncementNumber.'+' . $q2);
+         $dre = [];
+         if(str_contains ( $response2->body() , '<div class="result">' ))
+         {
+        $pos = stripos($response2->body(), '<div class="result">',);
+        $stri = substr($response2->body(), $pos, 250);
+        $pos = stripos($stri, '<a href',);
+        $stri = substr($stri, $pos, 250);
+        $pos = stripos($stri, '"');
+        $pos++;
+        $stri = substr($stri, $pos, 250);
+        $stri = explode('"', $stri);
 
-       // $filename = public_path().$url;
-       // header("Content-type:application/pdf");
-       // header("Content-Disposition:inline;filename='$filename");
-      //  $testes = readfile($filename);
-        //dd($testes);
-        // Parse pdf file and build necessary objects.
-        $parser = new Parser();
-        //$pdf    = $parser->parseFile(public_path().$url);
-       /* try {
-            $parser->parseFile(public_path().$url);
-        }
-        catch (Exception $e) {
-          //  if ($e->getMessage()) {
-               // dd($e->getMessage());
-
-          //  }
-        }*/
-      //  $pdf = $parser->parseFile(public_path().$url);
-       // dd($pdf );
-//dd($pdf->getText());
-      //  $text = ;
-
-         //ddd(public_path() .$url);
-        /* $parser = new Parser();
-         $pdf = $parser->parseFile($url);*/
-//dd(Pdf::getText(public_path().$url) );
-   // dd($cont->getFirstMedia());
-       // $pdftext = shell_exec('/usr/bin/pdftotext '.public_path().$url.' -');
-       // ddd($pdftext);
-      //   $text = (new Pdf())
-        //     ->setPdf(public_path() .$url)
-        //     ->text();
-
-
-       // echo $pdftext;
-       $text = pdf2text(public_path() . $url);
-     //dd($text);
-        //$dados = ((file_get_contents(public_path() . $url)));
-        //  $dados = chunk_split(base64_encode(file_get_contents(public_path() .$url)));
-
-        //transforma a informação do pfd em string (não está a funcionar)
-        /*$text = (new Pdf())
-            ->setPdf(public_path() .$url)
-            ->text();
-        ddd($text);*/
+        $response = Http::get($stri[0]);
+        //dd($response->body());
+        $dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
+        //dd($dre);
+        $position = strpos($dre[1], '<</li></ul></div>');
+        $final = substr($dre[1], 0, -1 * $position);
+        return json_encode($final);
+         }
+           else
+           {
+               return null;
+           }
     }
 
 }
