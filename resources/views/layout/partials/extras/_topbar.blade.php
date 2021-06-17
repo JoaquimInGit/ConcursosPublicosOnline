@@ -10,6 +10,7 @@
             <h3>Filters</h3>
         </a>
     </div>
+
     {{-- Search --}}
     @if (config('layout.extras.search.display'))
         @if (config('layout.extras.search.layout') == 'offcanvas')

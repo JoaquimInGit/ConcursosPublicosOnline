@@ -172,3 +172,7 @@ Breadcrumbs::for('filters.own_edit', function ($trail, $filter) {
     $trail->parent('filters.own_show', $filter);
     $trail->push(__('Update'), route('filters.edit', $filter));
 });
+
+Breadcrumbs::for('contest_filters.index', function ($trail) {
+    $trail->push('Title Here', route('contest_filters.index'));
+});

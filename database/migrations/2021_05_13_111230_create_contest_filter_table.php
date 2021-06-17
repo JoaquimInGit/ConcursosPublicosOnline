@@ -13,7 +13,7 @@ class CreateContestFilterTable extends Migration
      */
     public function up()
     {
-        Schema::create('contest_filter', function (Blueprint $table) {
+        Schema::create('contest_filters', function (Blueprint $table) {
             $table->id();
             $table->foreignId('contest_id')
                 ->nullable()

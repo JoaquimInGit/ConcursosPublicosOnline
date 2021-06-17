@@ -16,7 +16,17 @@ class FiltersLogic
 {
     public static function applyFilter()
     {
-        $filters = Filter::where('filter_status', '>=', 1)->get()->toArray();
+
+        $date = date('H') + 1;
+       //dd($date);
+        if($date > 14){
+            $time = Carbon::create(date('Y'), date('m'), date('d'), 14, 0, 0, 'GMT');
+            $filters = Filter::where('filter_status', '>=', 1)->where("created_at", '>', $time)->get()->toArray();
+        }
+        else{
+            $filters = Filter::where('filter_status', '>=', 1)->get()->toArray();
+        }
+
         $filters = json_encode($filters);
         $filters = json_decode($filters);
         //   dd($filters);

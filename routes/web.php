@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContestFilterController;
 use App\Http\Controllers\FilterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -34,6 +35,11 @@ Route::get('/', function () {
 });*/
 
 Auth::routes(['verify' => true]);
+
+//Route::get('/teste', [HomeController::class,'index'])->name('home');
+
+Route::get('/notification', [ContestFilterController::class,'index'])->name('contest_filters.index');
+Route::get('/notification/{notification}', [ContestFilterController::class,'show'])->name('contest_filters.show');
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 Route::get('/base', [BaseController::class,'insertContest2']);
@@ -83,6 +89,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/filters/{filter}', [FilterController::class,'show'])->name('filters.show');
     Route::get('/filters/{filter}/edit', [FilterController::class,'edit'])->name('filters.edit');
 
+
+
+   // Route::get('/Notifications', [FilterController::class,'showNotifications'])->name('showNotifications.index');
     /*Route::resource('testes', TesteController::class)->parameters([
         'testes' => 'teste'
     ]); //para escolher um parametro diferentes dava erro e em vez de teste estava a meter testis*/
@@ -103,3 +112,5 @@ Route::resource('filters', App\Http\Controllers\FilterController::class);
 Route::resource('contests', App\Http\Controllers\ContestController::class);
 
 Route::resource('entities', App\Http\Controllers\EntityController::class);
+
+Route::resource('contest_filters', App\Http\Controllers\ContestFilterController::class);

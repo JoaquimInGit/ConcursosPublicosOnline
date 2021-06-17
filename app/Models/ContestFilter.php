@@ -9,7 +9,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 /**
  * Class ContestFilter
  * @package App\Models
- * @version May 13, 2021, 11:21 am UTC
+ * @version June 8, 2021, 4:05 pm UTC
  *
  * @property \App\Models\Contest $contest
  * @property \App\Models\Filter $filter
@@ -22,8 +22,8 @@ class ContestFilter extends Model implements Auditable
     use LoadDefaults;
     use \OwenIt\Auditing\Auditable;
 
-    public $table = 'contest_filter';
-
+    public $table = 'contest_filters';
+    
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 

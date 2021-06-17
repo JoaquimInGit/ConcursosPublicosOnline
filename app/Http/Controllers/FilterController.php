@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\FilterDataTable;
+use App\Models\Contest;
 use Illuminate\Http\Request;
 //use App\Http\Requests\CreateFilterRequest;
 //use App\Http\Requests\UpdateFilterRequest;
@@ -74,6 +75,7 @@ class FilterController extends Controller
     {
         return view('filters.show', compact('filter'));
     }
+
 
     /**
      * Show the form for editing the specified Filter.

@@ -408,4 +408,6 @@ class Contest extends Model implements Auditable
         return DB::table('contests')->latest()->pluck('base_id')->max();
     }
 
+
+
 }
