@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContestFilterController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,10 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/products', [ProductController::class,'index'])->name('products.index');
+//Route::get('/teste', [HomeController::class,'index'])->name('home');
+
+Route::get('/notification', [ContestFilterController::class,'index'])->name('contest_filters.index');
+Route::get('/notification/{notification}', [ContestFilterController::class,'show'])->name('contest_filters.show');
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 Route::get('/base', [BaseController::class,'insertContest2']);
@@ -110,3 +114,5 @@ Route::resource('entities', App\Http\Controllers\EntityController::class);
 Route::resource('products', App\Http\Controllers\ProductController::class);
 
 Route::resource('orders', App\Http\Controllers\OrderController::class);
+
+Route::resource('contest_filters', App\Http\Controllers\ContestFilterController::class);

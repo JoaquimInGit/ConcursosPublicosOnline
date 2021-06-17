@@ -8,10 +8,11 @@ use App\Models\Contest;
 use Dompdf\Helpers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades;
-use mysql_xdevapi\Exception;
+//use mysql_xdevapi\Exception;
 use Smalot\PdfParser\Parser;
 use Spatie\PdfToText\Pdf;
 use Symfony\Component\Panther\Client;
+use Exception;
 use function Composer\Autoload\includeFile;
 include 'pdfToText.php';
 
@@ -192,6 +193,7 @@ class ContestBusinessLogic
        // $response = Http::get('https://dre.pt/web/guest/pesquisa/-/search/164501465/details/normal?q=7289%2F2021');
         //$dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
        // dd($response->body());
+
         try {
             $q2 = str_replace(' ', '+', $type);
             $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q=' . $annuncementNumber . '+' . $q2);
