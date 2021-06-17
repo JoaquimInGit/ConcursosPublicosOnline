@@ -14,9 +14,13 @@ use Carbon\Carbon;
 
 class FiltersLogic
 {
+    /***
+     *função que permite aplicar um filtro
+     * insere os resultados na tabela contestFilters
+     * nao coloca registos repetidos
+     */
     public static function applyFilter()
     {
-
         $date = date('H') + 1;
        //dd($date);
         if($date > 14){
@@ -88,14 +92,19 @@ class FiltersLogic
                 $contests = $contests->toArray();
                 $contests = json_encode($contests);
                 $contests = json_decode($contests);
-                //dd($contests);
+
+                //Retira todos os contestFilters da DB
+                $contestFilters = ContestFilter::where('filter_id', '=', $filter->id)->get();
                 foreach ($contests as $contest) {
-                    //dd($contest);
-                    ContestFilter::create([
-                        'contest_id' => $contest->id,
-                        'filter_id' => $filter->id,
-                        'date' => Carbon::now()
-                    ]);
+                    //vai validar um registo do contest filters para evitar que se coloquem repetidos
+                    if($contestFilters->where('contest_id', '=', $contest->id)->count() == 0) {
+                        //dd($contest);
+                        ContestFilter::create([
+                            'contest_id' => $contest->id,
+                            'filter_id' => $filter->id,
+                            'date' => Carbon::now()
+                        ]);
+                    }
                 }
             }
 
