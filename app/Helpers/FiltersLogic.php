@@ -100,6 +100,7 @@ class FiltersLogic
 
         //array para enviar os contests de cada entidade
         $contestsArray = array();
+        //$filtersArray = array();
 
         //por cada entidade
         foreach ($entities as $entity){
@@ -115,7 +116,8 @@ class FiltersLogic
 
                 //se o resultado da query anterior não for null
                 if (!empty($contests)){
-
+                    //$fil = Filter::where('id',$filtro->id)->first();
+                    //array_push($filtersArray, $fil);
                     //por cada concurso
                     foreach($contests as $c){
                         //colocamos o concurso no array
@@ -130,6 +132,7 @@ class FiltersLogic
                 $user->notify(new FilterNotification($contestsArray));
                 //colocamos o array vazio
                 $contestsArray = array();
+                $filtersArray = array();
             }
         }
 

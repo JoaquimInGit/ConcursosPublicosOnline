@@ -1,10 +1,10 @@
 @extends('layout.default')
 <?php
-view()->share('pageTitle', __('Entities'));
+view()->share('pageTitle', __('Orders'));
 view()->share('hideSubHeader', true);
 ?>
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('entities.index') }}
+    {{ Breadcrumbs::render('orders.index') }}
 @endsection
 @push('styles')
     <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -19,13 +19,15 @@ view()->share('hideSubHeader', true);
                     <i class="flaticon2-settings text-primary"></i>
                 </span>
                 <h3 class="card-label">
-                    {{ __('Entities') }}
+                    {{ __('Orders') }}
                 </h3>
             </div>
             <div class="card-toolbar">
-                <a href="{{ route('entities.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
+                <div class="dropdown dropdown-inline" id="datatable-buttons">
+                </div>
+                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
                     <i class="la la-plus"></i>
-                    {{ __('New Entity') }}
+                    {{ __('New Order') }}
                 </a>
             </div>
         </div>
@@ -48,7 +50,7 @@ view()->share('hideSubHeader', true);
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';
             $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-sm btn-default font-weight-bold mr-2';
-            var buttons = new $.fn.dataTable.Buttons(window.LaravelDataTables["entities-table"], {
+            var buttons = new $.fn.dataTable.Buttons(window.LaravelDataTables["orders-table"], {
                 buttons: [
                     'export',
                 ]
@@ -76,7 +78,7 @@ view()->share('hideSubHeader', true);
                         dataType: 'json',
                         data: {_method: 'DELETE'}
                     }).always(function (data) {
-                        jQuery('#entities-table').DataTable().draw(false);
+                        jQuery('#orders-table').DataTable().draw(false);
                     });
                 }
             });
