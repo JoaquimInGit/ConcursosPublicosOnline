@@ -98,6 +98,7 @@ class DatabaseSeeder extends Seeder
         }
         if ($this->command->confirm('Do you want to apply all seeds? [y|N]', true)) {
             $this->call(SettingSeeder::class);
+            $this->call(ProductSeeder::class);
         }
         if ($this->command->confirm('Do you want to create a some random data for other tables? [y|N]', true)) {
             //User::factory()->count(10)->create();

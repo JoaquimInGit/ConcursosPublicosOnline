@@ -30,9 +30,11 @@ class CreateOrderItemTable extends Migration
             $table->string('cookie')->nullable();
             $table->string('name');
             $table->smallInteger('quantity');
-            $table->decimal('price',12,2);;
+            $table->decimal('price',12,2);
             $table->string('notes')->nullable();
             $table->decimal('iva')->default(0.23);
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->smallInteger('status')->nullable()
                 ->default(1)
                 ->comment("1 - waiting order | 2 - ordered");

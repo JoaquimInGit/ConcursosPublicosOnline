@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Contest;
 use App\Models\Entity;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
@@ -26,11 +27,14 @@ class ContestDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
+            ->editColumn('price', function($contest){
+                return !empty($contest->price) ? number_format($contest->price, 2, ',', '.') : '';
+            })
             ->editColumn('publication_date', function ($contest){
-                return !empty($contest->publication_date) ? Carbon::Parse($contest->publication_date)->format('Y-m-d') : '';
+                return !empty($contest->publication_date) ? Carbon::Parse($contest->publication_date)->format('d-m-Y') : '';
             })
             ->editColumn('deadline_date', function ($contest){
-                return !empty($contest->deadline_date) ? Carbon::Parse($contest->deadline_date)->format('Y-m-d') : '';
+                return !empty($contest->deadline_date) ? Carbon::Parse($contest->deadline_date)->format('d-m-Y') : '';
             })
             ->addColumn('action', function ($contest) {
                 if(auth()->user()->can('accessAsUser')){

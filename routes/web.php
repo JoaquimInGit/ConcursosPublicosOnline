@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContestFilterController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
@@ -89,9 +90,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/filters/{filter}', [FilterController::class,'show'])->name('filters.show');
     Route::get('/filters/{filter}/edit', [FilterController::class,'edit'])->name('filters.edit');
 
-
-
-   // Route::get('/Notifications', [FilterController::class,'showNotifications'])->name('showNotifications.index');
     /*Route::resource('testes', TesteController::class)->parameters([
         'testes' => 'teste'
     ]); //para escolher um parametro diferentes dava erro e em vez de teste estava a meter testis*/
@@ -112,5 +110,9 @@ Route::resource('filters', App\Http\Controllers\FilterController::class);
 Route::resource('contests', App\Http\Controllers\ContestController::class);
 
 Route::resource('entities', App\Http\Controllers\EntityController::class);
+
+Route::resource('products', App\Http\Controllers\ProductController::class);
+
+Route::resource('orders', App\Http\Controllers\OrderController::class);
 
 Route::resource('contest_filters', App\Http\Controllers\ContestFilterController::class);

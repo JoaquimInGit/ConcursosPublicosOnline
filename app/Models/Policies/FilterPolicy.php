@@ -42,7 +42,15 @@ class FilterPolicy
      */
     public function create(User $user)
     {
-        return $user->can('accessAsUser');
+        $entity = Entity::getCurrentEntity();
+        //se o user atual não tiver uma entidade associada
+        if($entity == null){
+            //não permite o acesso
+            return false;
+        }{
+            //permite o acesso
+            return true;
+        }
     }
 
     /**
