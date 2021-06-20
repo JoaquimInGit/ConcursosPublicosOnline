@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContestFilterController;
 use App\Http\Controllers\FilterController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -77,6 +78,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/contests/{contest}', [ContestController::class,'show'])->name('contests.show');
     Route::get('/contests/{contest}/follow', [ContestController::class,'follow'])->name('contests.follow');
     Route::get('/contests/{contest}/edit', [ContestController::class,'edit'])->name('contests.edit');
+    Route::post('/contests/followdatatable', [ContestController::class,'followDatatable'])->name('contests.followDatatable');
 
     Route::get('/entities', [EntityController::class,'index'])->name('entities.index');
     Route::post('/entities', [EntityController::class,'store'])->name('entities.store');
@@ -89,6 +91,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/filters/create', [FilterController::class,'create'])->name('filters.create');
     Route::get('/filters/{filter}', [FilterController::class,'show'])->name('filters.show');
     Route::get('/filters/{filter}/edit', [FilterController::class,'edit'])->name('filters.edit');
+
+    ///Route::resource('products', App\Http\Controllers\ProductController::class)->middleware('can:adminFullApp');
+    Route::get('/products', [ProductController::class,'index'])->name('products.index')->middleware('can:adminFullApp');
+    Route::post('/products', [ProductController::class,'store'])->name('products.store')->middleware('can:adminFullApp');
+    Route::get('/products/create', [ProductController::class,'create'])->name('products.create')->middleware('can:adminFullApp');
+    Route::get('/products/{product}', [ProductController::class,'show'])->name('products.show')->middleware('can:adminFullApp');
+    Route::get('/products/{product}/edit', [ProductController::class,'edit'])->name('products.edit')->middleware('can:adminFullApp');
+
+    Route::get('/orders', [OrderController::class,'index'])->name('orders.index');
+    Route::post('/orders', [OrderController::class,'store'])->name('orders.store');
+    Route::get('/orders/create', [OrderController::class,'create'])->name('orders.create');
+    Route::get('/orders/{order}', [OrderController::class,'show'])->name('orders.show');
+    Route::get('/orders/{order}/edit', [OrderController::class,'edit'])->name('orders.edit');
+
 
     /*Route::resource('testes', TesteController::class)->parameters([
         'testes' => 'teste'

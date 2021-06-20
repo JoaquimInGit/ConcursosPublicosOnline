@@ -35,6 +35,6 @@ class CreateContestFilterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contest_filter');
+        Schema::dropIfExists('contest_filters');
     }
 }

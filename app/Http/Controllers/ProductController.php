@@ -14,6 +14,16 @@ use Illuminate\Http\Response;
 class ProductController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
+
+    /**
      * Display a listing of the Product.
      *
      * @param ProductDataTable $productDataTable

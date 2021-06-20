@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Contest;
+use App\Models\ContestEntity;
 use App\Models\Entity;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -38,8 +39,18 @@ class ContestDataTable extends DataTable
             })
             ->addColumn('action', function ($contest) {
                 if(auth()->user()->can('accessAsUser')){
-                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
-                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.follow', $contest) .'" title="'. __('Follow') .'"><i class="la la-star"></i></a>';
+                    $entity = Entity::getCurrentEntity();
+                    //\Debugbar::error($entity);
+                    $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
+                    //\Debugbar::error($contestentity);
+                    if(!empty($contestentity) && $contestentity->follow == 1){
+                        return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>'.
+                        '<a class="btn btn-sm btn-clean btn-icon btn-icon-md follow" onclick="follow('.$contest->id.')" title="'. __('Follow').'"> <i class="la la-star" style="color:blue"></i></a>';
+                    }else{
+                        return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>'.
+                            '<a class="btn btn-sm btn-clean btn-icon btn-icon-md follow" onclick="follow('.$contest->id.')" title="'. __('Follow').'"> <i class="la la-star"></i></a>';
+                    }
+
                 }else{
                     return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
                         <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.edit', $contest) .'"  title="'. __('Edit') .'"><i class="la la-edit"></i></a>
@@ -140,6 +151,7 @@ class ContestDataTable extends DataTable
         return $this->builder()
             ->setTableId('contests-table')
             ->columns($this->getColumns())
+            ->pageLength(50)
             ->minifiedAjax()
             ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive'rt>ip") // Bfrtip
              //   ->searchCols([ 'type' => "(1|2)"])

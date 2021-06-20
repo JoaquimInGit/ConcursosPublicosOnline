@@ -149,6 +149,46 @@ class ContestController extends Controller
         }
         return redirect()->back();
     }
+    /**
+     * Follow the specified Contest.
+     *
+     * @param  Contest  $contest
+     * @return Response
+     */
+    public function followDatatable(Request $request)
+    {
+        //\Debugbar::error($request->all());
+        $contest = Contest::where('id',$request['data'])->first();
+        //recebe a entidade do user autenticado
+        $entity = Entity::getCurrentEntity();
+
+        //se o user tiver permissões de acesso de user
+        if(auth()->user()->can('accessAsUser')){
+            //recebe se existir o registo entre contest e entidade
+            $valor = ContestEntity::getRegisto($contest,$entity);
+            if(!$valor->exists()){
+                //se não existir então cria um registo
+                ContestEntity::create([
+                    'contest_id' =>  $contest->id,
+                    'entity_id' => $entity->id,
+                    'follow' => 1,
+                ]);
+            }else{
+                //se existir altera o valor no atributo follow(segue(1) e não segue(0))
+                $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
+                if ($contestentity->follow == '0'){
+                    $contestentity->update([
+                        'follow' => 1,
+                    ]);
+                }else{
+                    $contestentity->update([
+                        'follow' => 0,
+                    ]);
+                }
+            }
+        }
+        return ['success' => true];
+    }
 
     /**
      * Show the form for editing the specified Contest.

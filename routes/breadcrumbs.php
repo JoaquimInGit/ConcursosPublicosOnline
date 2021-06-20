@@ -173,6 +173,59 @@ Breadcrumbs::for('filters.own_edit', function ($trail, $filter) {
     $trail->push(__('Update'), route('filters.edit', $filter));
 });
 
+
 Breadcrumbs::for('contest_filters.index', function ($trail) {
-    $trail->push('Title Here', route('contest_filters.index'));
+    $trail->push(__('Contest Filters'), route('contest_filters.index'));
+});
+
+
+Breadcrumbs::for('products.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push(__('Products'), route('products.index'));
+});
+Breadcrumbs::for('products.create', function ($trail) {
+    $trail->parent('products.index');
+    $trail->push(__('Create'), route('products.create'));
+});
+Breadcrumbs::for('products.show', function ($trail, $product) {
+    $trail->parent('products.index');
+    $trail->push($product->name, route('products.show', $product));
+});
+Breadcrumbs::for('products.edit', function ($trail, $product) {
+    $trail->parent('products.show', $product);
+    $trail->push(__('Update'), route('products.edit', $product));
+});
+Breadcrumbs::for('products.own_show', function ($trail, $product) {
+    $trail->parent('home');
+    $trail->push($product->name, route('products.show', $product));
+});
+Breadcrumbs::for('products.own_edit', function ($trail, $product) {
+    $trail->parent('products.own_show', $product);
+    $trail->push(__('Update'), route('products.edit', $product));
+});
+
+
+Breadcrumbs::for('orders.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push(__('Orders'), route('orders.index'));
+});
+Breadcrumbs::for('orders.create', function ($trail) {
+    $trail->parent('orders.index');
+    $trail->push(__('Create'), route('orders.create'));
+});
+Breadcrumbs::for('orders.show', function ($trail, $order) {
+    $trail->parent('orders.index');
+    $trail->push($order->id, route('orders.show', $order));
+});
+Breadcrumbs::for('orders.edit', function ($trail, $order) {
+    $trail->parent('orders.show', $order);
+    $trail->push(__('Update'), route('orders.edit', $order));
+});
+Breadcrumbs::for('orders.own_show', function ($trail, $order) {
+    $trail->parent('home');
+    $trail->push($order->id, route('orders.show', $order));
+});
+Breadcrumbs::for('orders.own_edit', function ($trail, $order) {
+    $trail->parent('orders.own_show', $order);
+    $trail->push(__('Update'), route('orders.edit', $order));
 });

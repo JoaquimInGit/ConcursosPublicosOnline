@@ -7,8 +7,10 @@ use App\Models\Entity;
 use App\Models\Filter;
 use App\Models\Policies\EntityPolicy;
 use App\Models\Policies\FilterPolicy;
+use App\Models\Policies\ProductPolicy;
 use App\Models\Policies\SettingPolicy;
 use App\Models\Policies\ContestPolicy;
+use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Entity::class => EntityPolicy::class,
         Contest::class => ContestPolicy::class,
         Filter::class => FilterPolicy::class,
+        Product::class => ProductPolicy::class
     ];
 
     /**
