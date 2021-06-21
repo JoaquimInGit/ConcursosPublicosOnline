@@ -46,7 +46,7 @@ class Order extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'orders';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -221,5 +221,114 @@ class Order extends Model implements Auditable
     public function orderItems()
     {
         return $this->hasMany(\App\Models\OrderItem::class, 'order_id');
+    }
+
+    /**
+     * recebe a entidade atual
+     * @return mixed
+     */
+    public function getEntity(){
+        $entity = Entity::getCurrentEntity();
+        return $entity;
+    }
+
+    /**
+     * recebe o user atual
+     * @return mixed
+     */
+    public function getUser(){
+        $user = User::where('id',auth()->user()->id)->first();
+        return $user;
+    }
+
+    /**
+     * recebe os produtos e devolve um array com o preço dos produtos
+     * @return array
+     */
+    public static function getPrice(){
+        $array = array();
+        $produtos = Product::select('price')->get();
+        foreach ($produtos as $produto){
+            $preco = floatval($produto->price);
+            array_push($array,$preco);
+        }
+        return $array;
+    }
+
+    /**
+     * devolve o preco sem iva dado o indice do produto
+     * @param $index
+     * @return mixed
+     */
+    public static function getSpecificPrice($index){
+        $array = Order::getPrice();
+        return $array[$index];
+    }
+
+    /**
+     * devolve o preco com iva dado o indice do produto
+     * @param $index
+     * @return string
+     */
+    public static function getSpecificPriceIVA($index){
+        $array = Order::getPrice();
+        $dif = $array[$index]*0.23;
+        $precofinal = $array[$index] + $dif;
+        return number_format($precofinal,1);
+    }
+
+    public function syncOrderItem($orderItems,$entity_id){
+        $orderItemIds = $this->orderItem->pluck('id')->toArray();
+        $updatedOrderItemIds = [];
+        /*if(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_PAYED){
+            \Debugbar::error('plan payed');
+            $status = Cart::STATUS_PAYED_PLAN;
+        }elseif(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_WAITING_PAYMENT){
+            \Debugbar::error('plan waiting');
+            $status = Cart::STATUS_WAITING_PAYMENT_PLAN;
+        }elseif(str_contains($this->order_reference,'Sessão') && $this->status == Order::STATUS_WAITING_PAYMENT){
+            \Debugbar::error('session waiting');
+            $status = Cart::STATUS_WAITING_PAYMENT_SEPARATE;
+        }elseif(str_contains($this->order_reference,'Sessão') && $this->status == Order::STATUS_PAYED){
+            \Debugbar::error('session payed');
+            $status = Cart::STATUS_PAYED_SEPARATE;
+        }
+        \Debugbar::error($status);*/
+        if(!empty($status)){
+            foreach($orderItems as $orderItem){
+                if(empty($orderItem['id'])) {
+                    $orderItem['price'] = round($orderItem['price'],2);
+                    $orderItem['quantity'] = 1;
+                    $orderItem['iva'] = 0.23;
+                    $orderItem['name'] = 'name';
+                    //$orderItem['start_date'] = Carbon::today();
+                    //$orderItem['end_date'] = Carbon::today()->addMonth();
+                    $orderItem['status'] = $status;
+                    $orderItem['entity_id'] = $entity_id;
+                    $this->orderItems()->create($orderItem);
+                }
+                /*if(in_array($orderItem['id'], $orderItemIds)){
+                    $item = $this->orderItem->where('id', $orderItem['id'])->first();
+                    $item->fill($orderItem);
+                    $item->price = round($item->price , 2);
+                    $orderItem['iva'] = 0.23;
+                    $orderItem['name'] = 'name';
+                    //$item->start_at = Carbon::today();
+                    //$item->end_at = Carbon::today()->addYear();
+                    $item->status = $status;
+                    $item->entity_id = $entity_id;
+                    $item->quantity = 1;
+                    if (!empty(Entity::where('id', $entity_id)->first()) && !empty(Entity::where('id', $entity_id)->first()->clientPlanPrice()->where('status', ClientPlanPrice::STATUS_ACTIVE)->get()->last())) {
+                        $item->client_plan_price_id = Client::where('id', $client_id)->first()->clientPlanPrice()->where('status', ClientPlanPrice::STATUS_ACTIVE)->get()->last()->id;
+                    }
+                    $item->save();
+                    $updatedCartsIds[] = $cart['id'];
+                }*/
+            }
+            /*$differenceArray = array_diff($cartsIds, $updatedCartsIds);
+            foreach($differenceArray as $removeId){
+                $this->carts()->where('id', $removeId)->delete();
+            }*/
+        }
     }
 }

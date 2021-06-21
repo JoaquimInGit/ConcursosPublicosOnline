@@ -25,10 +25,10 @@ view()->share('hideSubHeader', true);
             <div class="card-body">
                 @include('orders.fields')
              </div>
-            <div class="card-footer">
+            <!--<div class="card-footer">
                 <button type="submit" class="btn btn-primary mr-2">{{ __('Save') }}</button>
-                <!--<button type="reset" class="btn btn-secondary">Cancel</button>-->
-            </div>
+                <button type="reset" class="btn btn-secondary">Cancel</button>
+            </div>-->
         {!! Form::close() !!}
     </div>
 @endsection

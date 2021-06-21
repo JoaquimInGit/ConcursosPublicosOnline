@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\OrderDataTable;
+use App\Models\Entity;
 use Illuminate\Http\Request;
 //use App\Http\Requests\CreateOrderRequest;
 //use App\Http\Requests\UpdateOrderRequest;
@@ -49,64 +50,27 @@ class OrderController extends Controller
         if(($model = Order::create($validatedAttributes)) ) {
             //flash(Order saved successfully.');
             //Flash::success('Order saved successfully.');
+            //ddd($request->submit);
+            switch($request->submit) {
+                case __('Monthly'):
+                    break;
+                case __('Semi-annual'):
+                    $model->update(['sub_total'=>Order::getSpecificPrice(1),'iva_value'=>Order::getSpecificPriceIVA(1)]);
+                    break;
+                case __('Annual'):
+                    $model->update(['sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
+                    break;
+            }
             //$model->syncCarts($validatedAttributes['Carts'],$validatedAttributes['client_id']);
-            //if(isset($validatedAttributes['Carts']))
-                //$model->syncCarts($validatedAttributes['OrderItems'],$validatedAttributes['entity_id']);
+            //if(isset($validatedAttributes['OrderItem']))
+            //ddd($validatedAttributes['OrderItems']);
+                //$model->syncOrderItem($validatedAttributes['OrderItems'],$validatedAttributes['entity_id']);
             return redirect(route('orders.show', $model));
         }else
             return redirect()->back();
     }
 
-    /*public function syncCarts($carts,$client_id){
-        $cartsIds = $this->carts->pluck('id')->toArray();
-        $updatedCartsIds = [];
-        if(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_PAYED){
-            \Debugbar::error('plan payed');
-            $status = Cart::STATUS_PAYED_PLAN;
-        }elseif(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_WAITING_PAYMENT){
-            \Debugbar::error('plan waiting');
-            $status = Cart::STATUS_WAITING_PAYMENT_PLAN;
-        }elseif(str_contains($this->order_reference,'Sessão') && $this->status == Order::STATUS_WAITING_PAYMENT){
-            \Debugbar::error('session waiting');
-            $status = Cart::STATUS_WAITING_PAYMENT_SEPARATE;
-        }elseif(str_contains($this->order_reference,'Sessão') && $this->status == Order::STATUS_PAYED){
-            \Debugbar::error('session payed');
-            $status = Cart::STATUS_PAYED_SEPARATE;
-        }
-        \Debugbar::error($status);
-        if(!empty($status)){
-            foreach($carts as $cart){
-                if(empty($cart['id'])) {
-                    $cart['price'] = round($cart['price'],2);
-                    $cart['quantity'] = 1;
-                    //$cart['start_at'] = Carbon::today();
-                    //$cart['end_at'] = Carbon::today()->addYear();
-                    $cart['status'] = $status;
-                    $cart['client_id'] = $client_id;
-                    $this->carts()->create($cart);
-                }
-                if(in_array($cart['id'], $cartsIds)){
-                    $item = $this->carts->where('id', $cart['id'])->first();
-                    $item->fill($cart);
-                    $item->price = round($item->price , 2);
-                    //$item->start_at = Carbon::today();
-                    //$item->end_at = Carbon::today()->addYear();
-                    $item->status = $status;
-                    $item->client_id = $client_id;
-                    $item->quantity = 1;
-                    if (!empty(Client::where('id', $client_id)->first()) && !empty(Client::where('id', $client_id)->first()->clientPlanPrice()->where('status', ClientPlanPrice::STATUS_ACTIVE)->get()->last())) {
-                        $item->client_plan_price_id = Client::where('id', $client_id)->first()->clientPlanPrice()->where('status', ClientPlanPrice::STATUS_ACTIVE)->get()->last()->id;
-                    }
-                    $item->save();
-                    $updatedCartsIds[] = $cart['id'];
-                }
-            }
-            $differenceArray = array_diff($cartsIds, $updatedCartsIds);
-            foreach($differenceArray as $removeId){
-                $this->carts()->where('id', $removeId)->delete();
-            }
-        }
-    }*/
+
     /**
      * Display the specified Order.
      *
