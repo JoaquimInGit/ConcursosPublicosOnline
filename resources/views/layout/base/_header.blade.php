@@ -6,7 +6,7 @@
 @endif
 
     {{-- Container --}}
-    <div class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="container-fluid d-flex align-items-right justify-content-between">
         @if (config('layout.header.self.display'))
 
             @php

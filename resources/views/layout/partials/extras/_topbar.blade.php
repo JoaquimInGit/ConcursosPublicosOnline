@@ -2,12 +2,17 @@
 <div class="topbar">
     <div class="topbar-item mr-5">
         <a href="{{ route('contests.index') }}">
-            <h3>{{ __('Contests') }}</h3>
+            <h3 style=>{{ __('Contests') }}</h3>
         </a>
     </div>
     <div class="topbar-item mr-5 ">
         <a href="{{ route('filters.index') }}">
             <h3>{{ __('Filters') }}</h3>
+        </a>
+    </div>
+    <div class="topbar-item mr-5 ">
+        <a href="{{ route('contest_filters.index') }}">
+            <h3>{{ __('Notifications') }}</h3>
         </a>
     </div>
     @if(auth()->user()->can('manageUsers'))

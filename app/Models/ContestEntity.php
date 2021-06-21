@@ -120,5 +120,14 @@ class ContestEntity extends Model implements Auditable
     public static function getRegisto(Contest $contest,Entity $entity){
         return ContestEntity::where([['contest_id', $contest->id],['entity_id', $entity->id]]);
     }
+    /**
+     * procura registo entre o contest e a entidade
+     * @param $contest
+     * @param $entity
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public static function getRegistoId($id,Entity $entity){
+        return ContestEntity::where([['contest_id', $id],['entity_id', $entity->id]]);
+    }
 
 }

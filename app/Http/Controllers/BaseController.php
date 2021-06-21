@@ -6,6 +6,7 @@ use App\DataTables\ContestDataTable;
 use App\Helpers\FiltersLogic;
 use App\Models\Base;
 use App\Models\Contest;
+use App\Models\ContestFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Spatie\PdfToText\Pdf;
@@ -95,5 +96,33 @@ class BaseController extends Controller
 
     public function applyfilter(){
         FiltersLogic::applyFilter();
+    }
+
+    public function applyFilterToAllContests(){
+
+        //$entity = ContestFilter::getEntity();
+        //$filters = ContestFilter::getFiltersEntity($entity);
+      //// dd($filters);
+       //FiltersLogic::applyFilterToAllContests();
+
+        $query = ContestFilter::query();
+
+        if(auth()->user()->can('accessAsUser')){
+            $entity = ContestFilter::getEntity();
+            $filters = ContestFilter::getFiltersEntity($entity);
+            //$query = $query->where('filter_id', $filter);
+            $query = $query->where(function($q) use ($filters){
+                foreach ($filters as $filter) {
+
+                    $q->orWhere('filter_id', $filter->id);
+                  //  dd($q->get()->toArray());
+                }
+            });
+            ///Debugbar($query);
+        }
+        ddd($query);
+        return $query;
+
+
     }
 }

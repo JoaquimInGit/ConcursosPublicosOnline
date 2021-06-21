@@ -87,7 +87,7 @@ class ContestBusinessLogic
                 'base_id' => $body->id == null ? null : $body->id,
                 'num_announcement' => $body->announcementNumber == null ? null : $body->announcementNumber,
                 'description' => $body->contractDesignation == null ? null : $body->contractDesignation,
-                'entity' => $body->contractingEntities[0]->description == null ? null :  $body->contractingEntities[0]->description ,
+                'entity' => $body->contractingEntities == [] ? null :  $body->contractingEntities[0]->description ,
                 'price' => $basePrice,
                 'publication_date' => $date,
                 'deadline_date' => $dateDeadline,
@@ -214,6 +214,13 @@ class ContestBusinessLogic
                 //dd($dre);
                 $position = strpos($dre[1], '<</li></ul></div>');
                 $final = substr($dre[1], 0, -1 * $position);
+                $final = '"'.$final.'"';
+                $final = preg_replace("/<!--.*?-->/", "", $final);
+                $final = strip_tags($final);
+               // $final = htmlspecialchars($final);
+                $final = html_entity_decode($final);
+                $final = preg_replace("/\r|\n/", "", $final);
+                //ddd($final);
                 return json_encode($final);
             } else {
                 return null;

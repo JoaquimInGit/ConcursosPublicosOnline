@@ -3,8 +3,11 @@
 namespace App\DataTables;
 
 use App\Models\Contest;
+use App\Models\ContestEntity;
 use App\Models\ContestFilter;
+use App\Models\Entity;
 use App\Models\Filter;
+use Carbon\Carbon;
 use Doctrine\DBAL\Driver\AbstractDB2Driver;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
@@ -24,7 +27,10 @@ class ContestFilterDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
+            ->editColumn('date', function ($contestfilter){
+                return !empty($contestfilter->date) ? Carbon::Parse($contestfilter->date)->format('d-m-Y') : '';
+            })
+           // ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
             ->editColumn('contest_id', function($contestfilter) {
                 $contest = Contest::select('description')->where('id', $contestfilter->contest_id)->first();
                 return $contest->description;
@@ -34,10 +40,31 @@ class ContestFilterDataTable extends DataTable
                 $filter = Filter::select('filter_name')->where('id', $contestfilter->filter_id)->first();
                 return $filter->filter_name;
             })
-            ->addColumn('action', function ($contestFilter) {
-                return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contest_filters.show', $contestFilter) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
-                        <a href="'. route('contest_filters.edit', $contestFilter) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
-                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $contestFilter->id .'" data-delete-url="'. route('contest_filters.destroy', $contestFilter) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
+            ->addColumn('action', function ($contestfilter) {
+                $contest = Contest::find($contestfilter->contest_id);
+              //  $contest = Contest::where('id',$contestfilter->contest_id);
+               // \Debugbar::error($contest);
+                if(auth()->user()->can('accessAsUser')){
+                   //$contest = Contest::first("id", $contestfilter->contest_id);
+                    $entity = Entity::getCurrentEntity();
+                    //\Debugbar::error($entity);
+                   // $contestentity = ContestEntity::getRegistoId($contest->contests_id,$entity)->first();
+                    $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
+                  // \Debugbar::error(!empty($contestentity));
+                   \Debugbar::error($contestentity);
+                    if(!empty($contestentity) && $contestentity->follow == 1){
+                        return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>'.
+                            '<a class="btn btn-sm btn-clean btn-icon btn-icon-md follow" onclick="follow('.$contestfilter->contest_id.')" title="'. __('Follow').'"> <i class="la la-star" style="color:blue"></i></a>';
+                    }else{
+                        return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>'.
+                            '<a class="btn btn-sm btn-clean btn-icon btn-icon-md follow" onclick="follow('.$contestfilter->contest_id.')" title="'. __('Follow').'"> <i class="la la-star" ></i></a>';
+                    }
+                }else{
+                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
+                        <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.edit', $contest) .'"  title="'. __('Edit') .'"><i class="la la-edit"></i></a>
+                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $contestfilter->contest_id .'" data-delete-url="'. route('contests.destroy', $contest) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
+                }
+
             });
             //->editColumn('type', '{{ $this->typeLabel }}')
             /*->editColumn('type', function ($model) {
@@ -53,7 +80,21 @@ class ContestFilterDataTable extends DataTable
      */
     public function query(ContestFilter $model)
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+
+        if(auth()->user()->can('accessAsUser')){
+            $entity = $model->getEntity();
+            $filters = $model->getFiltersEntity($entity);
+            //$query = $query->where('filter_id', $filter);
+            $query = $query->where(function($q) use ($filters){
+                foreach ($filters as $filter) {
+                    $q->orWhere('filter_id', $filter->id);
+                }
+            });
+           ///Debugbar($query);
+        }
+        return $query;
+        //return $model->newQuery();
     }
 
     /**
@@ -66,6 +107,7 @@ class ContestFilterDataTable extends DataTable
         return $this->builder()
             ->setTableId('contest_filters-table')
             ->columns($this->getColumns())
+            ->pageLength(50)
             ->minifiedAjax()
             ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive'rt>ip") // Bfrtip
              //   ->searchCols([ 'type' => "(1|2)"])
@@ -87,17 +129,17 @@ class ContestFilterDataTable extends DataTable
     protected function getColumns()
     {
         $model = new ContestFilter();
-        return [
-            Column::make('contest_id')->title($model->getAttributeLabel('contest_id')),
-            Column::make('filter_id')->title($model->getAttributeLabel('filter_id')),
-            Column::make('date')->title($model->getAttributeLabel('date')),
+        return[
+            Column::make('contest_id')->title($model->getAttributeLabel(__('Contest'))),
+            Column::make('filter_id')->title($model->getAttributeLabel(__('Filter'))),
+            Column::make('date')->title($model->getAttributeLabel(__('Date'))),
             Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(120)
-                ->addClass('text-center')
-                ->title(__('Action')),
-        ];
+            ->exportable(false)
+            ->printable(false)
+            ->width(120)
+            ->addClass('text-center')
+            ->title(__('Action')),
+            ];
     }
 
     /**
