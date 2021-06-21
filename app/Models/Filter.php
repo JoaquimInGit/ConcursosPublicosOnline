@@ -186,7 +186,7 @@ class Filter extends Model implements Auditable
     }
 
     /**
-     * recebe a entidade atual
+     * Devolve a entidade atual
      * @return mixed
      */
     public static function getEntity(){

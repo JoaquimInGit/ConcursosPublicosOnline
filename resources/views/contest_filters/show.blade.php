@@ -19,17 +19,22 @@ view()->share('hideSubHeader', true);
                 </h3>
             </div>
             <div class="card-toolbar">
-                <a href="{{ route('contest_filters.edit', $contestFilter) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
-                    <i class="la la-edit"></i>
-                    {{ __('Update') }}
-                </a>
-                <button class="btn btn-sm btn-light-danger font-weight-bold" onclick="destroyConfirmation(this)">
-                    <i class="la la-trash"></i>
-                    {{ __('Delete') }}
-                </button>
-                {!! Form::open(['route' => ['contest_filters.destroy', $contestFilter], 'method' => 'delete', 'class'=>"d-none", 'id' => 'delete-form']) !!}
-
-                {!! Form::close() !!}
+            @if(auth()->user()->can('accessAsUser'))
+                <!--<button class="btn btn-sm btn-light-danger font-weight-bold" onclick="updateRelationship(this)">
+                        <i class="la la-trash"></i>
+                        {{ __('Follow') }}
+                    </button>
+-->
+                    <a href="{{ route('contests.follow', $contest) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
+                         <i class="la la-start"></i>
+                        @if($contestentity->follow == '0')
+                            {{ __('Seguir') }}
+                        @else
+                            {{ __('Deixar de Seguir') }}
+                        @endif
+                    </a>
+                @else
+            </div>
             </div>
         </div>
         <div class="card-body">

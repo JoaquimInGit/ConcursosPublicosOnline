@@ -40,12 +40,12 @@ Auth::routes(['verify' => true]);
 
 //Route::get('/teste', [HomeController::class,'index'])->name('home');
 
-Route::get('/notification', [ContestFilterController::class,'index'])->name('contest_filters.index');
-Route::get('/notification/{notification}', [ContestFilterController::class,'show'])->name('contest_filters.show');
+
 
 Route::get('/', [HomeController::class,'index'])->name('home');
 Route::get('/base', [BaseController::class,'insertContest2']);
 Route::get('/basefiltro', [BaseController::class,'applyfilter']);
+Route::get('/filtros', [BaseController::class,'applyFilterToAllContests']);
 Route::get('/mail', [BaseController::class,'filterNotification']);
 //only users autenticated and with email verified can access the following routes
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -106,6 +106,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/orders/{order}/edit', [OrderController::class,'edit'])->name('orders.edit');
 
 
+    Route::get('/notification', [ContestFilterController::class,'index'])->name('contest_filters.index');
+    Route::get('/notification/{notification}', [ContestFilterController::class,'show'])->name('contest_filters.show');
     /*Route::resource('testes', TesteController::class)->parameters([
         'testes' => 'teste'
     ]); //para escolher um parametro diferentes dava erro e em vez de teste estava a meter testis*/

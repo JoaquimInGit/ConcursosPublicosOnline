@@ -22,18 +22,16 @@ view()->share('hideSubHeader', true);
                     {{ __('Contest Filters') }}
                 </h3>
             </div>
+            <!-- o export está algures neste div em baixo -->
             <div class="card-toolbar">
                 <div class="dropdown dropdown-inline" id="datatable-buttons">
                 </div>
-                <a href="{{ route('contest_filters.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
-                    <i class="la la-plus"></i>
-                    {{ __('New Contest Filter') }}
-                </a>
             </div>
+
         </div>
         <div class="card-body">
             <!--begin: Datatable classes table dataTable no-footer -->
-            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], true)}}
+            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], false)}}
             <!--end: Datatable -->
         </div>
     </div>
@@ -46,7 +44,7 @@ view()->share('hideSubHeader', true);
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     {{$dataTable->scripts()}}
     <script>
-
+        const table = $('#contests-table');
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';
             $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-sm btn-default font-weight-bold mr-2';
@@ -82,6 +80,24 @@ view()->share('hideSubHeader', true);
                     });
                 }
             });
+        }
+
+        function follow(data) {
+            console.log(data)
+            $.ajax({
+                method: "POST",
+                url: "{{route('contests.followDatatable')}}" ,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {data:data},
+                success: function(response) {
+                    console.log(response)
+                    table.DataTable().ajax.reload();
+
+                }
+            })
         }
 
     </script>

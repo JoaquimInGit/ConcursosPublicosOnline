@@ -38,11 +38,13 @@ class ContestDataTable extends DataTable
                 return !empty($contest->deadline_date) ? Carbon::Parse($contest->deadline_date)->format('d-m-Y') : '';
             })
             ->addColumn('action', function ($contest) {
+               // \Debugbar::error($contest);
                 if(auth()->user()->can('accessAsUser')){
                     $entity = Entity::getCurrentEntity();
                     //\Debugbar::error($entity);
                     $contestentity = ContestEntity::getRegisto($contest,$entity)->first();
-                    //\Debugbar::error($contestentity);
+                   // \Debugbar::error($contestentity->$contestentity->follow == 1);
+                    //\Debugbar::error(!empty($contestentity));
                     if(!empty($contestentity) && $contestentity->follow == 1){
                         return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('contests.show', $contest) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>'.
                         '<a class="btn btn-sm btn-clean btn-icon btn-icon-md follow" onclick="follow('.$contest->id.')" title="'. __('Follow').'"> <i class="la la-star" style="color:blue"></i></a>';

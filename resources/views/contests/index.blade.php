@@ -142,6 +142,10 @@ view()->share('hideSubHeader', true);
 
         jQuery(document).ready(function() {
             $('#contests-table_filter').css('display', 'none');
+            //table.
+            /*table.DataTable({
+                "pageLength": 20,
+            })*/
         });
 
 

@@ -23,7 +23,7 @@ class ContestFilter extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'contest_filters';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -76,6 +76,23 @@ class ContestFilter extends Model implements Auditable
         'created_at' => __('Created At'),
         'updated_at' => __('Updated At')
         ];
+    }
+
+    /**
+     * Devolve a entidade atual
+     * @return mixed
+     */
+    public static function getEntity(){
+        $entity = Entity::getCurrentEntity();
+        return $entity->id;
+    }
+
+    public static function getFiltersEntity($entity){
+        $filters = Filter::where('entity_id', $entity)->get()->toArray();
+        $filters = json_encode($filters);
+        return json_decode($filters);
+        //console.log($filters);
+        //dd($filters);
     }
 
     /**
