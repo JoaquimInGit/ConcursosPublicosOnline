@@ -277,7 +277,19 @@ class Order extends Model implements Auditable
         return number_format($precofinal,1);
     }
 
-    public function syncOrderItem($orderItems,$entity_id){
+    public function syncOrderItem($order,$product){
+        OrderItem::create([
+            'entity_id' => Order::getEntity()->id,
+            'order_id' => $order,
+            'product_id' => $product,
+            'name' => Order::getUser()->name,
+            'quantity' => 1,
+            'price' => Order::getSpecificPrice($product),
+            'iva' => Order::getSpecificPriceIVA($product),
+        ]);
+    }
+
+    public function syncOrderItems($orderItems,$entity_id){
         $orderItemIds = $this->orderItem->pluck('id')->toArray();
         $updatedOrderItemIds = [];
         /*if(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_PAYED){

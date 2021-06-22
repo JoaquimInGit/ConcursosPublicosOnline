@@ -53,17 +53,21 @@ class OrderController extends Controller
             //ddd($request->submit);
             switch($request->submit) {
                 case __('Monthly'):
+                    $model->syncOrderItem($model->id,0);
                     break;
                 case __('Semi-annual'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(1),'iva_value'=>Order::getSpecificPriceIVA(1)]);
+                    $model->syncOrderItem($model->id,1);
                     break;
                 case __('Annual'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
+                    $model->syncOrderItem($model->id,2);
                     break;
             }
             //$model->syncCarts($validatedAttributes['Carts'],$validatedAttributes['client_id']);
             //if(isset($validatedAttributes['OrderItem']))
             //ddd($validatedAttributes['OrderItems']);
+            //ddd($model->id);
                 //$model->syncOrderItem($validatedAttributes['OrderItems'],$validatedAttributes['entity_id']);
             return redirect(route('orders.show', $model));
         }else

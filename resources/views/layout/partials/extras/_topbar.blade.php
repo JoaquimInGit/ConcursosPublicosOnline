@@ -15,6 +15,13 @@
             <h3>{{ __('Notifications') }}</h3>
         </a>
     </div>
+    @if(auth()->user()->can('accessAsUser'))
+    <div class="topbar-item mr-5 ">
+        <a href="{{ route('entities.show', \App\Models\Entity::getCurrentEntity()) }}">
+            <h3>{{ __('Entity') }}</h3>
+        </a>
+    </div>
+    @endif
     @if(auth()->user()->can('manageUsers'))
         <div class="topbar-item mr-5 ">
             <a href="{{ route('entities.index') }}">
