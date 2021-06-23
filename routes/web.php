@@ -99,11 +99,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/products/{product}', [ProductController::class,'show'])->name('products.show')->middleware('can:adminFullApp');
     Route::get('/products/{product}/edit', [ProductController::class,'edit'])->name('products.edit')->middleware('can:adminFullApp');
 
-    Route::get('/orders', [OrderController::class,'index'])->name('orders.index');
-    Route::post('/orders', [OrderController::class,'store'])->name('orders.store');
-    Route::get('/orders/create', [OrderController::class,'create'])->name('orders.create');
-    Route::get('/orders/{order}', [OrderController::class,'show'])->name('orders.show');
-    Route::get('/orders/{order}/edit', [OrderController::class,'edit'])->name('orders.edit');
+    Route::get('/orders/eupago-callback', [OrderController::class,'eupagoCallback'])->name('orders.eupago_callback');
+    Route::resource('orders', App\Http\Controllers\OrderController::class);
 
 
     Route::get('/notification', [ContestFilterController::class,'index'])->name('contest_filters.index');

@@ -28,14 +28,14 @@ view()->share('hideSubHeader', true);
             <form>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label class="col-2 col-form-label">Numero Anúncio</label>
-                        <div class="col-10">
+                        <label class="col-form-label col-lg-2 col-md-3">Numero Anúncio</label>
+                        <div class="col-lg-10 col-md-9">
                             <input class="form-control" type="text" id="num_announcement"/>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-2 col-form-label">Descrição</label>
-                        <div class="col-10">
+                        <label class="col-lg-2 col-form-label">Descrição</label>
+                        <div class="col-lg-10">
                             <input class="form-control" type="text" id="description"/>
                         </div>
                     </div>

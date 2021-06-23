@@ -49,13 +49,13 @@ class SettingSeeder extends Seeder
         }*/
 
         //Setting::getParam('subscrição_mensal');
-        if(!DB::table('settings')->where('slug','subscrição_mensal')->exists()){
+        if(!DB::table('settings')->where('slug','subscricao_mensal')->exists()){
             DB::table('settings')->insert([
                 [
                     'type' => Setting::TYPE_INTEGER,
-                    'group' => 'orders',
+                    'group' => 'main',
                     'name' => 'Subscrição mensal',
-                    'slug' => "subscrição_mensal",
+                    'slug' => "subscricao_mensal",
                     'options' => null,
                     'value' => '1',
                     'order' => 0,
@@ -65,13 +65,13 @@ class SettingSeeder extends Seeder
             ]);
         }
         //Setting::getParam('subscrição_mensal');
-        if(!DB::table('settings')->where('slug','subscrição_semestral')->exists()){
+        if(!DB::table('settings')->where('slug','subscricao_semestral')->exists()){
             DB::table('settings')->insert([
                 [
                     'type' => Setting::TYPE_INTEGER,
-                    'group' => 'orders',
+                    'group' => 'main',
                     'name' => 'subscrição semestral',
-                    'slug' => "subscrição_semestral",
+                    'slug' => "subscricao_semestral",
                     'options' => null,
                     'value' => '2',
                     'order' => 0,
@@ -81,13 +81,13 @@ class SettingSeeder extends Seeder
             ]);
         }
         //Setting::getParam('subscrição_mensal');
-        if(!DB::table('settings')->where('slug','subscrição_anual')->exists()){
+        if(!DB::table('settings')->where('slug','subscricao_anual')->exists()){
             DB::table('settings')->insert([
                 [
                     'type' => Setting::TYPE_INTEGER,
-                    'group' => 'orders',
+                    'group' => 'main',
                     'name' => 'Subscrição anual',
-                    'slug' => "subscrição_anual",
+                    'slug' => "subscricao_anual",
                     'options' => null,
                     'value' => '3',
                     'order' => 0,

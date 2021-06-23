@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Facades\Eupago;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -50,7 +51,9 @@ class Order extends Model implements Auditable
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
+    const STATUS_CANCELED = 0;
+    CONST STATUS_WAITING_PAYMENT = 1;
+    CONST STATUS_PAYED = 2;
 
 
     public $fillable = [
@@ -280,19 +283,19 @@ class Order extends Model implements Auditable
     public function syncOrderItem($order,$product){
         OrderItem::create([
             'entity_id' => Order::getEntity()->id,
-            'order_id' => $order,
+            'order_id' => $order->id,
             'product_id' => $product,
             'name' => Order::getUser()->name,
             'quantity' => 1,
-            'price' => Order::getSpecificPrice($product),
-            'iva' => Order::getSpecificPriceIVA($product),
+            'price' => Order::getSpecificPrice($product -1),
+            'iva' => Order::getSpecificPriceIVA($product -1),
         ]);
     }
 
     public function syncOrderItems($orderItems,$entity_id){
         $orderItemIds = $this->orderItem->pluck('id')->toArray();
         $updatedOrderItemIds = [];
-        /*if(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_PAYED){
+        if(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_PAYED){
             \Debugbar::error('plan payed');
             $status = Cart::STATUS_PAYED_PLAN;
         }elseif(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_WAITING_PAYMENT){
@@ -305,7 +308,7 @@ class Order extends Model implements Auditable
             \Debugbar::error('session payed');
             $status = Cart::STATUS_PAYED_SEPARATE;
         }
-        \Debugbar::error($status);*/
+        \Debugbar::error($status);
         if(!empty($status)){
             foreach($orderItems as $orderItem){
                 if(empty($orderItem['id'])) {
@@ -313,8 +316,8 @@ class Order extends Model implements Auditable
                     $orderItem['quantity'] = 1;
                     $orderItem['iva'] = 0.23;
                     $orderItem['name'] = 'name';
-                    //$orderItem['start_date'] = Carbon::today();
-                    //$orderItem['end_date'] = Carbon::today()->addMonth();
+                    $orderItem['start_date'] = Carbon::today();
+                    $orderItem['end_date'] = Carbon::today()->addMonth();
                     $orderItem['status'] = $status;
                     $orderItem['entity_id'] = $entity_id;
                     $this->orderItems()->create($orderItem);
@@ -342,5 +345,66 @@ class Order extends Model implements Auditable
                 $this->carts()->where('id', $removeId)->delete();
             }*/
         }
+    }
+
+
+    public function generateMB($dateLimit = null, $autoSave = false, $forceCreation = false){
+        if(empty($this->mb_entity) || $forceCreation == true) {
+            $response = Eupago::generateReferenceMB($this->id, $this->iva_value, $dateLimit);
+            if (Eupago::checkValidResponse($response)) {
+                $this->mb_entity = $response->entidade;
+                $this->mb_ref = $response->referencia;
+                $this->mb_limit_date = $dateLimit;
+                if ($autoSave)
+                    return $this->saveQuietly();
+            } else {
+                return false;
+            }
+        }else{
+            return true; //already exist a mb
+        }
+    }
+
+    /**
+     * Generate a MBWay and if autosave is ativated automatically save the order
+     * @param string $phone
+     * @param bool $autoSave
+     * @return bool
+     */
+    public function generateMBWay($phone, $autoSave = false){
+    $response = Eupago::generateMBWay($this->id, $this->total,$phone,'Pagamento Concursos');
+    if (Eupago::checkValidResponse($response)) {
+        $this->mbway_ref = $response->referencia;
+        $this->mbway_alias = $response->alias;
+        if ($autoSave)
+            return $this->saveQuietly();
+    } else {
+        return false;
+    }
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(\App\Models\Payment::class, 'order_id');
+    }
+
+    public static function getStatusArray()
+    {
+        return [
+            self::STATUS_CANCELED =>  __('Canceled'),
+            self::STATUS_WAITING_PAYMENT =>  __('Waiting payment'),
+            self::STATUS_PAYED =>  __('Payed'),
+        ];
+    }
+
+    public function getStatusOptions()
+    {
+        return static::getStatusArray();
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        $array = self::getStatusOptions();
+        return $array[$this->status];
     }
 }
