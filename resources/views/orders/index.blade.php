@@ -27,13 +27,13 @@ view()->share('hideSubHeader', true);
                 </div>
                 <a href="{{ route('orders.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
                     <i class="la la-plus"></i>
-                    {{ __('New Order') }}
+                    {{ __('New Subscription') }}
                 </a>
             </div>
         </div>
         <div class="card-body">
             <!--begin: Datatable classes table dataTable no-footer -->
-            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], true)}}
+            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], false)}}
             <!--end: Datatable -->
         </div>
     </div>
@@ -46,6 +46,10 @@ view()->share('hideSubHeader', true);
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     {{$dataTable->scripts()}}
     <script>
+
+        jQuery(document).ready(function() {
+            $('#order_items_table_filter').css('display', 'none');
+        });
 
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';

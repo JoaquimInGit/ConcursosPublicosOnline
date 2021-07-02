@@ -29,7 +29,7 @@ class ContestDataTable extends DataTable
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
             ->editColumn('price', function($contest){
-                return !empty($contest->price) ? number_format($contest->price, 2, ',', '.') : '';
+                return !empty($contest->price) ? number_format($contest->price, 2, ',', '.').'€' : '';
             })
             ->editColumn('publication_date', function ($contest){
                 return !empty($contest->publication_date) ? Carbon::Parse($contest->publication_date)->format('d-m-Y') : '';

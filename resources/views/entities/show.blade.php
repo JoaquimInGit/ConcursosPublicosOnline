@@ -15,10 +15,13 @@ view()->share('hideSubHeader', true);
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">
-                    {{ $entity->id }}
+                    {{ $entity->name }}
                 </h3>
             </div>
             <div class="card-toolbar">
+                <a href="{{ route('orders.index') }}" class="btn btn-sm btn-light-info font-weight-bold mr-2">
+                    {{ __('Orders') }}
+                </a>
                 <a href="{{ route('entities.edit', $entity) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
                     <i class="la la-edit"></i>
                     {{ __('Update') }}

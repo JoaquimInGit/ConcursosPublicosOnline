@@ -55,10 +55,10 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="row justify-content-center my-20">
+        <div class="row justify-content-center">
             <!--begin: Pricing-->
             <div class="col-md-4 col-xxl-3">
-                <div class="pt-30 pt-md-25 pb-15 px-5 text-center">
+                <div class="pt-10 pt-md-10 pb-5 px-5 text-center">
                     <!--begin::Content-->
                     <span class="font-size-h1 d-block d-block font-weight-boldest text-dark-75 py-2">10
                             <sup class="font-size-h3 font-weight-normal pl-1">€</sup></span>
@@ -75,7 +75,7 @@
             <!--end: Pricing-->
             <!--begin: Pricing-->
             <div class="col-md-4 col-xxl-3 border-x-0 border-x-md border-y border-y-md-0">
-                <div class="pt-30 pt-md-25 pb-15 px-5 text-center">
+                <div class="pt-10 pt-md-10 pb-5 px-5 text-center">
                     <!--begin::Content-->
                     <span class="font-size-h1 d-block font-weight-boldest text-dark-75 py-2">48
 													<sup class="font-size-h3 font-weight-normal pl-1">€</sup></span>
@@ -92,7 +92,7 @@
             <!--end: Pricing-->
             <!--begin: Pricing-->
             <div class="col-md-4 col-xxl-3">
-                <div class="pt-30 pt-md-25 pb-15 px-5 text-center">
+                <div class="pt-10 pt-md-10 pb-5 px-5 text-center">
                     <!--begin::Content-->
                     <span class="font-size-h1 d-block font-weight-boldest text-dark-75 py-2">84
 													<sup class="font-size-h3 font-weight-normal pl-1">€</sup></span>

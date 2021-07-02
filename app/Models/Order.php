@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Facades\Eupago;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -280,7 +281,7 @@ class Order extends Model implements Auditable
         return number_format($precofinal,1);
     }
 
-    public function syncOrderItem($order,$product){
+    public function syncOrderItems($order,$product){
         OrderItem::create([
             'entity_id' => Order::getEntity()->id,
             'order_id' => $order->id,
@@ -290,63 +291,8 @@ class Order extends Model implements Auditable
             'price' => Order::getSpecificPrice($product -1),
             'iva' => Order::getSpecificPriceIVA($product -1),
         ]);
-    }
 
-    public function syncOrderItems($orderItems,$entity_id){
-        $orderItemIds = $this->orderItem->pluck('id')->toArray();
-        $updatedOrderItemIds = [];
-        if(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_PAYED){
-            \Debugbar::error('plan payed');
-            $status = Cart::STATUS_PAYED_PLAN;
-        }elseif(str_contains($this->order_reference,'Plano') && $this->status == Order::STATUS_WAITING_PAYMENT){
-            \Debugbar::error('plan waiting');
-            $status = Cart::STATUS_WAITING_PAYMENT_PLAN;
-        }elseif(str_contains($this->order_reference,'Sessão') && $this->status == Order::STATUS_WAITING_PAYMENT){
-            \Debugbar::error('session waiting');
-            $status = Cart::STATUS_WAITING_PAYMENT_SEPARATE;
-        }elseif(str_contains($this->order_reference,'Sessão') && $this->status == Order::STATUS_PAYED){
-            \Debugbar::error('session payed');
-            $status = Cart::STATUS_PAYED_SEPARATE;
-        }
-        \Debugbar::error($status);
-        if(!empty($status)){
-            foreach($orderItems as $orderItem){
-                if(empty($orderItem['id'])) {
-                    $orderItem['price'] = round($orderItem['price'],2);
-                    $orderItem['quantity'] = 1;
-                    $orderItem['iva'] = 0.23;
-                    $orderItem['name'] = 'name';
-                    $orderItem['start_date'] = Carbon::today();
-                    $orderItem['end_date'] = Carbon::today()->addMonth();
-                    $orderItem['status'] = $status;
-                    $orderItem['entity_id'] = $entity_id;
-                    $this->orderItems()->create($orderItem);
-                }
-                /*if(in_array($orderItem['id'], $orderItemIds)){
-                    $item = $this->orderItem->where('id', $orderItem['id'])->first();
-                    $item->fill($orderItem);
-                    $item->price = round($item->price , 2);
-                    $orderItem['iva'] = 0.23;
-                    $orderItem['name'] = 'name';
-                    //$item->start_at = Carbon::today();
-                    //$item->end_at = Carbon::today()->addYear();
-                    $item->status = $status;
-                    $item->entity_id = $entity_id;
-                    $item->quantity = 1;
-                    if (!empty(Entity::where('id', $entity_id)->first()) && !empty(Entity::where('id', $entity_id)->first()->clientPlanPrice()->where('status', ClientPlanPrice::STATUS_ACTIVE)->get()->last())) {
-                        $item->client_plan_price_id = Client::where('id', $client_id)->first()->clientPlanPrice()->where('status', ClientPlanPrice::STATUS_ACTIVE)->get()->last()->id;
-                    }
-                    $item->save();
-                    $updatedCartsIds[] = $cart['id'];
-                }*/
-            }
-            /*$differenceArray = array_diff($cartsIds, $updatedCartsIds);
-            foreach($differenceArray as $removeId){
-                $this->carts()->where('id', $removeId)->delete();
-            }*/
-        }
     }
-
 
     public function generateMB($dateLimit = null, $autoSave = false, $forceCreation = false){
         if(empty($this->mb_entity) || $forceCreation == true) {

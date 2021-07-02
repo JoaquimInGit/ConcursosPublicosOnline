@@ -63,24 +63,23 @@
             </div>
         </div>
     </a>
-    @endif
     {{-- Item --}}
-    <!--<a href="#"  class="navi-item px-8">
+    <a href="{{ route('orders.index') }}"  class="navi-item px-8">
         <div class="navi-link">
             <div class="navi-icon mr-2">
                 <i class="flaticon2-rocket-1 text-danger"></i>
             </div>
             <div class="navi-text">
                 <div class="font-weight-bold">
-                    My Activities
+                    {{ __('My Orders') }}
                 </div>
                 <div class="text-muted">
-                    Logs and notifications
+                    {{ __('Orders information') }}
                 </div>
             </div>
         </div>
-    </a>-->
-
+    </a>
+    @endif
     {{-- Item --}}
     <!--<a href="#" class="navi-item px-8">
         <div class="navi-link">

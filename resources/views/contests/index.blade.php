@@ -142,12 +142,7 @@ view()->share('hideSubHeader', true);
 
         jQuery(document).ready(function() {
             $('#contests-table_filter').css('display', 'none');
-            //table.
-            /*table.DataTable({
-                "pageLength": 20,
-            })*/
         });
-
 
         table.on('preXhr.dt',function (e,settings,data){
             data.num_announcement = $('#num_announcement').val();

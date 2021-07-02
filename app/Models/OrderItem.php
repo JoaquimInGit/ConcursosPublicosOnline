@@ -33,7 +33,7 @@ class OrderItem extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'order_item';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -156,5 +156,14 @@ class OrderItem extends Model implements Auditable
     public function product()
     {
         return $this->belongsTo(\App\Models\Product::class, 'product_id');
+    }
+
+    /**
+     * Devolve a entidade atual
+     * @return mixed
+     */
+    public static function getEntity(){
+        $entity = Entity::getCurrentEntity();
+        return $entity->id;
     }
 }

@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\OrderItem;
+use App\Models\Product;
+use Carbon\Carbon;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use App\DataTables\Traits\DatatableColumnSearch;
@@ -22,10 +24,34 @@ class OrderItemDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
+            ->editColumn('product_id', function($orderItem) {
+                $product = Product::where('id', $orderItem->product_id)->first();
+                return $product->description;
+            })
+            ->editColumn('iva', function($orderItem) {
+                return $orderItem->iva.'€';
+            })
+            ->editColumn('start_date', function ($orderItem){
+                return !empty($orderItem->start_date) ? Carbon::Parse($orderItem->start_date)->format('d-m-Y') : '';
+            })
+            ->editColumn('end_date', function ($orderItem){
+                return !empty($orderItem->end_date) ? Carbon::Parse($orderItem->end_date)->format('d-m-Y') : '';
+            })
+            ->editColumn('status', function ($orderItem){
+                if($orderItem->status == 1){
+                    return __('Waiting Payment');
+                }else if($orderItem->status == 2){
+                    return __('Payed');
+                }
+            })
             ->addColumn('action', function ($orderItem) {
-                return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('order-items.show', $orderItem) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
-                        <a href="'. route('order-items.edit', $orderItem) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
-                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $orderItem->id .'" data-delete-url="'. route('order-items.destroy', $orderItem) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
+                if(auth()->user()->can('accessAsUser')){
+                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('orders.show', $orderItem->order_id) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>';
+                }else{
+                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('orders.show', $orderItem->order_id) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
+                        <a href="'. route('orders.edit', $orderItem->order_id) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
+                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $orderItem->order_id .'" data-delete-url="'. route('orders.destroy', $orderItem->order_id) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
+                }
             });
             //->editColumn('type', '{{ $this->typeLabel }}')
             /*->editColumn('type', function ($model) {
@@ -41,7 +67,12 @@ class OrderItemDataTable extends DataTable
      */
     public function query(OrderItem $model)
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+        if(auth()->user()->can('accessAsUser')){
+            $entity = $model->getEntity();
+            $query = $query->where('entity_id',$entity);
+        }
+        return $query;
     }
 
     /**
@@ -76,14 +107,7 @@ class OrderItemDataTable extends DataTable
     {
         $model = new OrderItem();
         return [
-            Column::make('entity_id')->title($model->getAttributeLabel('entity_id')),
-            Column::make('order_id')->title($model->getAttributeLabel('order_id')),
             Column::make('product_id')->title($model->getAttributeLabel('product_id')),
-            Column::make('cookie')->title($model->getAttributeLabel('cookie')),
-            Column::make('name')->title($model->getAttributeLabel('name')),
-            Column::make('quantity')->title($model->getAttributeLabel('quantity')),
-            Column::make('price')->title($model->getAttributeLabel('price')),
-            Column::make('notes')->title($model->getAttributeLabel('notes')),
             Column::make('iva')->title($model->getAttributeLabel('iva')),
             Column::make('start_date')->title($model->getAttributeLabel('start_date')),
             Column::make('end_date')->title($model->getAttributeLabel('end_date')),

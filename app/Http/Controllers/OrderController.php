@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\OrderDataTable;
+use App\DataTables\OrderItemDataTable;
 use App\Facades\Eupago;
 use App\Facades\Setting;
 use App\Models\Entity;
+use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Notifications\FilterNotification;
 use App\Notifications\OrderNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 //use App\Http\Requests\CreateOrderRequest;
 //use App\Http\Requests\UpdateOrderRequest;
@@ -25,7 +28,7 @@ class OrderController extends Controller
      * @param OrderDataTable $orderDataTable
      * @return Response
      */
-    public function index(OrderDataTable $orderDataTable)
+    public function index(OrderItemDataTable $orderDataTable)
     {
 
         return $orderDataTable->render('orders.index');
@@ -62,19 +65,19 @@ class OrderController extends Controller
             switch($request->submit) {
                 case __('Monthly'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(0),'iva_value'=>Order::getSpecificPriceIVA(0)]);
-                    $model->syncOrderItem($model,Setting::getParam('subscricao_mensal'));
+                    $model->syncOrderItems($model,Setting::getParam('subscricao_mensal'));
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
                 case __('Semi-annual'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(1),'iva_value'=>Order::getSpecificPriceIVA(1)]);
-                    $model->syncOrderItem($model,Setting::getParam('subscricao_semestral'));
+                    $model->syncOrderItems($model,Setting::getParam('subscricao_semestral'));
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
                 case __('Annual'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
-                    $model->syncOrderItem($model,Setting::getParam('subscricao_anual'));
+                    $model->syncOrderItems($model,Setting::getParam('subscricao_anual'));
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
@@ -201,6 +204,16 @@ class OrderController extends Controller
             $order->payment_method = $payment->payment_method;
             $order->save();
             if($order->status == Order::STATUS_PAYED){
+                //atualiza order item
+                /*$orderItem = OrderItem::where('order_id',$order->id)->first();
+                if($orderItem->product_id == 1){
+                    $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addMonth(),'status' => 2]);
+                }elseif ($orderItem->product_id == 2){
+                    $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addQuarters(2),'status' => 2]);
+                }elseif ($orderItem->product_id == 3){
+                    $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addYear(),'status' => 2]);
+                }*/
+
                 \Debugbar::info("Payment of order $order->id successful ");
                 //send notification to admin
             }else{

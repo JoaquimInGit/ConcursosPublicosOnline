@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
+use Carbon\Carbon;
 
 class OrderObserver
 {
@@ -25,7 +27,16 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        //
+        if ($order->status == 2){
+            $orderItem = OrderItem::where('order_id',$order->id)->first();
+            if($orderItem->product_id == 1){
+                $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addMonth(),'status' => 2]);
+            }elseif ($orderItem->product_id == 2){
+                $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addQuarters(2),'status' => 2]);
+            }elseif ($orderItem->product_id == 3){
+                $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addYear(),'status' => 2]);
+            }
+        }
     }
 
     /**
