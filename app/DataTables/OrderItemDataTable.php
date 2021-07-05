@@ -49,7 +49,6 @@ class OrderItemDataTable extends DataTable
                     return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('orders.show', $orderItem->order_id) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>';
                 }else{
                     return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('orders.show', $orderItem->order_id) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
-                        <a href="'. route('orders.edit', $orderItem->order_id) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
                         <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $orderItem->order_id .'" data-delete-url="'. route('orders.destroy', $orderItem->order_id) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
                 }
             });

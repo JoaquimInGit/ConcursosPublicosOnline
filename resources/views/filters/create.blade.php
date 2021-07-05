@@ -4,8 +4,12 @@
  * @var $filter \App\Models\Filter;
  * @var $errors Illuminate\View\Middleware\ShareErrorsFromSession
  */
+
+use App\Models\Entity;
+
 view()->share('pageTitle', __('Create Filter'));
 view()->share('hideSubHeader', true);
+
 ?>
 @extends('layout.default')
 
@@ -13,6 +17,7 @@ view()->share('hideSubHeader', true);
     {{ Breadcrumbs::render('filters.create') }}
 @endsection
 @section('content')
+
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">

@@ -1,4 +1,5 @@
 <!-- User Id Field -->
+@if(auth()->user()->cannot('accessAsUser'))
 <div class="form-group">
     {!! Form::label('user_id', $entity->getAttributeLabel('user_id')) !!}
     {!! Form::number('user_id', null, ['class' => 'form-control '.($errors->has('user_id') ? 'is-invalid' : '')]) !!}
@@ -6,6 +7,10 @@
         <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
+@else
+    {!! Form::hidden('user_id', $entity->user_id) !!}
+@endif
+
 
 <!-- Name Field -->
 <div class="form-group">
@@ -107,10 +112,21 @@
 </div>
 
 <!-- Status Field -->
-<div class="form-group">
+<!--<div class="form-group">
     {!! Form::label('status', $entity->getAttributeLabel('status')) !!}
     <label class="checkbox-inline">
         {!! Form::hidden('status', 0) !!}
         {!! Form::checkbox('status', '1', null) !!}
     </label>
+</div>-->
+@if(auth()->user()->cannot('accessAsUser'))
+<div class="form-group">
+    {!! Form::label('status', $entity->getAttributeLabel('status')) !!}
+    {!! Form::select('status',$entity->getStatusArray(), null, ['class' => 'form-control '.($errors->has('status') ? 'is-invalid' : ''),'placeholder' => __('Select a Status')]) !!}
+    @error('status')
+    <div class="error invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
+@else
+    {!! Form::hidden('status', $entity->status) !!}
+@endif

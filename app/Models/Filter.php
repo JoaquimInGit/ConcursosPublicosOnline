@@ -291,11 +291,18 @@ class Filter extends Model implements Auditable
         return $array[$this->type_contract];
     }
 
-    /*public function getLabelAttribute()
+    public function getWordsLabelAttribute()
     {
-        $array = array($this->description_words);
-        $array = explode(' ', $this->description_words);
-        //implode(" ", $filter->description_words)
-        return $array[0]['value'];
-    }*/
+        $keywords = explode(',', $this->description_words);
+        $keys = "";
+        foreach ($keywords as $word) {
+            $aux = explode('"value":"', $word);
+            $keys = $keys . $aux[1];
+        }
+        $keys = str_replace('"}', ' ', $keys);
+        $keys = str_replace(']', ' ', $keys);
+        $searchValues = preg_split('/\s+/', $keys, -1, PREG_SPLIT_NO_EMPTY);
+
+        return implode(', ',$searchValues);
+    }
 }

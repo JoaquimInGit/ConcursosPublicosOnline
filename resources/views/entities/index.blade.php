@@ -31,7 +31,7 @@ view()->share('hideSubHeader', true);
         </div>
         <div class="card-body">
             <!--begin: Datatable classes table dataTable no-footer -->
-            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], true)}}
+            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], false)}}
             <!--end: Datatable -->
         </div>
     </div>

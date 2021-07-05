@@ -32,7 +32,7 @@ class CreateEntitiesTable extends Migration
             $table->string('website')->nullable();
             $table->string('email_entity')->nullable();
             $table->tinyInteger('status')->default(1)->comment(
-                "0 - entidade inativa  | 1 - entidade ativa");
+                "0 - entidade inativa  | 1 - entidade subscrita | 2 - entidade especial");
             $table->timestamps();
         });
     }

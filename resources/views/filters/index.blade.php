@@ -22,12 +22,22 @@ view()->share('hideSubHeader', true);
                     {{ __('Filters') }}
                 </h3>
             </div>
-            <div class="card-toolbar">
-                <a href="{{ route('filters.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
-                    <i class="la la-plus"></i>
-                    {{ __('New Filter') }}
-                </a>
-            </div>
+            @if(\App\Models\Entity::getCurrentEntity() == null)
+                <div class="card-toolbar">
+                    <a onclick="alert('O utilizador tem de ter uma entidade associada.')" class="btn btn-sm btn-light-primary font-weight-bold">
+                        <i class="la la-plus"></i>
+                        {{ __('New Filter') }}
+                    </a>
+                </div>
+            @else
+                <div class="card-toolbar">
+                    <a href="{{ route('filters.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
+                        <i class="la la-plus"></i>
+                        {{ __('New Filter') }}
+                    </a>
+                </div>
+            @endif
+
         </div>
         <div class="card-body">
             <!--begin: Datatable classes table dataTable no-footer -->

@@ -26,10 +26,12 @@ view()->share('hideSubHeader', true);
                     <i class="la la-edit"></i>
                     {{ __('Update') }}
                 </a>
-                <button class="btn btn-sm btn-light-danger font-weight-bold" onclick="destroyConfirmation(this)">
-                    <i class="la la-trash"></i>
-                    {{ __('Delete') }}
-                </button>
+                @if(auth()->user()->can('manageUsers'))
+                    <button class="btn btn-sm btn-light-danger font-weight-bold" onclick="destroyConfirmation(this)">
+                        <i class="la la-trash"></i>
+                        {{ __('Delete') }}
+                    </button>
+                @endif
                 {!! Form::open(['route' => ['entities.destroy', $entity], 'method' => 'delete', 'class'=>"d-none", 'id' => 'delete-form']) !!}
 
                 {!! Form::close() !!}

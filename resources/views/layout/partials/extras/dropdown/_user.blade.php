@@ -23,7 +23,7 @@
             {{-- Text --}}
             <div class="text-white m-0 flex-grow-1 mr-3 font-size-h5">{{ auth()->user()->name }}</div>
         </div>
-        <span class="label label-success label-lg font-weight-bold label-inline">3 messages</span>
+        <!--<span class="label label-success label-lg font-weight-bold label-inline">3 messages</span>-->
     </div>
 @endif
 

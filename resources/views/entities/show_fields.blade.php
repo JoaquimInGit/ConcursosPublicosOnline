@@ -1,9 +1,10 @@
 <!-- User Id Field -->
+@if(auth()->user()->cannot('accessAsUser'))
 <tr>
     <th scope="row">{{ $entity->getAttributeLabel('user_id') }}</th>
     <td>{{ $entity->user_id }}</td>
 </tr>
-
+@endif
 
 <!-- Name Field -->
 <tr>

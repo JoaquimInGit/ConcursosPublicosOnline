@@ -44,11 +44,14 @@ class Entity extends Model implements Auditable
 
     const STATUS_DISABLED = 0;
     const STATUS_APPROVED = 1;
+    const STATUS_SPECIAL = 2;
+
     public static function getStatusArray()
     {
         return [
             self::STATUS_DISABLED =>  __('Disabled'),
             self::STATUS_APPROVED =>  __('Approved'),
+            self::STATUS_SPECIAL =>  __('Special'),
         ];
     }
 

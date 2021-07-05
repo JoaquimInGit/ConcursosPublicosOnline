@@ -3,11 +3,11 @@
 namespace App\Models\Policies;
 
 use App\Models\Entity;
-use App\Models\Filter;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class FilterPolicy
+class OrderPolicy
 {
     use HandlesAuthorization;
 
@@ -26,12 +26,12 @@ class FilterPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Filter  $filter
+     * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function view(User $user, Filter $filter)
+    public function view(User $user, Order $order)
     {
-        return $user->can('manageApp') || $filter->entity_id == Entity::getCurrentEntity()->id;
+        return $user->can('manageApp') || $order->entity_id == Entity::getCurrentEntity()->id;
     }
 
     /**
@@ -57,63 +57,47 @@ class FilterPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Filter  $filter
+     * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function update(User $user, Filter $filter)
+    public function update(User $user, Order $order)
     {
-        $entity = Entity::getCurrentEntity();
-        //se o user atual não tiver uma entidade associada
-        if($entity == null){
-            //não permite o acesso
-            return false;
-        }{
-            //permite o acesso
-            return $filter->entity_id == $entity->id;
-        }
+        return false;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Filter  $filter
+     * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function delete(User $user, Filter $filter)
+    public function delete(User $user, Order $order)
     {
-        $entity = Entity::getCurrentEntity();
-        //se o user atual não tiver uma entidade associada
-        if($entity == null){
-            //não permite o acesso
-            return false;
-        }{
-            //permite o acesso
-            return $filter->entity_id == $entity->id;
-        }
+        return $user->can('manageApp');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Filter  $filter
+     * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function restore(User $user, Filter $filter)
+    public function restore(User $user, Order $order)
     {
-
+        //
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Filter  $filter
+     * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function forceDelete(User $user, Filter $filter)
+    public function forceDelete(User $user, Order $order)
     {
-
+        //
     }
 }

@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
         DB::table('products')->insert([
             [
                 'name' => 'mensal',
-                'price' => 10,
+                'price' => 8.13,
                 'description' => 'Subscrição Mensal',
                 'excerpt' => 'Esta subscrição mensal permite o uso da plataforma sem restrições durante o proximo mes.',
                 'status' => 1,
@@ -26,7 +26,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'semestral',
-                'price' => 48,
+                'price' => 39.02,
                 'description' => 'Subscrição Semestral',
                 'excerpt' => 'Esta subscrição semestral permite o uso da plataforma sem restrições durante os proximos 6 meses.',
                 'status' => 1,
@@ -35,7 +35,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'anual',
-                'price' => '84',
+                'price' => 68.29,
                 'description' => 'Subscrição Anual',
                 'excerpt' => 'Esta subscrição anual permite o uso da plataforma sem restrições durante os proximos 12 meses',
                 'status' => '1',

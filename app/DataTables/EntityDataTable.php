@@ -82,13 +82,13 @@ class EntityDataTable extends DataTable
             Column::make('district')->title($model->getAttributeLabel('district')),
             Column::make('address')->title($model->getAttributeLabel('address')),
             Column::make('postal_code')->title($model->getAttributeLabel('postal_code')),
-            Column::make('mobile_phone')->title($model->getAttributeLabel('mobile_phone')),
-            Column::make('nif')->title($model->getAttributeLabel('nif')),
-            Column::make('cae')->title($model->getAttributeLabel('cae')),
-            Column::make('cae_secundario')->title($model->getAttributeLabel('cae_secundario')),
+            //Column::make('mobile_phone')->title($model->getAttributeLabel('mobile_phone')),
+            //Column::make('nif')->title($model->getAttributeLabel('nif')),
+            //Column::make('cae')->title($model->getAttributeLabel('cae')),
+            //Column::make('cae_secundario')->title($model->getAttributeLabel('cae_secundario')),
             Column::make('website')->title($model->getAttributeLabel('website')),
-            Column::make('email_entity')->title($model->getAttributeLabel('email_entity')),
-            Column::make('status')->title($model->getAttributeLabel('status')),
+            //Column::make('email_entity')->title($model->getAttributeLabel('email_entity')),
+            //Column::make('status')->title($model->getAttributeLabel('status')),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -1,8 +1,10 @@
 <!-- Entity Id Field -->
+@if(auth()->user()->cannot('accessAsUser'))
 <tr>
     <th scope="row">{{ $filter->getAttributeLabel('entity_id') }}</th>
     <td>{{ $filter->entity_id }}</td>
 </tr>
+@endif
 
 
 <!-- Filter Name Field -->
@@ -16,7 +18,7 @@
 <tr>
 
     <th scope="row">{{ $filter->getAttributeLabel('description_words') }}</th>
-    <td>{{ $filter->description_words }}</td>
+    <td>{{ $filter->getWordsLabelAttribute() }}</td>
 </tr>
 
 

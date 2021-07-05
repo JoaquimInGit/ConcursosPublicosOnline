@@ -16,6 +16,16 @@ use Illuminate\Http\Response;
 class ContestFilterController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(ContestFilter::class, 'contest_filters');
+    }
+
+    /**
      * Display a listing of the ContestFilter.
      *
      * @param ContestFilterDataTable $contestFilterDataTable

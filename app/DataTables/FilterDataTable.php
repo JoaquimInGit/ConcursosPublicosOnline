@@ -27,9 +27,13 @@ class FilterDataTable extends DataTable
                 return $filter->getFilterStatusLabelAttribute();
             })
             ->addColumn('action', function ($filter) {
-                return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('filters.show', $filter) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
-                        <a href="'. route('filters.edit', $filter) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>
-                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $filter->id .'" data-delete-url="'. route('filters.destroy', $filter) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
+                if(auth()->user()->can('accessAsUser')) {
+                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' . route('filters.show', $filter) . '" title="' . __('View') . '"><i class="la la-eye"></i></a>
+                        <a href="' . route('filters.edit', $filter) . '" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="' . __('Edit') . '"><i class="la la-edit"></i></a>
+                        <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-' . $filter->id . '" data-delete-url="' . route('filters.destroy', $filter) . '" onclick="destroyConfirmation(this)" title="' . __('Delete') . '"><i class="la la-trash"></i></button>';
+                }else{
+                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' . route('filters.show', $filter) . '" title="' . __('View') . '"><i class="la la-eye"></i></a>';
+                }
             });
             //->editColumn('type', '{{ $this->typeLabel }}')
             /*->editColumn('type', function ($model) {

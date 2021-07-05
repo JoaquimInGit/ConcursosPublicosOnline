@@ -23,6 +23,16 @@ use Illuminate\Http\Response;
 class OrderController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Order::class, 'order');
+    }
+
+    /**
      * Display a listing of the Order.
      *
      * @param OrderDataTable $orderDataTable
@@ -147,6 +157,9 @@ class OrderController extends Controller
       */
     public function destroy(Order $order)
     {
+        $orderItem = OrderItem::where('order_id', $order->id)->first();
+        $orderItem->delete();
+
         $order->delete();
         //Flash::success('Order deleted successfully.');
 

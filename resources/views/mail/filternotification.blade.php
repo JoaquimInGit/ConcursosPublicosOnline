@@ -1,7 +1,5 @@
 @component('mail::message')
-# Introduction
-
-The body of your message.
+# Concursos encontrados
 
 @component('mail::table')
 | Numero do Anúncio        | Descrição           | Entidade       |   Link   |
@@ -11,7 +9,7 @@ The body of your message.
 @endforeach
 @endcomponent
 
-@component('mail::button', ['url' => route('contests.show', $c->id)])
+@component('mail::button', ['url' => route('contest_filters.index')])
 Ver Anúncios
 @endcomponent
 

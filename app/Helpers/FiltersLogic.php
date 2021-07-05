@@ -209,7 +209,7 @@ class FiltersLogic
 
         $firstScrapeTime = date("Y-m-d 9:i:s");
         //ddd($currentTime.' '.$firstScrapeTime);
-        $entities = Entity::where('status',1)->get();
+        $entities = Entity::where('status','>=',1)->get();
 
         //array para enviar os contests de cada entidade
         $contestsArray = array();
