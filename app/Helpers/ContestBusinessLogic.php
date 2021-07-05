@@ -199,7 +199,7 @@ class ContestBusinessLogic
             $response2 = Http::get('https://dre.pt/web/guest/pesquisa/-/search/basic?q=' . $annuncementNumber . '+' . $q2);
             $dre = [];
             if (str_contains($response2->body(), '<div class="result">')) {
-                $pos = stripos($response2->body(), '<div class="result">',);
+              $pos = stripos($response2->body(), '<div class="result">',);
                 $stri = substr($response2->body(), $pos, 250);
                 $pos = stripos($stri, '<a href',);
                 $stri = substr($stri, $pos, 250);
@@ -209,18 +209,35 @@ class ContestBusinessLogic
                 $stri = explode('"', $stri);
 
                 $response = Http::get($stri[0]);
+
                 //dd($response->body());
                 $dre = explode('<div class="vertical"><ul><li class="sumario">', $response->body());
                 //dd($dre);
                 $position = strpos($dre[1], '<</li></ul></div>');
                 $final = substr($dre[1], 0, -1 * $position);
-                $final = '"'.$final.'"';
-                $final = preg_replace("/<!--.*?-->/", "", $final);
-                $final = strip_tags($final);
+               // $final = '"'.$final.'"';
+               // $final = htmlspecialchars(trim(strip_tags($final)));
                // $final = htmlspecialchars($final);
+
+                $final = preg_replace("/<!--.*?-->/", "", $final);
+                $final = str_replace("</p>", "###", $final);
+                $final = strip_tags($final);
+
+                $final = str_replace("\n", "", $final);
+               // $final = preg_replace("/\r|\n/", '\n', $final);
+
+              //  $final = str_replace("\'", '', $final);
+              //  $final = str_replace('\"', '', $final);
+
+                $final = ltrim($final, '\"');
+                $final = str_replace(['\"',"\'"], "", $final);
                 $final = html_entity_decode($final);
-                $final = preg_replace("/\r|\n/", "", $final);
+              //  $final = str_replace("###", "\n", $final);
+                $final = str_replace("###", "&#10;&#13;", $final);
+               // $final = print_r($final);
                 //ddd($final);
+
+
                 return json_encode($final);
             } else {
                 return null;

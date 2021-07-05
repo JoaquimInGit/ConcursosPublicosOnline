@@ -155,4 +155,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Auditab
         return self::all()->pluck('name', 'id')->toArray();
     }
 
+    public static function subscribed(){
+        $currentTime = date("Y-m-d H:i:s");
+        $entity = Entity::getCurrentEntity();
+        // ddd($entity->id)
+        $orderItem = OrderItem::where('entity_id', $entity->id)
+            ->where('end_date','>', $currentTime)
+            ->get();
+        return $orderItem->isNotEmpty();
+        //ddd($orderItem->isNotEmpty());
+    }
 }

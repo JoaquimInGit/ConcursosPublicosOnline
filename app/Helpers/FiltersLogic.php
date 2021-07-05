@@ -205,6 +205,10 @@ class FiltersLogic
      */
     public static function sendNotifications(){
         //guarda todas a entidades ativas
+        $currentTime = date("Y-m-d H:i:s");
+
+        $firstScrapeTime = date("Y-m-d 9:i:s");
+        //ddd($currentTime.' '.$firstScrapeTime);
         $entities = Entity::where('status',1)->get();
 
         //array para enviar os contests de cada entidade
@@ -219,9 +223,16 @@ class FiltersLogic
             $user = User::where('id',$entity->user_id)->first();
 
             //por cada filtro
-            foreach ($filtros as $filtro){
+            foreach ($filtros as $filtro) {
                 //encontra registos da relação Contest Filter
-                $contests = ContestFilter::where([['filter_id',$filtro->id],['date',today()->toDate()]])->get();
+                //$contests = ContestFilter::where([['filter_id', $filtro->id], ['date', today()->toDate()]])->get();
+                //ddd($currentTime < $firstScrapeTime);
+                if($currentTime < $firstScrapeTime){
+                $contests = ContestFilter::where([['filter_id',$filtro->id],['created_at','<',$firstScrapeTime]])->get()->toArray();
+                //ddd($contests);
+                }else{
+                $contests = ContestFilter::where([['filter_id', $filtro->id], ['date', today()->toDate()]])->get();
+                }
 
                 //se o resultado da query anterior não for null
                 if (!empty($contests)){
@@ -230,7 +241,9 @@ class FiltersLogic
                     //por cada concurso
                     foreach($contests as $c){
                         //colocamos o concurso no array
-                        $cont = Contest::where('id',$c->contest_id)->first();
+                        $cont = Contest::where('id',$c->contest_id)
+                            ->first();
+                       // ddd($cont);
                         array_push($contestsArray, $cont);
                     }
                 }

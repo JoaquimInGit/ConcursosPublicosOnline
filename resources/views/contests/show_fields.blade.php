@@ -99,7 +99,15 @@
 <!-- Pdf Content Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('pdf_content') }}</th>
-    <td>{{ $contest->pdf_content }}</td>
+
+    <td>
+        <p>
+            {{print_r( (html_entity_decode(json_decode(($contest->pdf_content)))) )  }}
+    </p>
+
+    </td>
+
+
 </tr>
 
 

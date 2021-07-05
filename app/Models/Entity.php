@@ -210,4 +210,12 @@ class Entity extends Model implements Auditable
     public static function getCurrentEntity(){
         return Entity::where('user_id', auth()->user()->id)->first();
     }
+
+    public static function isEntitySubscribed($entity){
+        $currentTime = date("Y-m-d H:i:s");
+        $orderItem = OrderItem::where('entity_id', $entity->id)
+            ->where('end_date','>', $currentTime)
+            ->get();
+        return $orderItem->isNotEmpty();
+    }
 }

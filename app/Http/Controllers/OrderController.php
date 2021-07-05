@@ -65,19 +65,23 @@ class OrderController extends Controller
             switch($request->submit) {
                 case __('Monthly'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(0),'iva_value'=>Order::getSpecificPriceIVA(0)]);
-                    $model->syncOrderItems($model,Setting::getParam('subscricao_mensal'));
+                    $model->syncOrderItems($model,1);
+                    //$model->syncOrderItems($model,Setting::getParam('subscricao_mensal'));
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
                 case __('Semi-annual'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(1),'iva_value'=>Order::getSpecificPriceIVA(1)]);
-                    $model->syncOrderItems($model,Setting::getParam('subscricao_semestral'));
+
+                    $model->syncOrderItems($model,2);
+                    //$model->syncOrderItems($model,Setting::getParam('subscricao_semestral'));
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
                 case __('Annual'):
                     $model->update(['sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
-                    $model->syncOrderItems($model,Setting::getParam('subscricao_anual'));
+                    //$model->syncOrderItems($model,Setting::getParam('subscricao_anual'));
+                    $model->syncOrderItems($model,3);
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
@@ -164,8 +168,10 @@ class OrderController extends Controller
         $payment = new Payment();
         $payment->value = $request->get('valor', 0);
         $payment->setEupagoPaymentMethod($request->get('mp'));
+        //ddd($payment);
         \Debugbar::error("Payment status".$payment->payment_method);
         $payment->transaction_id = $request->get('transacao');
+        //ddd(Payment::STATUS_PAYMENT_COMPLETED);
         $payment->status = Payment::STATUS_PAYMENT_COMPLETED;
         $payment->raw_data = json_encode($request->toArray());
         $order = Order::find($request->get('identificador'));

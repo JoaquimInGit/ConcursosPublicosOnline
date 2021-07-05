@@ -7,6 +7,8 @@ use App\Helpers\FiltersLogic;
 use App\Models\Base;
 use App\Models\Contest;
 use App\Models\ContestFilter;
+use App\Models\Entity;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Spatie\PdfToText\Pdf;
@@ -95,7 +97,8 @@ class BaseController extends Controller
     }
 
     public function applyfilter(){
-        FiltersLogic::applyFilter();
+
+       // FiltersLogic::applyFilter();
     }
 
     public function applyFilterToAllContests(){

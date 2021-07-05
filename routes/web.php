@@ -4,6 +4,7 @@ use App\Http\Controllers\ContestFilterController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\subscribedUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
@@ -72,13 +73,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('settings', SettingController::class)->middleware('can:adminFullApp');
     //Route::resource('settings', SettingController::class)->middleware('can:viewAny,App\Models\Setting'); // não funciona porque vai aplicar sempre a mesma policy tinha que separar todas as routes
 
-    Route::get('/contests', [ContestController::class,'index'])->name('contests.index');
+  /*  Route::get('/contests', [ContestController::class,'index'])->name('contests.index');
     Route::post('/contests', [ContestController::class,'store'])->name('contests.store');
     Route::get('/contests/create', [ContestController::class,'create'])->name('contests.create');
     Route::get('/contests/{contest}', [ContestController::class,'show'])->name('contests.show');
+
+    Route::get('/contests/{contest}/edit', [ContestController::class,'edit'])->name('contests.edit');*/
     Route::get('/contests/{contest}/follow', [ContestController::class,'follow'])->name('contests.follow');
-    Route::get('/contests/{contest}/edit', [ContestController::class,'edit'])->name('contests.edit');
     Route::post('/contests/followdatatable', [ContestController::class,'followDatatable'])->name('contests.followDatatable');
+    Route::resource('contests', App\Http\Controllers\ContestController::class)->middleware('subscribed');;
 
     Route::get('/entities', [EntityController::class,'index'])->name('entities.index');
     Route::post('/entities', [EntityController::class,'store'])->name('entities.store');
@@ -86,11 +89,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/entities/{entity}', [EntityController::class,'show'])->name('entities.show');
     Route::get('/entities/{entity}/edit', [EntityController::class,'edit'])->name('entities.edit');
 
-    Route::get('/filters', [FilterController::class,'index'])->name('filters.index');
-    Route::post('/filters', [FilterController::class,'store'])->name('filters.store');
-    Route::get('/filters/create', [FilterController::class,'create'])->name('filters.create');
-    Route::get('/filters/{filter}', [FilterController::class,'show'])->name('filters.show');
-    Route::get('/filters/{filter}/edit', [FilterController::class,'edit'])->name('filters.edit');
+    Route::resource('filters', App\Http\Controllers\FilterController::class)->middleware('subscribed');
+
+   /* Route::get('/filters', [FilterController::class,'index'])->name('filters.index')->middleware('subscribed');
+    Route::post('/filters', [FilterController::class,'store'])->name('filters.store')->middleware('subscribed');
+    Route::get('/filters/create', [FilterController::class,'create'])->name('filters.create')->middleware('subscribed');
+    Route::get('/filters/{filter}', [FilterController::class,'show'])->name('filters.show')->middleware('subscribed');
+    Route::get('/filters/{filter}/edit', [FilterController::class,'edit'])->name('filters.edit')->middleware('subscribed');*/
 
     ///Route::resource('products', App\Http\Controllers\ProductController::class)->middleware('can:adminFullApp');
     Route::get('/products', [ProductController::class,'index'])->name('products.index')->middleware('can:adminFullApp');
@@ -99,12 +104,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/products/{product}', [ProductController::class,'show'])->name('products.show')->middleware('can:adminFullApp');
     Route::get('/products/{product}/edit', [ProductController::class,'edit'])->name('products.edit')->middleware('can:adminFullApp');
 
+
     Route::get('/orders/eupago-callback', [OrderController::class,'eupagoCallback'])->name('orders.eupago_callback');
     Route::resource('orders', App\Http\Controllers\OrderController::class);
 
 
-    Route::get('/notification', [ContestFilterController::class,'index'])->name('contest_filters.index');
-    Route::get('/notification/{notification}', [ContestFilterController::class,'show'])->name('contest_filters.show');
+  //  Route::get('/notification', [ContestFilterController::class,'index'])->name('contest_filters.index');
+ //   Route::get('/notification/{notification}', [ContestFilterController::class,'show'])->name('contest_filters.show')->middleware('can:adminFullApp');
+    Route::resource('contest_filters', App\Http\Controllers\ContestFilterController::class)->middleware('subscribed');
     /*Route::resource('testes', TesteController::class)->parameters([
         'testes' => 'teste'
     ]); //para escolher um parametro diferentes dava erro e em vez de teste estava a meter testis*/
@@ -118,11 +125,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-Route::resource('filters', App\Http\Controllers\FilterController::class);
 
 
 
-Route::resource('contests', App\Http\Controllers\ContestController::class);
+
+
 
 Route::resource('entities', App\Http\Controllers\EntityController::class);
 
@@ -130,4 +137,3 @@ Route::resource('products', App\Http\Controllers\ProductController::class);
 
 Route::resource('orders', App\Http\Controllers\OrderController::class);
 
-Route::resource('contest_filters', App\Http\Controllers\ContestFilterController::class);

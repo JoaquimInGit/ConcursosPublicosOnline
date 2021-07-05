@@ -92,7 +92,7 @@ class RegisterController extends Controller
             'mobile_phone' => $data['mobile_phone'],
             'nif' => $data['nif'],
             'cae' => $data['cae'],
-            'status' => 1,
+            'status' => 0,
         ]);
 
         //cria o user com o role do tipo User(4)

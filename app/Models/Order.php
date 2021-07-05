@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Facades\Eupago;
 use Carbon\Carbon;
+use Carbon\Doctrine\DateTimeDefaultPrecision;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -252,10 +253,12 @@ class Order extends Model implements Auditable
     public static function getPrice(){
         $array = array();
         $produtos = Product::select('price')->get();
+       // dd($produtos);
         foreach ($produtos as $produto){
             $preco = floatval($produto->price);
             array_push($array,$preco);
         }
+        //dd($array);
         return $array;
     }
 
@@ -265,7 +268,9 @@ class Order extends Model implements Auditable
      * @return mixed
      */
     public static function getSpecificPrice($index){
+        //dd($index);
         $array = Order::getPrice();
+        //ddd($array[$index]);
         return $array[$index];
     }
 
@@ -282,6 +287,7 @@ class Order extends Model implements Auditable
     }
 
     public function syncOrderItems($order,$product){
+       //ddd($product);
         OrderItem::create([
             'entity_id' => Order::getEntity()->id,
             'order_id' => $order->id,

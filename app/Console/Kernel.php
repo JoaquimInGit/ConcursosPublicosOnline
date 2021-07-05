@@ -4,6 +4,8 @@ namespace App\Console;
 
 use App\Console\Commands\AuthPermissionCommand;
 use App\Helpers\ContestBusinessLogic;
+use App\Helpers\FiltersLogic;
+use App\Models\Entity;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,17 +28,45 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->call(function () {
+            ContestBusinessLogic::insertContests();
+        })->twiceDaily(8, 14)
+            ->onSuccess(function () {
+                FiltersLogic::applyFilter();
+            })->onSuccess(function () {
+                FiltersLogic::sendNotifications();
+            });
+
         // $schedule->command('inspire')->hourly();
         //corre o InsertContests a cada minuto
-        //TODO:Mudar para o tempo que queremos
-        /*$schedule->call(function(){
+      /*  $schedule->call(function(){
             ContestBusinessLogic::insertContests();
-        })->everyTwoMinutes();
-*/
-       $schedule->call(function(){
-            ContestBusinessLogic::insertContests();
-        })->twiceDaily(8, 14);
+        })->everyTwoMinutes()->onSuccess(function () {
+            FiltersLogic::applyFilter();
+        })->onSuccess(function () {
+            FiltersLogic::sendNotifications();
+        });*/
+
+        $schedule->call(function (){
+            $entities = Entity::where('status', 1)->get();
+            foreach ($entities as $entity) {
+                if( !Entity::isEntitySubscribed($entity)){
+                    $entity->update(['status' => 0]);
+                }
+            }
+        })->daily();
+
+/*
+   $schedule->call(function (){
+          FiltersLogic::applyFilter();
+      })->twiceDaily(9, 15);
+        $schedule->call(function (){
+             FiltersLogic::sendNotifications();
+         })->twiceDaily(9, 14);
+  */
     }
+
+
 
     /**
      * Register the commands for the application.
