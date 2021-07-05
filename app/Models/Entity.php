@@ -103,7 +103,7 @@ class Entity extends Model implements Auditable
         'cae_secundario' => 'string',
         'website' => 'string',
         'email_entity' => 'string',
-        'status' => 'boolean'
+        'status' => 'integer'
     ];
 
     /**
@@ -124,7 +124,7 @@ class Entity extends Model implements Auditable
         'cae_secundario' => 'nullable|string|max:255',
         'website' => 'nullable|string|max:255',
         'email_entity' => 'nullable|string|max:255',
-        'status' => 'required|boolean',
+        'status' => 'required|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

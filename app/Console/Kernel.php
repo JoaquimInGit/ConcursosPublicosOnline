@@ -28,24 +28,24 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
+        /*$schedule->call(function () {
             ContestBusinessLogic::insertContests();
         })->twiceDaily(8, 14)
             ->onSuccess(function () {
                 FiltersLogic::applyFilter();
             })->onSuccess(function () {
                 FiltersLogic::sendNotifications();
-            });
+            });*/
 
         // $schedule->command('inspire')->hourly();
         //corre o InsertContests a cada minuto
-        /*$schedule->call(function(){
+        $schedule->call(function(){
             ContestBusinessLogic::insertContests();
         })->everyTwoMinutes()->onSuccess(function () {
             FiltersLogic::applyFilter();
         })->onSuccess(function () {
             FiltersLogic::sendNotifications();
-        });*/
+        });
 
         $schedule->call(function (){
             $entities = Entity::where('status', 1)->get();
