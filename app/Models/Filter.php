@@ -293,16 +293,18 @@ class Filter extends Model implements Auditable
 
     public function getWordsLabelAttribute()
     {
-        $keywords = explode(',', $this->description_words);
-        $keys = "";
-        foreach ($keywords as $word) {
-            $aux = explode('"value":"', $word);
-            $keys = $keys . $aux[1];
-        }
-        $keys = str_replace('"}', ' ', $keys);
-        $keys = str_replace(']', ' ', $keys);
-        $searchValues = preg_split('/\s+/', $keys, -1, PREG_SPLIT_NO_EMPTY);
+        if(!empty($this->description_words)){
+            $keywords = explode(',', $this->description_words);
+            $keys = "";
+            foreach ($keywords as $word) {
+                $aux = explode('"value":"', $word);
+                $keys = $keys . $aux[1];
+            }
+            $keys = str_replace('"}', ' ', $keys);
+            $keys = str_replace(']', ' ', $keys);
+            $searchValues = preg_split('/\s+/', $keys, -1, PREG_SPLIT_NO_EMPTY);
 
-        return implode(', ',$searchValues);
+            return implode(', ',$searchValues);
+        }
     }
 }

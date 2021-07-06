@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             ContestBusinessLogic::insertContests();
-        })->twiceDaily(9, 15)
+        })->twiceDaily(8, 15)
             ->onSuccess(function () {
                 FiltersLogic::applyFilter();
             })->onSuccess(function () {
@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
         //corre o InsertContests a cada minuto
         /*$schedule->call(function(){
             ContestBusinessLogic::insertContests();
-        })->everyTwoMinutes()->onSuccess(function () {
+        })->everyFiveMinutes()->onSuccess(function () {
             FiltersLogic::applyFilter();
         })->onSuccess(function () {
             FiltersLogic::sendNotifications();

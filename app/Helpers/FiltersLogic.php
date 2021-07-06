@@ -228,8 +228,8 @@ class FiltersLogic
                 //$contests = ContestFilter::where([['filter_id', $filtro->id], ['date', today()->toDate()]])->get();
                 //ddd($currentTime < $firstScrapeTime);
                 if($currentTime < $firstScrapeTime){
-                $contests = ContestFilter::where([['filter_id',$filtro->id],['created_at','<',$firstScrapeTime]])->get()->toArray();
-                //ddd($contests);
+                $contests = ContestFilter::where([['filter_id',$filtro->id],['created_at','<',$firstScrapeTime]])->get();
+               // ddd($contests);
                 }else{
                 $contests = ContestFilter::where([['filter_id', $filtro->id], ['date', today()->toDate()]])->get();
                 }
@@ -243,7 +243,7 @@ class FiltersLogic
                         //colocamos o concurso no array
                         $cont = Contest::where('id',$c->contest_id)
                             ->first();
-                       // ddd($cont);
+                      //ddd($cont);
                         array_push($contestsArray, $cont);
                     }
                 }
