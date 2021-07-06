@@ -39,13 +39,13 @@ class Kernel extends ConsoleKernel
 
         // $schedule->command('inspire')->hourly();
         //corre o InsertContests a cada minuto
-        $schedule->call(function(){
+        /*$schedule->call(function(){
             ContestBusinessLogic::insertContests();
         })->everyTwoMinutes()->onSuccess(function () {
             FiltersLogic::applyFilter();
         })->onSuccess(function () {
             FiltersLogic::sendNotifications();
-        });
+        });*/
 
         $schedule->call(function (){
             $entities = Entity::where('status', 1)->get();
