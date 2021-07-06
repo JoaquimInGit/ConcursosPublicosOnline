@@ -83,7 +83,10 @@ class FiltersLogic
                 $contests = $contests->where('type_act', $filter->type_act)->get();
             }
             if (!empty($filter->type_model)) {
-                $contests = $contests->where('type_model', $filter->type_model)->get();
+                if($contests->where('type_model', $filter->type_model)->get() != null){
+                    $contests = $contests->where('type_model', $filter->type_model)->get();
+                }
+
             }
             if (!empty($filter->type_contract)) {
                 $contests = $contests->where('type_contract', $filter->type_contract)->get();
