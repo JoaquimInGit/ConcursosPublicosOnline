@@ -238,15 +238,21 @@ class FiltersLogic
                 //encontra registos da relação Contest Filter
                 //$contests = ContestFilter::where([['filter_id', $filtro->id], ['date', today()->toDate()]])->get();
                 //ddd($currentTime < $firstScrapeTime);
+               // ddd($currentTime > $firstScrapeTime);
+
                 if($currentTime < $firstScrapeTime){
-                $contests = ContestFilter::where([['filter_id',$filtro->id],['created_at','<',$firstScrapeTime]])->get();
-               // ddd($contests);
+                //   ddd($firstScrapeTime);
+                $contests = ContestFilter::where([['filter_id',$filtro->id],['created_at','>',$firstScrapeTime]])->get();
+                //$contests = ContestFilter::where('created_at','>',$firstScrapeTime)->get();
+                //ddd($contests);
                 }else{
                 $contests = ContestFilter::where([['filter_id', $filtro->id], ['date', today()->toDate()]])->get();
                 }
-
+               // ddd();
                 //se o resultado da query anterior não for null
-                if (!empty($contests)){
+               // if (!empty($contests)){
+                if (sizeof($contests) != 0){
+                   // ddd($contests);
                     //$fil = Filter::where('id',$filtro->id)->first();
                     //array_push($filtersArray, $fil);
                     //por cada concurso
