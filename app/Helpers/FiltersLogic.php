@@ -58,41 +58,49 @@ class FiltersLogic
                             ->orWhere('pdf_content', 'like', "%{$value}%");
                         // ->orWhere('cpv_description', 'like', "%{$value}%");
                     }
-                })->get();
+                });
 //dd($contests);
             }
 
             if (!empty($filter->contest_entity)) {
-                $contests = $contests->where('entity', 'LIKE', "%" . $filter->contest_entity . "%")->get();
+                $contests = $contests->where('entity', 'LIKE', "%" . $filter->contest_entity . "%");
             }
 
             if (!empty($filter->district)) {
-                $contests = $contests->where('pdf_content', 'LIKE', "%" . $filter->district . "%")->get();
+                $contests = $contests->where('pdf_content', 'LIKE', "%" . $filter->district . "%");
             }
             //dd($contests);
             if (!empty($filter->min_price)) {
-                $contests = $contests->where('price', '>=', $filter->min_price)->get();
+                $contests = $contests->where('price', '>=', $filter->min_price);
             }
             if (!empty($filter->max_price)) {
-                $contests = $contests->where('price', '<=', $filter->max_price)->get();
+                $contests = $contests->where('price', '<=', $filter->max_price);
             }
             if (!empty($filter->cpv)) {
-                $contests = $contests->where('cpv', $filter->cpv)->get();
+                $contests = $contests->where('cpv', $filter->cpv);
             }
             if (!empty($filter->type_act)) {
-                $contests = $contests->where('type_act', $filter->type_act)->get();
+              // ddd($filter->type_act);
+                $contests = $contests->where('type_act', $filter->type_act);
+                //ddd($contests->toArray());
             }
             if (!empty($filter->type_model)) {
-                if($contests->where('type_model', $filter->type_model)->get() != null){
-                    $contests = $contests->where('type_model', $filter->type_model)->get();
-                }
+             //   ddd($filter->type_model);
+              //  ddd($contests->toArray());
+              //  ddd($filter->type_model);
+               // ddd($contests->where('type_model',$filter->type_model));
+              //  ddd($contests->toArray());
+              //  if($contests->where('type_model', $filter->type_model)->get() != null){
+                    $contests = $contests->where('type_model', $filter->type_model);
+                //}
 
             }
             if (!empty($filter->type_contract)) {
-                $contests = $contests->where('type_contract', $filter->type_contract)->get();
+                $contests = $contests->where('type_contract', $filter->type_contract);
             }
             if ($contests != null) {
-                $contests = $contests->toArray();
+                $contests = $contests->get()->toArray();
+
                 $contests = json_encode($contests);
                 $contests = json_decode($contests);
 
