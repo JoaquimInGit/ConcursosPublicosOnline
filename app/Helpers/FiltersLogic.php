@@ -11,6 +11,7 @@ use App\Models\Filter;
 use App\Models\User;
 use App\Notifications\FilterNotification;
 use Carbon\Carbon;
+use Exception;
 
 class FiltersLogic
 {
@@ -36,6 +37,7 @@ class FiltersLogic
         //   dd($filters);
         //ddd($teste);
         foreach ($filters as $filter) {
+            try {
             // dd($filter->filter_name);
             $contests = Contest::where('created_at', '>=', today()->toDate());
 
@@ -118,7 +120,10 @@ class FiltersLogic
                     }
                 }
             }
-
+            }catch(Exception $e){
+                //TODO:fazer log da exceção
+                return "erro encontrado: ".$e->getMessage();
+            }
         }
     }
 
@@ -218,7 +223,7 @@ class FiltersLogic
         //guarda todas a entidades ativas
         $currentTime = date("Y-m-d H:i:s");
 
-        $firstScrapeTime = date("Y-m-d 9:i:s");
+        $firstScrapeTime = date("Y-m-d 8:i:s");
         //ddd($currentTime.' '.$firstScrapeTime);
         $entities = Entity::where('status','>=',1)->get();
 

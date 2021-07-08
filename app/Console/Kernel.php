@@ -28,14 +28,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+
         $schedule->call(function () {
             ContestBusinessLogic::insertContests();
-        })->twiceDaily(8, 14)
-            ->onSuccess(function () {
+        })->hourly()->onSuccess(
+            function () {
                 FiltersLogic::applyFilter();
-            })->onSuccess(function () {
-                FiltersLogic::sendNotifications();
-            });
+            }
+        );
+
+        $schedule->call(function () {
+            FiltersLogic::sendNotifications();
+        })->twiceDaily(8 , 13);
+
 
         // $schedule->command('inspire')->hourly();
         //corre o InsertContests a cada minuto
