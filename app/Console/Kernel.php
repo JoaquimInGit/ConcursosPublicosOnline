@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             ContestBusinessLogic::insertContests();
-        })->twiceDaily(8, 15)
+        })->twiceDaily(8, 14)
             ->onSuccess(function () {
                 FiltersLogic::applyFilter();
             })->onSuccess(function () {
