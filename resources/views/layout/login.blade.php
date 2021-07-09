@@ -46,8 +46,8 @@
         <!--begin::Main-->
         <div class="d-flex flex-column flex-root">
             <!--begin::Login-->
-            <div class="login login-2 login-signin-on d-flex flex-row-fluid" id="kt_login">
-                <div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat" style="background-image: url('/assets/media/bg/bg-3.jpg');">
+            <div class="login login-1 login-signin-on d-flex flex-row-fluid" id="kt_login">
+                <div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat" style="background-color: #ADD8E6;">
                     @yield('content')
                 </div>
             </div>

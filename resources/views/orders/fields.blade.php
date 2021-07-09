@@ -64,9 +64,9 @@
                             <sup class="font-size-h3 font-weight-normal pl-1">€</sup></span>
                     <h4 class="font-size-h6 d-block d-block font-weight-bold mb-7 text-dark-50">{{__('Monthly Subscription')}}</h4>
                     <p class="mb-15 d-flex flex-column">
-                        <span>{{__('Value w/o IVA')}}:  {{$order->getSpecificPrice(0)}}€</span>
+                        <span>{{__('Value w/o IVA')}}:  {{number_format($order->getSpecificPrice(0), 2, ',', '.').'€'}}</span>
                         <span>IVA 23%</span>
-                        <span>{{__('Value w/IVA')}}:  {{$order->getSpecificPriceIVA(0)}}€</span>
+                        <span>{{__('Value w/IVA')}}:  {{number_format($order->getSpecificPriceIVA(0), 2, ',', '.').'€'}}</span>
                     </p>
                 {!! Form::submit( __('Monthly'), ['class' => 'btn btn-primary text-uppercase font-weight-bolder px-15 py-3', 'name' => 'submit', 'value' => 'save-monthly'])!!}
                     <!--end::Content-->
@@ -81,9 +81,9 @@
 													<sup class="font-size-h3 font-weight-normal pl-1">€</sup></span>
                     <h4 class="font-size-h6 d-block font-weight-bold mb-7 text-dark-50">{{__('Semi-annual subscription')}}</h4>
                     <p class="mb-15 d-flex flex-column">
-                        <span>{{__('Value w/o IVA')}}:  {{$order->getSpecificPrice(1)}}€</span>
+                        <span>{{__('Value w/o IVA')}}:  {{number_format($order->getSpecificPrice(1), 2, ',', '.').'€'}}</span>
                         <span>IVA 23%</span>
-                        <span>{{__('Value w/IVA')}}:  {{$order->getSpecificPriceIVA(1)}}€</span>
+                        <span>{{__('Value w/IVA')}}:  {{number_format($order->getSpecificPriceIVA(1), 2, ',', '.').'€'}}</span>
                     </p>
                 {!! Form::submit( __('Semi-annual'), ['class' => 'btn btn-primary text-uppercase font-weight-bolder px-15 py-3', 'name' => 'submit', 'value' => 'save-semiannual'])!!}
                     <!--end::Content-->
@@ -98,9 +98,9 @@
 													<sup class="font-size-h3 font-weight-normal pl-1">€</sup></span>
                     <h4 class="font-size-h6 d-block font-weight-bold mb-7 text-dark-50">{{__('Annual subscription')}}</h4>
                     <p class="mb-15 d-flex flex-column">
-                        <span>{{__('Value w/o IVA')}}:  {{$order->getSpecificPrice(2)}}€</span>
+                        <span>{{__('Value w/o IVA')}}:  {{number_format($order->getSpecificPrice(2), 2, ',', '.').'€'}}</span>
                         <span>IVA 23%</span>
-                        <span>{{__('Value w/IVA')}}:  {{$order->getSpecificPriceIVA(2)}}€</span>
+                        <span>{{__('Value w/IVA')}}:  {{number_format($order->getSpecificPrice(2), 2, ',', '.').'€'}}</span>
                     </p>
                 {!! Form::submit( __('Annual'), ['class' => 'btn btn-primary text-uppercase font-weight-bolder px-15 py-3', 'name' => 'submit', 'value' => 'save-yearly'])!!}
                     <!--end::Content-->

@@ -16,7 +16,7 @@ view()->share('hideSubHeader', true);
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">
-                    {{ $contest->id }}
+                    {{ $contest->description }}
                 </h3>
             </div>
             <div class="card-toolbar">

@@ -4,9 +4,7 @@
     <div class="login-form text-center p-7 position-relative overflow-hidden">
         <!--begin::Login Header-->
         <div class="d-flex flex-center mb-15">
-            <a href="/">
-                <img src="/media/logos/logo-dark.png" class="max-h-75px" alt="" />
-            </a>
+            <h1>Concursos Públicos Online</h1>
         </div>
         <div class="login-signin">
             <div class="mb-20">

@@ -1,3 +1,4 @@
+@if(auth()->user()->cannot('accessAsUser'))
 <!-- Entity Id Field -->
 <tr>
     <th scope="row">{{ $order->getAttributeLabel('entity_id') }}</th>
@@ -10,7 +11,7 @@
     <th scope="row">{{ $order->getAttributeLabel('user_id') }}</th>
     <td>{{ $order->user_id }}</td>
 </tr>
-
+@endif
 
 <!-- Name Field -->
 <tr>
@@ -54,45 +55,17 @@
 </tr>
 
 
-<!-- Coupon Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('coupon') }}</th>
-    <td>{{ $order->coupon }}</td>
-</tr>
-
-
-<!-- Discount Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('discount') }}</th>
-    <td>{{ $order->discount }}</td>
-</tr>
-
-
 <!-- Sub Total Field -->
 <tr>
     <th scope="row">{{ $order->getAttributeLabel('sub_total') }}</th>
-    <td>{{ $order->sub_total }}</td>
+    <td>{{ number_format($order->sub_total, 2, ',', '.').'€' }}</td>
 </tr>
 
 
 <!-- Iva Value Field -->
 <tr>
     <th scope="row">{{ $order->getAttributeLabel('iva_value') }}</th>
-    <td>{{ $order->iva_value }}</td>
-</tr>
-
-
-<!-- Payment Method Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('payment_method') }}</th>
-    <td>{{ $order->payment_method }}</td>
-</tr>
-
-
-<!-- Notes Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('notes') }}</th>
-    <td>{{ $order->notes }}</td>
+    <td>{{ number_format($order->iva_value, 2, ',', '.').'€' }}</td>
 </tr>
 
 
@@ -117,59 +90,10 @@
 </tr>
 
 
-<!-- Mbway Ref Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('mbway_ref') }}</th>
-    <td>{{ $order->mbway_ref }}</td>
-</tr>
-
-
-<!-- Mbway Alias Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('mbway_alias') }}</th>
-    <td>{{ $order->mbway_alias }}</td>
-</tr>
-
-
-<!-- Payment Ref Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('payment_ref') }}</th>
-    <td>{{ $order->payment_ref }}</td>
-</tr>
-
-
-<!-- Invoice Id Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('invoice_id') }}</th>
-    <td>{{ $order->invoice_id }}</td>
-</tr>
-
-
-<!-- Invoice Link Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('invoice_link') }}</th>
-    <td>{{ $order->invoice_link }}</td>
-</tr>
-
-
-<!-- Payment Limit Date Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('payment_limit_date') }}</th>
-    <td>{{ $order->payment_limit_date }}</td>
-</tr>
-
-
-<!-- Invoice Status Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('invoice_status') }}</th>
-    <td>{{ $order->invoice_status }}</td>
-</tr>
-
-
 <!-- Status Field -->
 <tr>
     <th scope="row">{{ $order->getAttributeLabel('status') }}</th>
-    <td>{{ $order->status }}</td>
+    <td>{{ $order->getStatusLabelAttribute() }}</td>
 </tr>
 
 
