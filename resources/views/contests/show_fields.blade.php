@@ -1,9 +1,10 @@
+@if(auth()->user()->cannot('accessAsUser'))
 <!-- Base Id Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('base_id') }}</th>
     <td>{{ $contest->base_id }}</td>
 </tr>
-
+@endif
 
 <!-- Num Announcement Field -->
 <tr>
@@ -29,7 +30,7 @@
 <!-- Price Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('price') }}</th>
-    <td>{{ $contest->price }}</td>
+    <td>{{ number_format($contest->price, 2, ',', '.').'€' }}</td>
 </tr>
 
 
@@ -55,17 +56,17 @@
 
 
 <!-- Republic Diary Num Field -->
-<tr>
+<!--<tr>
     <th scope="row">{{ $contest->getAttributeLabel('republic_diary_num') }}</th>
     <td>{{ $contest->republic_diary_num }}</td>
-</tr>
+</tr>-->
 
 
 <!-- Republic Diary Serie Field -->
-<tr>
+<!--<tr>
     <th scope="row">{{ $contest->getAttributeLabel('republic_diary_serie') }}</th>
     <td>{{ $contest->republic_diary_serie }}</td>
-</tr>
+</tr>-->
 
 
 <!-- Cpv Field -->
@@ -80,36 +81,6 @@
     <th scope="row">{{ $contest->getAttributeLabel('cpv_description') }}</th>
     <td>{{ $contest->cpv_description }}</td>
 </tr>
-
-
-<!-- Procedure Parts Field -->
-<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('procedure_parts') }}</th>
-    <td>{{ $contest->procedure_parts }}</td>
-</tr>
-
-
-<!-- Link Announcement Field -->
-<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('link_announcement') }}</th>
-    <td>{{ $contest->link_announcement }}</td>
-</tr>
-
-
-<!-- Pdf Content Field -->
-<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('pdf_content') }}</th>
-
-    <td>
-        <p>
-            {{print_r( (html_entity_decode(json_decode(($contest->pdf_content)))) )  }}
-    </p>
-
-    </td>
-
-
-</tr>
-
 
 <!-- Type Act Field -->
 <tr>
@@ -131,15 +102,40 @@
     <td>{{ $contest->getTypeContractLabelAttribute() }}</td>
 </tr>
 
-
-<!-- Status Field -->
-<!--<tr>
-    <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
-    <td>{{ $contest->status }}</td>
-</tr>-->
+<!-- Procedure Parts Field -->
 <tr>
-    <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
-    <td>{{ $contest->getStatusLabelAttribute() }}</td>
+    <th scope="row">{{ $contest->getAttributeLabel('procedure_parts') }}</th>
+    <td>{{ $contest->procedure_parts }}</td>
 </tr>
+
+
+<!-- Link Announcement Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('link_announcement') }}</th>
+    <td><a href="{{ $contest->link_announcement }}" class="btn btn-sm btn-light font-weight-bold" target="_blank">Ligação</a></td>
+</tr>
+
+@if(auth()->user()->cannot('accessAsUser'))
+    <tr>
+        <th scope="row">{{ $contest->getAttributeLabel('status') }}</th>
+        <td>{{ $contest->getStatusLabelAttribute() }}</td>
+    </tr>
+@endif
+
+<!-- Pdf Content Field -->
+<tr>
+    <th scope="row">{{ $contest->getAttributeLabel('pdf_content') }}</th>
+
+    <td>
+        <p>
+            {{print_r( (html_entity_decode(json_decode(($contest->pdf_content)))) )  }}
+    </p>
+
+    </td>
+
+
+</tr>
+
+
 
 
