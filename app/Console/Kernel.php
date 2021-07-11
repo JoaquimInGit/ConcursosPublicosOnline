@@ -33,13 +33,13 @@ class Kernel extends ConsoleKernel
             ContestBusinessLogic::insertContests();
         })->hourly()->onSuccess(
             function () {
-                FiltersLogic::applyFilter();
+                FiltersLogic::applyFilter2();
             }
         );
 
         $schedule->call(function () {
-            FiltersLogic::sendNotifications();
-        })->twiceDaily(8 , 13);
+            FiltersLogic::sendNotifications2();
+        })->twiceDaily(7 , 13);
 
 
         // $schedule->command('inspire')->hourly();
