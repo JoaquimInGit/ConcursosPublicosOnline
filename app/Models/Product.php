@@ -25,12 +25,13 @@ class Product extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'products';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
-
-
+    const STATUS_DELETED = -1;
+    const STATUS_DISABLED = 0;
+    const STATUS_ACTIVE = 1;
 
     public $fillable = [
         'name',
@@ -108,5 +109,25 @@ class Product extends Model implements Auditable
     public function orderItems()
     {
         return $this->hasMany(\App\Models\OrderItem::class, 'product_id');
+    }
+
+    public static function getStatusArray()
+    {
+        return [
+            self::STATUS_DELETED =>  __('Deleted'),
+            self::STATUS_DISABLED =>  __('Disabled'),
+            self::STATUS_ACTIVE =>  __('Active'),
+        ];
+    }
+
+    public function getStatusOptions()
+    {
+        return static::getStatusArray();
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        $array = self::getStatusOptions();
+        return $array[$this->status];
     }
 }

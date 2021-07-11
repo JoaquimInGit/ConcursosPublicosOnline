@@ -4,7 +4,9 @@
     <div class="login-form text-center p-7 position-relative overflow-hidden">
         <!--begin::Login Header-->
         <div class="d-flex flex-center mb-15">
-            <h1>Concursos Públicos Online</h1>
+            <a href="{{ url('/') }}">
+                <img alt="{{ config('app.name') }}" src="{{ asset('media/logos/logo-concursos-online.jpeg') }}" width="200px"/>
+            </a>
         </div>
         <div class="login-signin">
             <div class="mb-20">
@@ -42,7 +44,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">{{ __('Login') }}</button>
             </form>
-            <div class="mt-10">
+            <div class="mb-5">
                 <span class="opacity-70 mr-4">{{ __("Don't have an account yet?") }}</span>
                 <a href="{{ route('register') }}" id="kt_login_signup" class="text-muted text-hover-primary font-weight-bold">{{ __('Register') }}</a>
             </div>

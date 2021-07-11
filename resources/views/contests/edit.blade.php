@@ -16,8 +16,11 @@ view()->share('hideSubHeader', true);
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
+                <a href="{{ URL::previous() }}">
+                    <img alt="Voltar" src="{{ asset('media/logos/voltar.png') }}" width="25px" class="mr-2 pb-2"/>
+                </a>
                 <h3 class="card-label">
-                    {{ $contest->id }}
+                    {{ $contest->description }}
                 </h3>
             </div>
         </div>

@@ -3,20 +3,18 @@
 @section('content')
     <div class="login-form text-center p-7 position-relative overflow-hidden">
         <!--begin::Login Header-->
-        <div class="dflex-center-flex mb-5 ">
-            <h1>Concursos Públicos Online</h1>
+        <div class="d-flex flex-center mb-10">
+            <a href="{{ url('/') }}">
+                <img alt="{{ config('app.name') }}" src="{{ asset('media/logos/logo-concursos-online.jpeg') }}" width="200px"/>
+            </a>
         </div>
         <div class="">
-            <div class="mb-7">
+            <div class="mb-10">
                 <h3>{{ __('Register') }}</h3>
                 <div class="font-weight-bold">{{ __('Enter your details to create your account:') }}</div>
             </div>
             <form  method="POST" action="{{ route('register') }}" class="form">
                 @csrf
-                <div class="row">
-                <div class="col-md-6">
-                <h3>{{ __('Entity') }}</h3>
-
                 <div class="form-group">
                     <div>
                         <input id="entity_name" type="text" class="form-control @error('entity_name') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Name Entity') }}" name="entity_name" value="{{ old('entity_name') }}" required autocomplete="entity_name" autofocus>
@@ -87,31 +85,6 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-group mb-15">
-                    <div>
-                        <input id="cae" type="text" class="form-control @error('cae') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('CAE') }}" name="cae" value="{{ old('cae') }}" required autocomplete="cae">
-                        @error('cae')
-                        <div class="fv-plugins-message-container">
-                            <div class="fv-help-block">{{ $message }}</div>
-                        </div>
-                        @enderror
-                    </div>
-                </div>
-                </div>
-                <div class="col-md-6">
-                <div class="mt-20">
-                    <h3>{{ __('User') }}</h3>
-                </div>
-                <div class="form-group mb-5">
-                    <div>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Name') }}" name="name" value="{{ old('name') }}" required autocomplete="name">
-                        @error('name')
-                        <div class="fv-plugins-message-container">
-                            <div class="fv-help-block">{{ $message }}</div>
-                        </div>
-                        @enderror
-                    </div>
-                </div>
                 <div class="form-group mb-5">
                     <div>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Email') }}"  name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -138,10 +111,9 @@
                         <input id="password-confirm" type="password" class="form-control @error('password-confirm') is-invalid @enderror h-auto form-control-solid py-4 px-8" placeholder="{{ __('Confirm Password') }}" name="password_confirmation" required autocomplete="new-password">
                     </div>
                 </div>
-                    <button type="submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-2">{{ __('Register') }}</button>
-                    <a href="{{ route('login') }}" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2 ">{{ __('Login') }}</a>
-                </div>
-                </div>
+                    <button type="submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-2 mb-15">{{ __('Register') }}</button>
+                    <a href="{{ route('login') }}" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2 mb-15">{{ __('Login') }}</a>
+
                 <!--<div class="form-group mb-5 text-left">
                     <label class="checkbox m-0">
                         <input type="checkbox" name="agree" />I Agree the
@@ -149,7 +121,6 @@
                         <span></span></label>
                     <div class="form-text text-muted text-center"></div>
                 </div>-->
-
 
 
             </form>

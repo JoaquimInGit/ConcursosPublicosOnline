@@ -57,6 +57,10 @@ class Order extends Model implements Auditable
     CONST STATUS_WAITING_PAYMENT = 1;
     CONST STATUS_PAYED = 2;
 
+    const PAYMENT_METHOD_MBREF = 0;
+    CONST PAYMENT_METHOD_PAYPAL = 1;
+    CONST PAYMENT_METHOD_MBWAY = 2;
+
 
     public $fillable = [
         'entity_id',
@@ -358,5 +362,41 @@ class Order extends Model implements Auditable
     {
         $array = self::getStatusOptions();
         return $array[$this->status];
+    }
+
+    public static function getPaymentMethodArray()
+    {
+        return [
+            self::PAYMENT_METHOD_MBREF =>  __('Referência Multibanco'),
+            self::PAYMENT_METHOD_PAYPAL =>  __('Paypal'),
+            self::PAYMENT_METHOD_MBWAY =>  __('MBWay'),
+        ];
+    }
+
+    public function getPaymentMethodOptions()
+    {
+        return static::getPaymentMethodArray();
+    }
+
+    public function getPaymentMethodLabelAttribute()
+    {
+        $array = self::getPaymentMethodOptions();
+        return $array[$this->payment_method];
+    }
+
+    public function getEntityParam($entityid){
+        $entity = Entity::where('id',$entityid)->first();
+        return $entity;
+    }
+
+    public function getUserParam($userid){
+        $user = User::where('id',$userid)->first();
+        return $user;
+    }
+
+    public function getUsername($userid){
+        $user = User::where('id',$userid)->first();
+        $username = strtok($user->email, '@');
+        return $username;
     }
 }

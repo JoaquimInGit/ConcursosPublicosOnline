@@ -14,9 +14,20 @@ view()->share('hideSubHeader', true);
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
-
+                <a href="{{ URL::previous() }}">
+                    <img alt="Voltar" src="{{ asset('media/logos/voltar.png') }}" width="25px" class="mr-2 pb-2"/>
+                </a>
+                <h3 class="card-label">
+                    {{ $order->name }}
+                </h3>
             </div>
             <div class="card-toolbar">
+                @if(auth()->user()->can('manageApp'))
+                    <a href="{{ route('orders.edit', $order) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
+                        <i class="la la-edit"></i>
+                        {{ __('Update') }}
+                    </a>
+                @endif
                 <button class="btn btn-sm btn-light-danger font-weight-bold" onclick="destroyConfirmation(this)">
                     <i class="la la-trash"></i>
                     {{ __('Delete') }}

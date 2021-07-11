@@ -30,21 +30,21 @@
 <!-- Price Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('price') }}</th>
-    <td>{{ number_format($contest->price, 2, ',', '.').'€' }}</td>
+    <td>{{ !empty($contest->price) ? number_format($contest->price, 2, ',', '.').'€' :'' }}</td>
 </tr>
 
 
 <!-- Publication Date Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('publication_date') }}</th>
-    <td>{{ $contest->publication_date }}</td>
+    <td>{{ !empty($contest->publication_date) ? $contest->publication_date->format('d-m-Y') : '' }}</td>
 </tr>
 
 
 <!-- Deadline Date Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('deadline_date') }}</th>
-    <td>{{ $contest->deadline_date }}</td>
+    <td>{{ !empty($contest->deadline_date) ? $contest->deadline_date->format('d-m-Y') : '' }}</td>
 </tr>
 
 
@@ -56,17 +56,17 @@
 
 
 <!-- Republic Diary Num Field -->
-<!--<tr>
+<tr>
     <th scope="row">{{ $contest->getAttributeLabel('republic_diary_num') }}</th>
     <td>{{ $contest->republic_diary_num }}</td>
-</tr>-->
+</tr>
 
 
 <!-- Republic Diary Serie Field -->
-<!--<tr>
+<tr>
     <th scope="row">{{ $contest->getAttributeLabel('republic_diary_serie') }}</th>
     <td>{{ $contest->republic_diary_serie }}</td>
-</tr>-->
+</tr>
 
 
 <!-- Cpv Field -->
@@ -105,14 +105,19 @@
 <!-- Procedure Parts Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('procedure_parts') }}</th>
-    <td>{{ $contest->procedure_parts }}</td>
+    <td>@if(!empty($contest->procedure_parts))
+            <a href="{{ $contest->procedure_parts }}" class="btn btn-sm btn-light font-weight-bold" target="_blank">Ligação Peças do procedimento</a>
+        @endif
+    </td>
 </tr>
-
 
 <!-- Link Announcement Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('link_announcement') }}</th>
-    <td><a href="{{ $contest->link_announcement }}" class="btn btn-sm btn-light font-weight-bold" target="_blank">Ligação</a></td>
+    <td>@if(!empty($contest->link_announcement))
+            <a href="{{ $contest->link_announcement }}" class="btn btn-sm btn-light font-weight-bold" target="_blank">Ligação Diário da República</a>
+        @endif
+    </td>
 </tr>
 
 @if(auth()->user()->cannot('accessAsUser'))
@@ -125,16 +130,12 @@
 <!-- Pdf Content Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('pdf_content') }}</th>
-
     <td>
-        <p>
-            {{print_r( (html_entity_decode(json_decode(($contest->pdf_content)))) )  }}
-    </p>
-
+        <pre class="line-height-xl card-label font-size-base" >{{e($contest->pdf_content)}}</pre>
     </td>
-
-
 </tr>
+
+
 
 
 

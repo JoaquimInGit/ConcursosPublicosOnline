@@ -15,17 +15,15 @@ view()->share('hideSubHeader', true);
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
+                <a href="{{ URL::previous() }}">
+                    <img alt="Voltar" src="{{ asset('media/logos/voltar.png') }}" width="25px" class="mr-2 pb-2"/>
+                </a>
                 <h3 class="card-label">
                     {{ $contest->description }}
                 </h3>
             </div>
             <div class="card-toolbar">
                 @if(auth()->user()->can('accessAsUser'))
-                    <!--<button class="btn btn-sm btn-light-danger font-weight-bold" onclick="updateRelationship(this)">
-                        <i class="la la-trash"></i>
-                        {{ __('Follow') }}
-                    </button>
-                    -->
                     <a href="{{ route('contests.follow', $contest) }}" class="btn btn-sm btn-light-primary font-weight-bold mr-2">
                         <i class="la la-start"></i>
                         @if($contestentity->follow == '0')
@@ -79,4 +77,15 @@ view()->share('hideSubHeader', true);
                 document.getElementById('updade-form').submit();
         }*/
     </script>
+    <style>
+        pre {
+            font-family: Poppins, Helvetica, "sans-serif";
+            white-space: pre-wrap;
+            word-break: break-all;
+            color: #7E8299 !important;
+            font-weight: 500 !important;
+            font-size: 13px !important;
+        }
+    </style>
 @endpush
+

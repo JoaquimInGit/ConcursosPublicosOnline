@@ -1,8 +1,8 @@
 {{-- Header --}}
 @if(auth()->user()->can('accessAsUser'))
-    <div id="kt_header" class="header" {{ Metronic::printAttrs('header') }}>
+<div id="kt_header" class="header {{ Metronic::printClasses('header', true) }}" {{ Metronic::printAttrs('header') }}>
 @else
-    <div id="kt_header" class="header {{ Metronic::printClasses('header', false) }}" {{ Metronic::printAttrs('header') }}>
+<div id="kt_header" class="header {{ Metronic::printClasses('header', false) }}" {{ Metronic::printAttrs('header') }}>
 @endif
 
     {{-- Container --}}
@@ -36,7 +36,7 @@
             </div>
 
         @else
-            <div></div>
+
         @endif
 
         @include('layout.partials.extras._topbar')

@@ -8,14 +8,14 @@
 <!-- Price Field -->
 <tr>
     <th scope="row">{{ $product->getAttributeLabel('price') }}</th>
-    <td>{{ $product->price }}</td>
+    <td>{{ !empty($product->price) ? $product->price.'€' : '' }}</td>
 </tr>
 
 
 <!-- Reduced Price Field -->
 <tr>
     <th scope="row">{{ $product->getAttributeLabel('reduced_price') }}</th>
-    <td>{{ $product->reduced_price }}</td>
+    <td>{{ !empty($product->reduced_price) ? $product->reduced_price.'€' : '' }}</td>
 </tr>
 
 
@@ -36,7 +36,7 @@
 <!-- Status Field -->
 <tr>
     <th scope="row">{{ $product->getAttributeLabel('status') }}</th>
-    <td>{{ $product->status }}</td>
+    <td>{{ $product->getStatusLabelAttribute() }}</td>
 </tr>
 
 

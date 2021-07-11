@@ -1,12 +1,12 @@
 <!-- User Id Field -->
-@if(auth()->user()->cannot('accessAsUser'))
-<div class="form-group">
-    {!! Form::label('user_id', $entity->getAttributeLabel('user_id')) !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control '.($errors->has('user_id') ? 'is-invalid' : '')]) !!}
-    @error('user_id')
+@if(auth()->user()->can('manageApp'))
+    <div class="form-group">
+        {!! Form::label('user_id', $entity->getAttributeLabel('user_id')) !!}
+        {!! Form::select('user_id',$entity->getUsername(), null, ['class' => 'form-control '.($errors->has('user_id') ? 'is-invalid' : ''),'placeholder' => __('Select a User')]) !!}
+        @error('user_id')
         <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
+        @enderror
+    </div>
 @else
     {!! Form::hidden('user_id', $entity->user_id) !!}
 @endif
@@ -119,7 +119,7 @@
         {!! Form::checkbox('status', '1', null) !!}
     </label>
 </div>-->
-@if(auth()->user()->cannot('accessAsUser'))
+@if(auth()->user()->can('manageApp'))
 <div class="form-group">
     {!! Form::label('status', $entity->getAttributeLabel('status')) !!}
     {!! Form::select('status',$entity->getStatusArray(), null, ['class' => 'form-control '.($errors->has('status') ? 'is-invalid' : ''),'placeholder' => __('Select a Status')]) !!}

@@ -46,28 +46,6 @@ class Entity extends Model implements Auditable
     const STATUS_APPROVED = 1;
     const STATUS_SPECIAL = 2;
 
-    public static function getStatusArray()
-    {
-        return [
-            self::STATUS_DISABLED =>  __('Disabled'),
-            self::STATUS_APPROVED =>  __('Approved'),
-            self::STATUS_SPECIAL =>  __('Special'),
-        ];
-    }
-
-    public function getStatusOptions()
-    {
-        return static::getStatusArray();
-    }
-
-    public function getStatusLabelAttribute()
-    {
-        $array = self::getStatusOptions();
-        return $array[$this->status];
-    }
-
-
-
     public $fillable = [
         'user_id',
         'name',
@@ -206,6 +184,26 @@ class Entity extends Model implements Auditable
         return $this->hasMany(\App\Models\Order::class, 'entity_id');
     }
 
+    public static function getStatusArray()
+    {
+        return [
+            self::STATUS_DISABLED =>  __('Disabled'),
+            self::STATUS_APPROVED =>  __('Approved'),
+            self::STATUS_SPECIAL =>  __('Special'),
+        ];
+    }
+
+    public function getStatusOptions()
+    {
+        return static::getStatusArray();
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        $array = self::getStatusOptions();
+        return $array[$this->status];
+    }
+
     /**
      * procura entidade do user autenticado
      * @return Model|\Illuminate\Database\Query\Builder|object|null
@@ -221,4 +219,21 @@ class Entity extends Model implements Auditable
             ->get();
         return $orderItem->isNotEmpty();
     }
+
+    /**
+     * devolve um array com o nome[email] dos users todos
+     * @param $userid
+     * @return array
+     */
+    public function getUsername(){
+        $array = array();
+        array_push($array, '');
+        $users = User::all();
+        foreach ($users as $user){
+            $username = strtok($user->email, '@');
+                array_push($array, $username);
+        }
+        return $array;
+    }
+
 }

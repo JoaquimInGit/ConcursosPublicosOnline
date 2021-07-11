@@ -94,19 +94,21 @@ view()->share('hideSubHeader', true);
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2 col-sm-12">Preço Minimo</label>
-                        <div class="col-lg-3 col-md-9 col-sm-12">
+                        <div class="col-lg-4 col-md-9 col-sm-12">
                             <input id="min_price_1" type="text" class="form-control text-center" value="0.00" name="demo0" placeholder="Select time"/>
                         </div>
-                        <label class="col-form-label col-lg-3 col-sm-12 checkbox checkbox-lg">
-                            Anúncio visto
+                        <div class="checkbox-inline">
+                        <label class="col-form-label col-lg-5 col-sm-12 checkbox checkbox-lg">
                             <input type="checkbox" name="viewed_at" id="viewed_at"/>
                             <span></span>
+                            Anúncio visto
                         </label>
                         <label class="col-form-label col-lg-3 col-sm-12 checkbox checkbox-lg">
-                            A Seguir Anúncio
                             <input type="checkbox" name="follow" id="follow"/>
                             <span></span>
+                            A Seguir Anúncio
                         </label>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">

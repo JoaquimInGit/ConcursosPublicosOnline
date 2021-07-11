@@ -59,8 +59,6 @@ class RegisterController extends Controller
             'postal_code' => ['required','string','max:8'],
             'mobile_phone' => ['required','string','max:32'],
             'nif' => ['required','string','max:32'],
-            'cae' => ['nullable','string','max:5'],
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -76,7 +74,7 @@ class RegisterController extends Controller
     {
         //cria um novo user
         $user = User::create([
-            'name' => $data['name'],
+            'name' => strtok($data['email'], '@'),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -91,7 +89,6 @@ class RegisterController extends Controller
             'postal_code' => $data['postal_code'],
             'mobile_phone' => $data['mobile_phone'],
             'nif' => $data['nif'],
-            'cae' => $data['cae'],
             'status' => 0,
         ]);
 

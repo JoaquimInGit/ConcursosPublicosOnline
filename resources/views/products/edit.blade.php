@@ -17,7 +17,7 @@ view()->share('hideSubHeader', true);
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">
-                    {{ $product->id }}
+                    {{ $product->name }}
                 </h3>
             </div>
         </div>

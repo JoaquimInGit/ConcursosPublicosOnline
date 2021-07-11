@@ -25,13 +25,15 @@
 
             @endif
 
-            <img alt="{{ config('app.name') }}" src="{{ asset('media/logos/'.$kt_logo_image) }}"/>
+            <img alt="{{ config('app.name') }}" src="{{ asset('media/logos/logo-concursos-online.jpeg') }}" width="120px"/>
         </a>
     </div>
     <div class="d-flex align-items-center">
 
-        @if (config('layout.aside.self.display'))
-            <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle"><span></span></button>
+        @if(auth()->user()->can('manageApp'))
+            @if (config('layout.aside.self.display'))
+                <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle"><span></span></button>
+            @endif
         @endif
 
         @if (config('layout.header.menu.self.display'))

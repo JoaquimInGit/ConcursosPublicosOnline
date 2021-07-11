@@ -3,18 +3,13 @@
         @yield('content')
     </div>
 @else
-
     @include('layout.base._header-mobile')
 
-    @if(auth()->user()->can('accessAsUser'))
-        <div class="d-flex flex-column flex-root ">
-
+    @if(auth()->user()->can('accessAsUser') && (preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]) == null) )
+        <div class="d-flex flex-column flex-column-fluid" >
             @include('layout.base._header')
 
             <div class="content {{ Metronic::printClasses('content', false) }} d-flex flex-column flex-column-fluid" id="kt_content">
-
-
-
                 @include('layout.base._content')
             </div>
 

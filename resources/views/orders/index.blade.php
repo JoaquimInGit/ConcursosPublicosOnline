@@ -22,14 +22,14 @@ view()->share('hideSubHeader', true);
                     {{ __('Orders') }}
                 </h3>
             </div>
-            <div class="card-toolbar">
-                <div class="dropdown dropdown-inline" id="datatable-buttons">
+            @if(auth()->user()->can('accessAsUser'))
+                <div class="card-toolbar">
+                    <a href="{{ route('orders.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
+                        <i class="la la-plus"></i>
+                        {{ __('New Subscription') }}
+                    </a>
                 </div>
-                <a href="{{ route('orders.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
-                    <i class="la la-plus"></i>
-                    {{ __('New Subscription') }}
-                </a>
-            </div>
+            @endif
         </div>
         <div class="card-body">
             <!--begin: Datatable classes table dataTable no-footer -->

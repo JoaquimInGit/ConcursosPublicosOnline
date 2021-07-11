@@ -1,5 +1,5 @@
 <!-- User Id Field -->
-@if(auth()->user()->cannot('accessAsUser'))
+@if(auth()->user()->can('manageApp'))
 <tr>
     <th scope="row">{{ $entity->getAttributeLabel('user_id') }}</th>
     <td>{{ $entity->user_id }}</td>

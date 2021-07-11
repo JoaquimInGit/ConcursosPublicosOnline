@@ -1,24 +1,8 @@
-@if(auth()->user()->cannot('accessAsUser'))
 <!-- Entity Id Field -->
 <tr>
     <th scope="row">{{ $order->getAttributeLabel('entity_id') }}</th>
-    <td>{{ $order->entity_id }}</td>
+    <td>{{ $order->getEntityParam($order->entity_id)->name }}</td>
 </tr>
-
-
-<!-- User Id Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('user_id') }}</th>
-    <td>{{ $order->user_id }}</td>
-</tr>
-@endif
-
-<!-- Name Field -->
-<tr>
-    <th scope="row">{{ $order->getAttributeLabel('name') }}</th>
-    <td>{{ $order->name }}</td>
-</tr>
-
 
 <!-- Email Field -->
 <tr>
@@ -68,6 +52,11 @@
     <td>{{ number_format($order->iva_value, 2, ',', '.').'€' }}</td>
 </tr>
 
+<!-- Payment method Field -->
+<tr>
+    <th scope="row">{{ $order->getAttributeLabel('payment_method') }}</th>
+    <td>{{ $order->getPaymentMethodLabelAttribute() }}</td>
+</tr>
 
 <!-- Mb Entity Field -->
 <tr>
@@ -87,6 +76,12 @@
 <tr>
     <th scope="row">{{ $order->getAttributeLabel('mb_limit_date') }}</th>
     <td>{{ $order->mb_limit_date }}</td>
+</tr>
+
+<!-- Notes Field -->
+<tr>
+    <th scope="row">{{ $order->getAttributeLabel('notes') }}</th>
+    <td>{{ $order->notes }}</td>
 </tr>
 
 

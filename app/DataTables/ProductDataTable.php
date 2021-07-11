@@ -22,6 +22,15 @@ class ProductDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
+            ->editColumn('price', function ($product){
+                return !empty($product->price) ? $product->price.'€' : '';
+            })
+            ->editColumn('reduced_price', function ($product){
+                return !empty($product->reduced_price) ? $product->reduced_price.'€' : '';
+            })
+            ->editColumn('status', function ($product){
+                return $product->getStatusLabelAttribute();
+            })
             ->addColumn('action', function ($product) {
                 return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('products.show', $product) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
                         <a href="'. route('products.edit', $product) .'" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="'. __('Edit') .'"><i class="la la-edit"></i></a>

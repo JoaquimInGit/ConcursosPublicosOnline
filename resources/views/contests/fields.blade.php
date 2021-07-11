@@ -37,17 +37,24 @@
 <!-- Price Field -->
 <div class="form-group">
     {!! Form::label('price', $contest->getAttributeLabel('price')) !!}
-    {!! Form::number('price', null, ['class' => 'form-control '.($errors->has('price') ? 'is-invalid' : '')]) !!}
-    @error('price')
+    <div class="input-group">
+        {!! Form::number('price', null, ['class' => 'form-control '.($errors->has('price') ? 'is-invalid' : ''), 'min'=> 0, 'step' => 0.01]) !!}
+        <div class="input-group-append">
+                <span class="input-group-text">
+                    <i class="la la-euro"></i>
+                </span>
+        </div>
+        @error('price')
         <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
+        @enderror
+    </div>
 </div>
 
 <!-- Publication Date Field -->
 <div class="form-group">
     {!! Form::label('publication_date', $contest->getAttributeLabel('publication_date')) !!}
     <div class="input-group date">
-        {!! Form::text('publication_date', null, ['class' => 'form-control kt_datepicker '.($errors->has('publication_date') ? 'is-invalid' : ''), 'readonly' => true]) !!}
+        {!! Form::text('publication_date', !empty($contest->publication_date) ? $contest->publication_date->format('d-m-Y') :'', ['class' => 'form-control datepicker '.($errors->has('publication_date') ? 'is-invalid' : ''), 'readonly' => true]) !!}
         <div class="input-group-append">
             <span class="input-group-text">
                 <i class="la la-calendar-check-o"></i>
@@ -61,13 +68,18 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
+    <script>
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+    </script>
 @endpush
 
 <!-- Deadline Date Field -->
 <div class="form-group">
     {!! Form::label('deadline_date', $contest->getAttributeLabel('deadline_date')) !!}
     <div class="input-group date">
-        {!! Form::text('deadline_date', null, ['class' => 'form-control kt_datepicker '.($errors->has('deadline_date') ? 'is-invalid' : ''), 'readonly' => true]) !!}
+        {!! Form::text('deadline_date', !empty($contest->deadline_date) ? $contest->deadline_date->format('d-m-Y') : '', ['class' => 'form-control datepicker '.($errors->has('deadline_date') ? 'is-invalid' : ''), 'readonly' => true]) !!}
         <div class="input-group-append">
             <span class="input-group-text">
                 <i class="la la-calendar-check-o"></i>
@@ -81,6 +93,11 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
+    <script>
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+    </script>
 @endpush
 
 <!-- Proposal Time Limit Field -->
@@ -164,7 +181,6 @@
     @enderror
 </div>
 
-
 <!-- Type Model Field -->
 <div class="form-group">
     {!! Form::label('type_model', $contest->getTypeModelLabelAttribute()) !!}
@@ -173,7 +189,6 @@
     <div class="error invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
-
 
 <!-- Type Contract Field -->
 <div class="form-group">
@@ -184,15 +199,7 @@
     @enderror
 </div>
 
-
 <!-- Status Field -->
-<!--<div class="form-group">
-    {!! Form::label('status', $contest->getAttributeLabel('status')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('status', 0) !!}
-        {!! Form::checkbox('status', '1', null) !!}
-    </label>
-</div>-->
 <div class="form-group">
     {!! Form::label('status', $contest->getAttributeLabel('status')) !!}
     {!! Form::select('status',$contest->getStatusArray(), null, ['class' => 'form-control '.($errors->has('status') ? 'is-invalid' : ''),'placeholder' => __('Select a Status')]) !!}

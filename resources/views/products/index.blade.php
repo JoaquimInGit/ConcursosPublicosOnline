@@ -23,8 +23,6 @@ view()->share('hideSubHeader', true);
                 </h3>
             </div>
             <div class="card-toolbar">
-                <div class="dropdown dropdown-inline" id="datatable-buttons">
-                </div>
                 <a href="{{ route('products.create') }}" class="btn btn-sm btn-light-primary font-weight-bold">
                     <i class="la la-plus"></i>
                     {{ __('New Product') }}
@@ -33,7 +31,7 @@ view()->share('hideSubHeader', true);
         </div>
         <div class="card-body">
             <!--begin: Datatable classes table dataTable no-footer -->
-            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], true)}}
+            {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], false)}}
             <!--end: Datatable -->
         </div>
     </div>

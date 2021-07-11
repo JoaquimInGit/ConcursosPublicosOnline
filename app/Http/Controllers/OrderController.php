@@ -74,23 +74,19 @@ class OrderController extends Controller
             $user = $model->getUser();
             switch($request->submit) {
                 case __('Monthly'):
-                    $model->update(['sub_total'=>Order::getSpecificPrice(0),'iva_value'=>Order::getSpecificPriceIVA(0)]);
+                    $model->update(['name'=> 'Subscrição Mensal','sub_total'=>Order::getSpecificPrice(0),'iva_value'=>Order::getSpecificPriceIVA(0)]);
                     $model->syncOrderItems($model,1);
-                    //$model->syncOrderItems($model,Setting::getParam('subscricao_mensal'));
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
                 case __('Semi-annual'):
-                    $model->update(['sub_total'=>Order::getSpecificPrice(1),'iva_value'=>Order::getSpecificPriceIVA(1)]);
-
+                    $model->update(['name'=> 'Subscrição Semestral','sub_total'=>Order::getSpecificPrice(1),'iva_value'=>Order::getSpecificPriceIVA(1)]);
                     $model->syncOrderItems($model,2);
-                    //$model->syncOrderItems($model,Setting::getParam('subscricao_semestral'));
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
                     break;
                 case __('Annual'):
-                    $model->update(['sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
-                    //$model->syncOrderItems($model,Setting::getParam('subscricao_anual'));
+                    $model->update(['name'=> 'Subscrição Mensal','sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
                     $model->syncOrderItems($model,3);
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));
@@ -223,16 +219,6 @@ class OrderController extends Controller
             $order->payment_method = $payment->payment_method;
             $order->save();
             if($order->status == Order::STATUS_PAYED){
-                //atualiza order item
-                /*$orderItem = OrderItem::where('order_id',$order->id)->first();
-                if($orderItem->product_id == 1){
-                    $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addMonth(),'status' => 2]);
-                }elseif ($orderItem->product_id == 2){
-                    $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addQuarters(2),'status' => 2]);
-                }elseif ($orderItem->product_id == 3){
-                    $orderItem->update(['start_date'=> Carbon::today(),'end_date' => Carbon::today()->addYear(),'status' => 2]);
-                }*/
-
                 \Debugbar::info("Payment of order $order->id successful ");
                 //send notification to admin
             }else{

@@ -62,7 +62,7 @@ class OrderPolicy
      */
     public function update(User $user, Order $order)
     {
-        return false;
+        return $user->can('manageApp');
     }
 
     /**
@@ -74,7 +74,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        return $user->can('manageApp');
+        return $user->can('manageApp') || $order->entity_id == Entity::getCurrentEntity()->id;
     }
 
     /**

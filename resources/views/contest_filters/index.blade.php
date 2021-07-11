@@ -19,13 +19,8 @@ view()->share('hideSubHeader', true);
                     <i class="flaticon2-settings text-primary"></i>
                 </span>
                 <h3 class="card-label">
-                    {{ __('Contest Filters') }}
+                    {{ __('Notifications') }}
                 </h3>
-            </div>
-            <!-- o export está algures neste div em baixo -->
-            <div class="card-toolbar">
-                <div class="dropdown dropdown-inline" id="datatable-buttons">
-                </div>
             </div>
 
         </div>
