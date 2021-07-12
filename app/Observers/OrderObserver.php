@@ -28,8 +28,8 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        if(auth()->user()->can('accessAsUser')) {
-            $enddate = OrderItem::where('entity_id', $order->getEntity()->id)
+        if(auth()->user()->cannot('manageApp')) {
+            $enddate = OrderItem::where('entity_id', $order->entity_id)
                 ->where('status', 2)
                 ->orderBy('end_date', 'desc')->first();
             //ddd($order);
@@ -58,15 +58,15 @@ class OrderObserver
                     //ddd(($order->status == 2).' '.$orderItem);
                     if ($orderItem->product_id == 1) {
                         $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addMonth(), 'status' => 2]);
-                        $entity = Entity::getCurrentEntity();
+                        $entity = Entity::where('id', $order->entity_id)->first();
                         $entity->update(['status' => 1]);
                     } elseif ($orderItem->product_id == 2) {
                         $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addQuarters(2), 'status' => 2]);
-                        $entity = Entity::getCurrentEntity();
+                        $entity = Entity::where('id', $order->entity_id)->first();
                         $entity->update(['status' => 1]);
                     } elseif ($orderItem->product_id == 3) {
                         $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addYear(), 'status' => 2]);
-                        $entity = Entity::getCurrentEntity();
+                        $entity = Entity::where('id', $order->entity_id)->first();
                         $entity->update(['status' => 1]);
                     }
                 }
