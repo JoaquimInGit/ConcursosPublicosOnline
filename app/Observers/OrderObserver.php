@@ -28,7 +28,7 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        if(auth()->user()->cannot('manageApp') == null) {
+        if(auth()->check() == false) {
             Order::changeOnPayment($order);
         }else{
             if($order->wasChanged('status') && $order->status == 2){
