@@ -399,8 +399,8 @@ class FiltersLogic
                     $contests = $contests->where(function ($q) use ($searchValues) {
                         foreach ($searchValues as $value) {
                            // ddd($q);
-                            $q->orWhere('description', 'like', "%{$value}%")
-                                ->orWhere('pdf_content', 'like', "%{$value}%");
+                            $q->orWhere('description', 'like', "%{$value}%");
+                               //->orWhere('pdf_content', 'like', "%{$value}%");
                             // ->orWhere('cpv_description', 'like', "%{$value}%");
                         }
                     });
