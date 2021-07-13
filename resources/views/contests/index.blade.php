@@ -15,114 +15,139 @@ view()->share('hideSubHeader', true);
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
-                <span class="card-icon">
-                    <i class="flaticon2-settings text-primary"></i>
-                </span>
                 <h3 class="card-label">
                     {{ __('Contests') }}
                 </h3>
             </div>
-
         </div>
-        <div class="card card-custom">
-            <form>
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2 col-md-3">Numero Anúncio</label>
-                        <div class="col-lg-10 col-md-9">
-                            <input class="form-control" type="text" id="num_announcement"/>
-                        </div>
+        <form>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label">{{__('Number Announcement')}}</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" id="num_announcement"/>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Descrição</label>
-                        <div class="col-lg-10">
-                            <input class="form-control" type="text" id="description"/>
-                        </div>
+                    <label class="col-lg-2 col-form-label">{{__('Entity')}}</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" id="entity"/>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-2 col-form-label">Entidade</label>
-                        <div class="col-10">
-                            <input class="form-control" type="text" id="entity"/>
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label">{{__('Description')}}</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" type="text" id="description"/>
                     </div>
-                    <div class="form-group row">
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-2 col-form-label">{{__('CPV code')}}</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" id="cpv"/>
+                    </div>
+                    <label class="col-lg-2 col-form-label">{{__('CPV Description')}}</label>
+                    <div class="col-lg-4">
+                        <input class="form-control" type="text" id="cpv_description"/>
+                    </div>
+                </div>
+                <div class="form-group row">
 
-                        {!! Form::label('type_act', \App\Models\Contest::getAttributeLabel('type_act'),['class'=>'col-2 col-form-label']) !!}
-                        <div class="col-2">
-                            {!! Form::select('type_act',\App\Models\Contest::getTypeActArray(), null, ['id' => 'type_act','class' => 'form-control '.($errors->has('type_act') ? 'is-invalid' : '')]) !!}
-                            @error('type_act')
-                            <div class="error invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {!! Form::label('type_model', \App\Models\Contest::getAttributeLabel('type_model'),['class'=>'col-2 col-form-label']) !!}
-                        <div class="col-2">
-                            {!! Form::select('type_model',\App\Models\Contest::getTypeModelArray(), null, ['id' => 'type_model','class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
-                            @error('type_model')
-                            <div class="error invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        {!! Form::label('type_contract', \App\Models\Contest::getAttributeLabel('type_contract'),['class'=>'col-2 col-form-label']) !!}
-                        <div class="col-2">
-                            {!! Form::select('type_contract',\App\Models\Contest::getTypeContractArray(), null, ['id' => 'type_contract','class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
-                            @error('type_contract')
-                            <div class="error invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
+                    {!! Form::label('type_act', \App\Models\Contest::getAttributeLabel('type_act'),['class'=>'col-2 col-form-label']) !!}
+                    <div class="col-2">
+                        {!! Form::select('type_act',\App\Models\Contest::getTypeActArray(), null, ['id' => 'type_act','class' => 'form-control '.($errors->has('type_act') ? 'is-invalid' : '')]) !!}
+                        @error('type_act')
+                        <div class="error invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="form-group row">
-                        <label for="example-date-input" class="col-2 col-form-label">Data de Publicação</label>
-                        <div class="col-4">
-                            <input class="form-control" type="date" value="<?php #echo date("Y-m-d"); ?>" id="publication_date"/>
-                        </div>
-                        <label for="example-date-input" class="col-2 col-form-label">Entre</label>
-                        <div class="col-4">
-                            <input class="form-control" type="date" value="<?php #echo date("Y-m-d"); ?>" id="publication_date_between"/>
-                        </div>
+
+                    {!! Form::label('type_model', \App\Models\Contest::getAttributeLabel('type_model'),['class'=>'col-2 col-form-label']) !!}
+                    <div class="col-2">
+                        {!! Form::select('type_model',\App\Models\Contest::getTypeModelArray(), null, ['id' => 'type_model','class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
+                        @error('type_model')
+                        <div class="error invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="form-group row">
-                        <label for="example-date-input" class="col-2 col-form-label">Data Limite</label>
-                        <div class="col-4">
-                            <input class="form-control" type="date" id="deadline_date"/>
-                        </div>
-                        <label for="example-date-input" class="col-2 col-form-label">Entre</label>
-                        <div class="col-4">
-                            <input class="form-control" type="date" id="deadline_date_between"/>
-                        </div>
+
+                    {!! Form::label('type_contract', \App\Models\Contest::getAttributeLabel('type_contract'),['class'=>'col-2 col-form-label']) !!}
+                    <div class="col-2">
+                        {!! Form::select('type_contract',\App\Models\Contest::getTypeContractArray(), null, ['id' => 'type_contract','class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
+                        @error('type_contract')
+                        <div class="error invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2 col-sm-12">Preço Minimo</label>
-                        <div class="col-lg-4 col-md-9 col-sm-12">
-                            <input id="min_price_1" type="text" class="form-control text-center" value="0.00" name="demo0" placeholder="Select time"/>
-                        </div>
-                        <div class="checkbox-inline">
-                        <label class="col-form-label col-lg-5 col-sm-12 checkbox checkbox-lg">
+
+                </div>
+                <div class="form-group row">
+                    <label for="example-date-input" class="col-2 col-form-label">{{__('Publication Date')}}</label>
+                    <div class="col-3">
+                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="publication_date"/>
+                    </div>
+                    <div class="input-group-append col-1">
+                        <span class="input-group-text">
+                            <i class="la la-calendar"></i>
+                        </span>
+                    </div>
+                    <label for="example-date-input" class="col-2 col-form-label">{{__('Between')}}</label>
+                    <div class="col-3">
+                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="publication_date_between"/>
+                    </div>
+                    <div class="input-group-append col-1">
+                        <span class="input-group-text">
+                            <i class="la la-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-date-input" class="col-2 col-form-label">{{__('Limit Date')}}</label>
+                    <div class="col-3">
+                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="deadline_date"/>
+                    </div>
+                    <div class="input-group-append col-1">
+                        <span class="input-group-text">
+                            <i class="la la-calendar"></i>
+                        </span>
+                    </div>
+                    <label for="example-date-input" class="col-2 col-form-label">{{__('Between')}}</label>
+                    <div class="col-3">
+                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="deadline_date_between"/>
+                    </div>
+                    <div class="input-group-append col-1">
+                        <span class="input-group-text">
+                            <i class="la la-calendar"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2 ">{{__('Minimum Price')}}</label>
+                    <div class="col-lg-4 ">
+                        <input id="min_price_1" type="text" class="form-control text-center" value="0.00" name="demo0" placeholder="Select time"/>
+                    </div>
+                    <div class="checkbox-inline ml-4">
+                        <label class="col-form-label  checkbox checkbox-lg">
                             <input type="checkbox" name="viewed_at" id="viewed_at"/>
                             <span></span>
-                            Anúncio visto
+                            {{__('Viewed contests')}}
                         </label>
-                        <label class="col-form-label col-lg-3 col-sm-12 checkbox checkbox-lg">
+                        <label class="col-form-label checkbox checkbox-lg">
                             <input type="checkbox" name="follow" id="follow"/>
                             <span></span>
-                            A Seguir Anúncio
+                            {{__('Followed contests')}}
                         </label>
-                        </div>
+                        <label class="col-form-label checkbox checkbox-lg">
+                            <input type="checkbox" name="notified" id="notified"/>
+                            <span></span>
+                            {{__('Notified contests')}}
+                        </label>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-2">
-                        </div>
-                        <div class="col-10">
-                            <button type="button" class="btn btn-success mr-2" id="pesquisa">Pesquisar</button>
-                            <button type="reset" class="btn btn-danger" id="reset">Reset</button>
-                        </div>
+                <div class="form-group row">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-10">
+                        <button type="button" class="btn btn-success mr-2" id="pesquisa">{{__('Search')}}</button>
+                        <button type="reset" class="btn btn-danger" id="reset">{{__('Reset')}}</button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
 
         <div class="card-body">
 
@@ -138,6 +163,7 @@ view()->share('hideSubHeader', true);
 @push('scripts')
     <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+    <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
     {{$dataTable->scripts()}}
     <script>
         const table = $('#contests-table');
@@ -146,10 +172,25 @@ view()->share('hideSubHeader', true);
             $('#contests-table_filter').css('display', 'none');
         });
 
+        $('#publication_date').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $('#publication_date_between').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $('#deadline_date').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        $('#deadline_date_between').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+
         table.on('preXhr.dt',function (e,settings,data){
             data.num_announcement = $('#num_announcement').val();
             data.description = $('#description').val();
             data.entity = $('#entity').val();
+            data.cpv = $('#cpv').val();
+            data.cpv_description = $('#cpv_description').val();
             data.type_act = $('#type_act').val();
             data.type_model = $('#type_model').val();
             data.type_contract = $('#type_contract').val();
@@ -164,39 +205,45 @@ view()->share('hideSubHeader', true);
             if ($('#follow').prop('checked')) {
                 data.follow = true;
             }
+            if ($('#notified').prop('checked')) {
+                data.notified = true;
+            }
         });
 
         $('#pesquisa').on('click', function(){
             table.DataTable().ajax.reload();
             return false;
-        })
+        });
+
         $('#reset').on('click', function(){
-            table.on('preXhr.dt',function (e,settings,data){
-                data.num_announcement = '';
-                data.description = '';
-                data.entity = '';
-                data.type_act = '';
-                data.type_model = '';
-                data.type_contract = '';
-                data.publication_date = '';
-                data.publication_date_between = '';
-                data.deadline_date = '';
-                data.deadline_date_between = '';
-                data.min_price_1 = '';
-            });
+            $('#num_announcement').val('');
+            $('#description').val('');
+            $('#entity').val('');
+            $('#cpv').val('');
+            $('#type_act').val('0');
+            $('#type_model').val('0');
+            $('#type_contract').val('0');
+            $('#publication_date').val('');
+            $('#publication_date_between').val('');
+            $('#deadline_date').val('');
+            $('#deadline_date_between').val('');
+            $('#min_price_1').val('0.00');
+            $('#viewed_at').prop('checked', false);
+            $('#follow').prop('checked', false);
+            $('#notified').prop('checked', false);
             table.DataTable().ajax.reload();
             return false;
-        })
+        });
 
         $('#type_act').on('change',function (){
             table.DataTable().ajax.reload();
-        })
+        });
         $('#type_model').on('change',function (){
             table.DataTable().ajax.reload();
-        })
+        });
         $('#type_contract').on('change',function (){
             table.DataTable().ajax.reload();
-        })
+        });
 
         function follow(data) {
             console.log(data)

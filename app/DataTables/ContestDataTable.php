@@ -77,6 +77,8 @@ class ContestDataTable extends DataTable
         $num_announcement = $this->request()->get('num_announcement');
         $description = $this->request()->get('description');
         $entity = $this->request()->get('entity');
+        $cpv = $this->request()->get('cpv');
+        $cpv_description = $this->request()->get('cpv_description');
         $type_act = $this->request()->get('type_act');
         $type_model = $this->request()->get('type_model');
         $type_contract = $this->request()->get('type_contract');
@@ -87,6 +89,7 @@ class ContestDataTable extends DataTable
         $min_price = $this->request()->get('min_price');
         $viewed_at = $this->request()->get('viewed_at');
         $follow = $this->request()->get('follow');
+        $notified = $this->request()->get('notified');
         $query = $model->newQuery();
 
 
@@ -99,6 +102,12 @@ class ContestDataTable extends DataTable
         if(!empty($description)){
             $query = $query->where('description','LIKE',"%{$description}%");
         }
+        if(!empty($cpv)){
+            $query = $query->where('cpv','LIKE',"%{$cpv}%");
+        }
+        if(!empty($cpv_description)){
+            $query = $query->where('cpv_description','LIKE',"%{$cpv_description}%");
+        }
         if(!empty($type_act)){
             $query = $query->where('type_act',$type_act);
         }
@@ -110,16 +119,16 @@ class ContestDataTable extends DataTable
         }
         if(!empty($publication_date)){
             if(empty($publication_date_between)){
-                $query = $query->where('publication_date','LIKE',$publication_date);
+                $query = $query->where('publication_date','LIKE',Carbon::Parse($publication_date)->format('Y-m-d'));
             }else {
-                $query = $query->whereBetween('publication_date',[$publication_date,$publication_date_between]);
+                $query = $query->whereBetween('publication_date',[Carbon::Parse($publication_date)->format('Y-m-d'),Carbon::Parse($publication_date_between)->format('Y-m-d')]);
             }
         }
         if(!empty($deadline_date)){
             if(empty($deadline_date_between)) {
-                $query = $query->where('deadline_date', 'LIKE', $deadline_date);
+                $query = $query->where('deadline_date', 'LIKE', Carbon::Parse($deadline_date)->format('Y-m-d'));
             }else{
-                $query = $query->whereBetween('deadline_date',[$deadline_date,$deadline_date_between]);
+                $query = $query->whereBetween('deadline_date',[Carbon::Parse($deadline_date)->format('Y-m-d'),Carbon::Parse($deadline_date_between)->format('Y-m-d')]);
             }
         }
         if(!empty($min_price)){
@@ -137,6 +146,17 @@ class ContestDataTable extends DataTable
                 $query->select('contest_id')
                     ->from('contest_entity')
                     ->where([['entity_id', Entity::getCurrentEntity()->id],['follow',1]]);
+            });
+        }
+        if($notified == true){
+            $query = $query->whereIn('id', function($query){
+                $query->select('contest_id')
+                    ->from('contest_filters')
+                    ->whereIn('filter_id', function($query){
+                        $query->select('id')
+                            ->from('filters')
+                            ->where('entity_id', Entity::getCurrentEntity()->id);
+                    });
             });
         }
 

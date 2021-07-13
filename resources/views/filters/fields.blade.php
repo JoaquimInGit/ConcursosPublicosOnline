@@ -13,6 +13,7 @@
 <!-- Description Words Field -->
 <div class="form-group">
     {!! Form::label('description_words', $filter->getAttributeLabel('description_words')) !!}
+     {{__(' (To divide the words put a comma)')}}
     {!! Form::text('description_words', null, ['id' => 'words', 'class' => 'tagify form-control '.($errors->has('description_words') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
     @error('description_words')
         <div class="error invalid-feedback">{{ $message }}</div>
@@ -65,21 +66,26 @@
 </div>
 
 <!-- Type Act Field -->
-<div class="form-group">
-    {!! Form::label('type_act', $filter->getAttributeLabel('type_act'),['class'=>'col-2 col-form-label']) !!}
-    <div class="col-2">
+<div class="row">
+    {!! Form::label('type_act', $filter->getAttributeLabel('type_act'),['class'=>'col-4 col-form-label']) !!}
+    {!! Form::label('type_model', $filter->getAttributeLabel('type_model'),['class'=>'col-4 col-form-label']) !!}
+    {!! Form::label('type_contract', $filter->getAttributeLabel('type_contract'),['class'=>'col-4 col-form-label']) !!}
+</div>
+
+<div class="form-group row">
+    <div class="col-4">
         {!! Form::select('type_act',$filter->getTypeActArray(), null, ['id' => 'type_act','class' => 'form-control '.($errors->has('type_act') ? 'is-invalid' : '')]) !!}
         @error('type_act')
         <div class="error invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
-</div>
-
-
-<!-- Type Model Field -->
-<div class="form-group">
-    {!! Form::label('type_model', $filter->getAttributeLabel('type_model'),['class'=>'col-2 col-form-label']) !!}
-    <div class="col-2">
+    <div class="col-4">
+        {!! Form::select('type_model', $filter->getTypeModelArray(), null, ['id' => 'type_model','class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
+        @error('type_model')
+        <div class="error invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="col-4">
         {!! Form::select('type_model', $filter->getTypeModelArray(), null, ['id' => 'type_model','class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
         @error('type_model')
         <div class="error invalid-feedback">{{ $message }}</div>
@@ -87,36 +93,16 @@
     </div>
 </div>
 
-
-<!-- Type Contract Field -->
-<div class="form-group">
-    {!! Form::label('type_contract', $filter->getAttributeLabel('type_contract'),['class'=>'col-2 col-form-label']) !!}
-    <div class="col-2">
-        {!! Form::select('type_contract',$filter->getTypeContractArray(), null, ['id' => 'type_contract','class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
-        @error('type_contract')
-        <div class="error invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
-
-
 <!-- Filter Status Field -->
 <div class="form-group">
-    {!! Form::label('filter_status', $filter->getAttributeLabel('filter_status'),['class'=>'col-2 col-form-label']) !!}
-    <div class="col-2">
+    {!! Form::label('filter_status', $filter->getAttributeLabel('filter_status'),['class'=>'col-4 col-form-label']) !!}
+    <div class="col-4">
         {!! Form::select('filter_status',$filter->getFilterStatusArray(), null, ['id' => 'filter_status','class' => 'form-control '.($errors->has('filter_status') ? 'is-invalid' : '')]) !!}
         @error('filter_status')
         <div class="error invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
 </div>
-<!--
-    {!! Form::label('filter_status', $filter->getAttributeLabel('filter_status')) !!}
-    <label class="checkbox-inline">
-        {!! Form::hidden('filter_status', 0) !!}
-        {!! Form::checkbox('filter_status', '1', null) !!}
-    </label>
--->
 
 @push('scripts')
     <script>

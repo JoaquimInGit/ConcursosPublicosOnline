@@ -7,6 +7,7 @@ use App\Models\ContestEntity;
 use App\Models\ContestFilter;
 use App\Models\Entity;
 use App\Models\Filter;
+use App\Models\User;
 use Carbon\Carbon;
 use Doctrine\DBAL\Driver\AbstractDB2Driver;
 use Yajra\DataTables\Services\DataTable;
@@ -34,17 +35,24 @@ class ContestFilterDataTable extends DataTable
             ->editColumn('contest_id', function($contestfilter) {
                 $contest = Contest::select('description')->where('id', $contestfilter->contest_id)->first();
                 return $contest->description;
-
             })
             ->editColumn('filter_id', function($contestfilter){
                 $filter = Filter::select('filter_name')->where('id', $contestfilter->filter_id)->first();
                 return $filter->filter_name;
             })
-            ->editColumn('entity_id', function($contestfilter){
-                $filter = Filter::where('id', $contestfilter->filter_id)->first();
-                $entity = Entity::where('id',$filter->entity_id)->first();
-                return $entity->name;
+            ->editColumn('entity', function ($contestfilter) {
+                if(auth()->user()->can('accessAsUser')){
+                    $filter = Filter::where('id', $contestfilter->filter_id)->first();
+                    $entity = Entity::where('id', $filter->entity_id)->first();
+                    $user = User::where('id',$entity->user_id)->first();
+                    return $user->email;
+                }else{
+                    $filter = Filter::where('id', $contestfilter->filter_id)->first();
+                    $entity = Entity::where('id', $filter->entity_id)->first();
+                    return $entity->name;
+                }
             })
+
             ->addColumn('action', function ($contestfilter) {
                 $contest = Contest::find($contestfilter->contest_id);
               //  $contest = Contest::where('id',$contestfilter->contest_id);
@@ -85,7 +93,12 @@ class ContestFilterDataTable extends DataTable
      */
     public function query(ContestFilter $model)
     {
+        $date = $this->request()->get('date');
         $query = $model->newQuery();
+
+        if(!empty($date)) {
+            $query = $query->where('date', 'LIKE', Carbon::Parse($date)->format('Y-m-d'));
+        }
 
         if(auth()->user()->can('accessAsUser')){
             $entity = $model->getEntity();
@@ -134,18 +147,34 @@ class ContestFilterDataTable extends DataTable
     protected function getColumns()
     {
         $model = new ContestFilter();
-        return[
-            Column::make('contest_id')->title($model->getAttributeLabel(__('Contest'))),
-            Column::make('filter_id')->title($model->getAttributeLabel(__('Filter'))),
-            Column::make('entity_id')->title(__('Entity')),
-            Column::make('date')->title($model->getAttributeLabel(__('Date'))),
-            Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(120)
-            ->addClass('text-center')
-            ->title(__('Action')),
-            ];
+        if(auth()->user()->can('accessAsUser')){
+            return[
+                Column::make('contest_id')->title($model->getAttributeLabel(__('Contest'))),
+                Column::make('filter_id')->title($model->getAttributeLabel(__('Filter'))),
+                Column::make('entity')->title(__('Enviado para')),
+                Column::make('date')->title($model->getAttributeLabel(__('Date'))),
+                Column::computed('action')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->width(120)
+                    ->addClass('text-center')
+                    ->title(__('Action')),
+                ];
+        }else{
+            return[
+                Column::make('contest_id')->title($model->getAttributeLabel(__('Contest'))),
+                Column::make('filter_id')->title($model->getAttributeLabel(__('Filter'))),
+                Column::make('entity')->title(__('Entity')),
+                Column::make('date')->title($model->getAttributeLabel(__('Date'))),
+                Column::computed('action')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->width(120)
+                    ->addClass('text-center')
+                    ->title(__('Action')),
+                ];
+        }
+
     }
 
     /**

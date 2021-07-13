@@ -142,7 +142,7 @@ class Filter extends Model implements Auditable
     {
         return [
             'id' => __('Id'),
-        'entity_id' => __('Entity Id'),
+        'entity_id' => __('Entity'),
         'filter_name' => __('Filter Name'),
         'description_words' => __('Description Words'),
         'contest_entity' => __('Contest Entity'),

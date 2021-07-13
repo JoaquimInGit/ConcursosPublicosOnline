@@ -8,30 +8,30 @@
 @endif
 <div class="topbar">
 
-    <div class="topbar-item mr-5">
+    <div class="topbar-item mr-5 hover-opacity-50">
         <a href="{{ route('contests.index') }}">
             <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Contests') }}</h3>
         </a>
     </div>
-    <div class="topbar-item mr-5 ">
+    <div class="topbar-item mr-5 hover-opacity-50">
         <a href="{{ route('filters.index') }}">
             <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Filters') }}</h3>
         </a>
     </div>
-    <div class="topbar-item mr-5 ">
+    <div class="topbar-item mr-5 hover-opacity-50">
         <a href="{{ route('contest_filters.index') }}">
             <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Notifications') }}</h3>
         </a>
     </div>
     @if(auth()->user()->can('accessAsUser'))
-    <div class="topbar-item mr-5 ">
+    <div class="topbar-item mr-5 hover-opacity-50">
         <a href="{{ route('entities.show', \App\Models\Entity::getCurrentEntity()) }}">
             <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Entity') }}</h3>
         </a>
     </div>
     @endif
     @if(auth()->user()->can('manageUsers'))
-        <div class="topbar-item mr-5 ">
+        <div class="topbar-item mr-5 hover-opacity-50">
             <a href="{{ route('entities.index') }}">
                 <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Entities') }}</h3>
             </a>
@@ -170,10 +170,11 @@
                 {{-- Toggle --}}
                 <div class="topbar-item" data-toggle="dropdown" data-offset="0px,0px">
                     <div class="btn btn-icon w-auto btn-clean d-flex align-items-center btn-lg px-2">
-                        <span class="text-dark font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ auth()->user()->first_name }}</span>
-                        <span class="symbol symbol-35 symbol-light-success">
-                            <span class="symbol-label font-size-h5 font-weight-bold">{{auth()->user()->name[0]}}</span>
+                        <span class="symbol symbol-35 symbol-info">
+                            <span class="symbol-label font-size-h5 font-weight-bold mr-3">{{auth()->user()->name[0]}}</span>
                         </span>
+                        <span class="text-dark font-weight-bolder font-size-base d-none d-md-inline">{{ auth()->user()->first_name }}</span>
+
                     </div>
                 </div>
 

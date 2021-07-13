@@ -15,16 +15,27 @@ view()->share('hideSubHeader', true);
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
-                <span class="card-icon">
-                    <i class="flaticon2-settings text-primary"></i>
-                </span>
                 <h3 class="card-label">
                     {{ __('Notifications') }}
                 </h3>
             </div>
-
         </div>
         <div class="card-body">
+            <form>
+                <div class="form-group row">
+                    <label for="example-date-input" class="col-1 col-form-label">{{__('Date')}}</label>
+                    <div class="col-3">
+                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="date"/>
+                    </div>
+                    <div class="input-group-append col-1">
+                        <span class="input-group-text">
+                            <i class="la la-calendar"></i>
+                        </span>
+                    </div>
+                    <button type="button" class="btn btn-success mr-2" id="pesquisa">{{__('Pesquisar')}}</button>
+                    <button type="reset" class="btn btn-danger" id="reset">{{__('Limpar')}}</button>
+                </div>
+            </form>
             <!--begin: Datatable classes table dataTable no-footer -->
             {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], false)}}
             <!--end: Datatable -->
@@ -37,9 +48,30 @@ view()->share('hideSubHeader', true);
 @push('scripts')
     <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+    <script src="{{ asset('js/pages/date-inputs.js') }}" type="text/javascript"></script>
     {{$dataTable->scripts()}}
     <script>
-        const table = $('#contests-table');
+        const table = $('#contest_filters-table');
+
+        $('#date').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+
+        table.on('preXhr.dt',function (e,settings,data){
+            data.date = $('#date').val();
+        });
+
+        $('#pesquisa').on('click', function(){
+            table.DataTable().ajax.reload();
+            return false;
+        })
+
+        $('#reset').on('click', function(){
+            $('#date').val('');
+            table.DataTable().ajax.reload();
+            return false;
+        })
+
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';
             $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-sm btn-default font-weight-bold mr-2';
