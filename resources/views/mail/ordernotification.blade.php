@@ -11,6 +11,6 @@ Valor:      {{$order->iva_value}}€<br>
 Pedido
 @endcomponent
 
-Thanks,<br>
+Obrigado,<br>
 {{ config('app.name') }}
 @endcomponent
