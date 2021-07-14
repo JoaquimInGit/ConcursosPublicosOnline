@@ -13,6 +13,6 @@
 Ver Anúncios
 @endcomponent
 
-Thanks,<br>
+Obrigado,<br>
 {{ config('app.name') }}
 @endcomponent
