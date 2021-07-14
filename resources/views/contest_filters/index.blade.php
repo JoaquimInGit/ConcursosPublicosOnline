@@ -23,18 +23,19 @@ view()->share('hideSubHeader', true);
         <div class="card-body">
             <form>
                 <div class="form-group row">
-                    <label for="example-date-input" class="col-1 col-form-label">{{__('Date')}}</label>
-                    <div class="col-3">
+                    <label for="example-date-input" class="col-lg-2 col-form-label">{{__('Date')}}</label>
+                    <div class="col-lg-3">
                         <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="date"/>
                     </div>
-                    <div class="input-group-append col-1">
-                        <span class="input-group-text">
-                            <i class="la la-calendar"></i>
-                        </span>
-                    </div>
-                    <button type="button" class="btn btn-success mr-2" id="pesquisa">{{__('Pesquisar')}}</button>
-                    <button type="reset" class="btn btn-danger" id="reset">{{__('Limpar')}}</button>
+
                 </div>
+                <div class="form-group row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-2"><button type="button" class="btn btn-success mr-2" id="pesquisa">{{__('Pesquisar')}}</button>
+                        <button type="reset" class="btn btn-danger" id="reset">{{__('Limpar')}}</button></div>
+
+                </div>
+
             </form>
             <!--begin: Datatable classes table dataTable no-footer -->
             {{$dataTable->table(['class' => 'table table-bordered table-hover table-checkable dataTable no-footer dtr-inline'], false)}}

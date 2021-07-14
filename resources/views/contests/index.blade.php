@@ -77,42 +77,22 @@ view()->share('hideSubHeader', true);
                 </div>
                 <div class="form-group row">
                     <label for="example-date-input" class="col-2 col-form-label">{{__('Publication Date')}}</label>
-                    <div class="col-3">
-                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="publication_date"/>
-                    </div>
-                    <div class="input-group-append col-1">
-                        <span class="input-group-text">
-                            <i class="la la-calendar"></i>
-                        </span>
+                    <div class="col-lg-4">
+                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="publication_date">
                     </div>
                     <label for="example-date-input" class="col-2 col-form-label">{{__('Between')}}</label>
-                    <div class="col-3">
+                    <div class="col-lg-4">
                         <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="publication_date_between"/>
-                    </div>
-                    <div class="input-group-append col-1">
-                        <span class="input-group-text">
-                            <i class="la la-calendar"></i>
-                        </span>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="example-date-input" class="col-2 col-form-label">{{__('Limit Date')}}</label>
-                    <div class="col-3">
+                    <div class="col-lg-4">
                         <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="deadline_date"/>
                     </div>
-                    <div class="input-group-append col-1">
-                        <span class="input-group-text">
-                            <i class="la la-calendar"></i>
-                        </span>
-                    </div>
                     <label for="example-date-input" class="col-2 col-form-label">{{__('Between')}}</label>
-                    <div class="col-3">
+                    <div class="col-lg-4">
                         <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="deadline_date_between"/>
-                    </div>
-                    <div class="input-group-append col-1">
-                        <span class="input-group-text">
-                            <i class="la la-calendar"></i>
-                        </span>
                     </div>
                 </div>
                 <div class="form-group row">
