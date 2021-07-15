@@ -86,7 +86,7 @@
         @enderror
     </div>
     <div class="col-4">
-        {!! Form::select('type_model', $filter->getTypeModelArray(), null, ['id' => 'type_model','class' => 'form-control '.($errors->has('type_model') ? 'is-invalid' : '')]) !!}
+        {!! Form::select('type_contract', $filter->getTypeContractArray(), null, ['id' => 'type_contract','class' => 'form-control '.($errors->has('type_contract') ? 'is-invalid' : '')]) !!}
         @error('type_model')
         <div class="error invalid-feedback">{{ $message }}</div>
         @enderror

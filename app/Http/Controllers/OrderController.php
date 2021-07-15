@@ -86,7 +86,7 @@ class OrderController extends Controller
                     $user->notify(new OrderNotification($model));
                     break;
                 case __('Annual'):
-                    $model->update(['name'=> 'Subscrição Mensal','sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
+                    $model->update(['name'=> 'Subscrição Annual','sub_total'=>Order::getSpecificPrice(2),'iva_value'=>Order::getSpecificPriceIVA(2)]);
                     $model->syncOrderItems($model,3);
                     $model->generateMB(NULL,true);
                     $user->notify(new OrderNotification($model));

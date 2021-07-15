@@ -290,6 +290,11 @@ class Order extends Model implements Auditable
         return number_format($precofinal,1);
     }
 
+    /**
+     * cria um order item
+     * @param $order
+     * @param $product
+     */
     public function syncOrderItems($order,$product){
        //ddd($product);
         OrderItem::create([
@@ -304,6 +309,13 @@ class Order extends Model implements Auditable
 
     }
 
+    /**
+     * função para gerar referencias de multibanco
+     * @param null $dateLimit
+     * @param false $autoSave
+     * @param false $forceCreation
+     * @return bool
+     */
     public function generateMB($dateLimit = null, $autoSave = false, $forceCreation = false){
         if(empty($this->mb_entity) || $forceCreation == true) {
             $response = Eupago::generateReferenceMB($this->id, $this->iva_value, $dateLimit);
@@ -384,22 +396,41 @@ class Order extends Model implements Auditable
         return $array[$this->payment_method];
     }
 
+    /**
+     * recebe o id da entidade por parametro e devolve a entidade
+     * @param $entityid
+     * @return mixed
+     */
     public function getEntityParam($entityid){
         $entity = Entity::where('id',$entityid)->first();
         return $entity;
     }
 
+    /**
+     * recebe o id do user por parametro e devolve a user
+     * @param $userid
+     * @return mixed
+     */
     public function getUserParam($userid){
         $user = User::where('id',$userid)->first();
         return $user;
     }
 
+    /**
+     * devolve a parte do lado esquerdo do email
+     * @param $userid
+     * @return string
+     */
     public function getUsername($userid){
         $user = User::where('id',$userid)->first();
         $username = strtok($user->email, '@');
         return $username;
     }
 
+    /**
+     * função que é chamada quando uma order é paga
+     * @param Order $order
+     */
     public static function changeOnPayment(Order $order){
         $enddate = OrderItem::where('entity_id', $order->entity_id)
             ->where('status', 2)

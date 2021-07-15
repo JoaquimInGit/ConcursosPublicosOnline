@@ -291,6 +291,10 @@ class Filter extends Model implements Auditable
         return $array[$this->type_contract];
     }
 
+    /**
+     * recebe o valor das description_words e retorna o valor separado por virgulas para ser apresentado nos detalhes de um filtro
+     * @return string
+     */
     public function getWordsLabelAttribute()
     {
         if(!empty($this->description_words)){
