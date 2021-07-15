@@ -121,8 +121,12 @@ class ContestFilterDataTable extends DataTable
            }
 
       }
+        $query = $model->newQuery();
 
-     //   return $model->newQuery();
+        if(!empty($date)) {
+            $query = $query->where('date', 'LIKE', Carbon::Parse($date)->format('Y-m-d'));
+        }
+           return $query;
 
 
 
