@@ -95,12 +95,12 @@ class ContestFilterDataTable extends DataTable
      */
     public function query(ContestFilter $model)
     {
-        $date = $this->request()->get('date');
+       // $date = $this->request()->get('date');
         $query = $model->newQuery();
 
-        if(!empty($date)) {
+      /*  if(!empty($date)) {
             $query = $query->where('date', 'LIKE', Carbon::Parse($date)->format('Y-m-d'));
-        }
+        }*/
 
         if(auth()->user()->can('accessAsUser')){
             try{
@@ -109,7 +109,7 @@ class ContestFilterDataTable extends DataTable
                 //$query = $query->where('filter_id', $filter);
                 $query = $query->where(function($q) use ($filters){
                     foreach ($filters as $filter) {
-                        $q->where('filter_id', $filter->id);
+                        $q->orWhere('filter_id', $filter->id);
                     }
                 });
             }catch(Exception $e){
