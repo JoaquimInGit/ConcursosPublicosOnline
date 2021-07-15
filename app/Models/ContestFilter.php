@@ -90,6 +90,8 @@ class ContestFilter extends Model implements Auditable
     public static function getFiltersEntity($entity){
         $filters = Filter::where('entity_id', $entity)->get()->toArray();
         $filters = json_encode($filters);
+      //  \Debugbar::Info($filters);
+       // return $filters;
         return json_decode($filters);
         //console.log($filters);
         //dd($filters);
