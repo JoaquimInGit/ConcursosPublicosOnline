@@ -9,7 +9,9 @@ use App\Models\Entity;
 use App\Models\Filter;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Doctrine\DBAL\Driver\AbstractDB2Driver;
+//use mysql_xdevapi\Exception;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use App\DataTables\Traits\DatatableColumnSearch;
@@ -93,26 +95,34 @@ class ContestFilterDataTable extends DataTable
      */
     public function query(ContestFilter $model)
     {
-        $date = $this->request()->get('date');
+       // $date = $this->request()->get('date');
         $query = $model->newQuery();
 
-        if(!empty($date)) {
+      /*  if(!empty($date)) {
             $query = $query->where('date', 'LIKE', Carbon::Parse($date)->format('Y-m-d'));
-        }
+        }*/
 
         if(auth()->user()->can('accessAsUser')){
-            $entity = $model->getEntity();
-            $filters = $model->getFiltersEntity($entity);
-            //$query = $query->where('filter_id', $filter);
-            $query = $query->where(function($q) use ($filters){
-                foreach ($filters as $filter) {
-                    $q->orWhere('filter_id', $filter->id);
-                }
-            });
+            try{
+                $entity = $model->getEntity();
+                $filters = $model->getFiltersEntity($entity);
+                //$query = $query->where('filter_id', $filter);
+                $query = $query->where(function($q) use ($filters){
+                    foreach ($filters as $filter) {
+                        $q->orWhere('filter_id', $filter->id);
+                    }
+                });
+            }catch(Exception $e){
+
+            }
+
            ///Debugbar($query);
         }
         return $query;
         //return $model->newQuery();
+
+
+
     }
 
     /**
