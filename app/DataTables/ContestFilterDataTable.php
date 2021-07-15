@@ -112,11 +112,11 @@ class ContestFilterDataTable extends DataTable
 
                     $query = $query->where(function ($q) use ($filters) {
                         foreach ($filters as $filter) {
-                            $q->Where('filter_id', $filter->id);
+                            $q->orWhere('filter_id', $filter->id);
                         }
                     });
                return $query;
- }else{
+        }else{
                return $query->where('filter_id', $filters);
            }
 
