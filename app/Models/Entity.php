@@ -127,7 +127,7 @@ class Entity extends Model implements Auditable
         'cae' => __('Cae'),
         'cae_secundario' => __('Cae Secundario'),
         'website' => __('Website'),
-        'email_entity' => __('Email Entity'),
+        'email_entity' => __('Email'),
         'status' => __('Status'),
         'created_at' => __('Created At'),
         'updated_at' => __('Updated At')

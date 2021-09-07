@@ -104,7 +104,7 @@ eval("// Class definition\nvar DateInputs = function () {\n  var arrows;\n\n  if
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/fabioferreira/Dev/Valet Websites/laravel-starter/resources/metronic/js/pages/date-inputs.js */"./resources/metronic/js/pages/date-inputs.js");
+module.exports = __webpack_require__(/*! /home/vagrant/laravel/concursos-publicos/resources/metronic/js/pages/date-inputs.js */"./resources/metronic/js/pages/date-inputs.js");
 
 
 /***/ })

@@ -28,6 +28,14 @@
                         </a>
                     </div>
                 @endif
+                    {{-- Topbar --}}
+                    @if(auth()->user()->can('accessAsUser') && (preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]) == null))
+                        <div class="align-left">
+                            <a href="{{ url('/') }}">
+                                <img alt="Logo" src="{{ asset('media/logos/logo-concursos-online.jpeg') }}" width="150px"/>
+                            </a>
+                        </div>
+                    @endif
                 <div id="kt_header_menu" class="header-menu header-menu-mobile {{ Metronic::printClasses('header_menu', false) }}" {{ Metronic::printAttrs('header_menu') }}>
                     <ul class="menu-nav {{ Metronic::printClasses('header_menu_nav', false) }}">
                         <?php //{{ Menu::renderHorMenu(config('menu_header.items')) }} ?>

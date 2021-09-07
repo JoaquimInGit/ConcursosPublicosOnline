@@ -21,18 +21,19 @@ view()->share('hideSubHeader', true);
             </div>
         </div>
         <div class="card-body">
-            <form>
-                <div class="form-group row">
+            <form class="mb-5">
+                <div class="row">
                     <label for="example-date-input" class="col-lg-2 col-form-label">{{__('Date')}}</label>
-                    <div class="col-lg-3">
-                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="date"/>
-                    </div>
-
                 </div>
-                <div class="form-group row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-2"><button type="button" class="btn btn-success mr-2" id="pesquisa">{{__('Pesquisar')}}</button>
-                        <button type="reset" class="btn btn-danger" id="reset">{{__('Limpar')}}</button></div>
+                <div class="row">
+
+                    <div class="col-lg-3">
+                        <input class="form-control datepicker" placeholder="dd/mm/aaaa" id="date" readonly/>
+                    </div>
+                    <div class="col-lg-4 align-content-start">
+                        <button type="button" class="btn btn-success mr-2" id="pesquisa">{{__('Pesquisar')}}</button>
+                        <button type="reset" class="btn btn-danger" id="reset">{{__('Limpar')}}</button>
+                    </div>
 
                 </div>
 

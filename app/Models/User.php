@@ -159,7 +159,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Auditab
         $currentTime = date("Y-m-d H:i:s");
         $entity = Entity::getCurrentEntity();
         if($entity != null){
-            if($entity->status != 2){
+            if($entity->status != Entity::STATUS_SPECIAL){
                 // ddd($entity->id)
                 $orderItem = OrderItem::where('entity_id', $entity->id)
                     ->where('end_date','>', $currentTime)
@@ -170,5 +170,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Auditab
         return true;
 
         //ddd($orderItem->isNotEmpty());
+    }
+
+    public function entity()
+    {
+        return $this->hasOne(\App\Models\Entity::class, 'user_id');
     }
 }

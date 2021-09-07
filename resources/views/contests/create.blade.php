@@ -16,9 +16,11 @@ view()->share('hideSubHeader', true);
     <div class="card card-custom">
         <div class="card-header">
             <div class="card-title">
-                <a href="{{ URL::previous() }}">
+                <a href="{{ route('contests.index') }}" class="btn btn-bg-secondary btn-sm mr-3">
+                    <i class="fas fa-undo-alt"></i>{{__('Back')}}</a>
+                {{--<a href="{{ route('contests.index') }}">
                     <img alt="Voltar" src="{{ asset('media/logos/voltar.png') }}" width="25px" class="mr-2 pb-2"/>
-                </a>
+                </a>--}}
                 <h3 class="card-label">
                     {{ __('Create Contest') }}
                 </h3>

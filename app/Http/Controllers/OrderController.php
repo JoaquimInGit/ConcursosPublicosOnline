@@ -40,8 +40,8 @@ class OrderController extends Controller
      */
     public function index(OrderItemDataTable $orderDataTable)
     {
-
-        return $orderDataTable->render('orders.index');
+        $entity = !empty(auth()->user()) && !empty(auth()->user()->entity) ? auth()->user()->entity : null;
+        return $orderDataTable->render('orders.index',compact('entity'));
     }
 
     /**

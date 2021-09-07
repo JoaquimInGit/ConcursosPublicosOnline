@@ -115,7 +115,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// jKanban Board - Vanilla Javascript plugin for manage kanban boards: https://github.com/riktar/jkanban\n__webpack_require__(/*! jkanban/dist/jkanban.js */ \"./node_modules/jkanban/dist/jkanban.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvcGx1Z2lucy9jdXN0b20va2FuYmFuL2thbmJhbi5qcz84MzNkIl0sIm5hbWVzIjpbInJlcXVpcmUiXSwibWFwcGluZ3MiOiJBQUFBO0FBRUFBLG1CQUFPLENBQUMsdUVBQUQsQ0FBUCIsImZpbGUiOiIuL3Jlc291cmNlcy9wbHVnaW5zL2N1c3RvbS9rYW5iYW4va2FuYmFuLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gakthbmJhbiBCb2FyZCAtIFZhbmlsbGEgSmF2YXNjcmlwdCBwbHVnaW4gZm9yIG1hbmFnZSBrYW5iYW4gYm9hcmRzOiBodHRwczovL2dpdGh1Yi5jb20vcmlrdGFyL2prYW5iYW5cclxuXHJcbnJlcXVpcmUoJ2prYW5iYW4vZGlzdC9qa2FuYmFuLmpzJyk7XHJcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/plugins/custom/kanban/kanban.js\n");
+eval("// jKanban Board - Vanilla Javascript plugin for manage kanban boards: https://github.com/riktar/jkanban\n__webpack_require__(/*! jkanban/dist/jkanban.js */ \"./node_modules/jkanban/dist/jkanban.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvcGx1Z2lucy9jdXN0b20va2FuYmFuL2thbmJhbi5qcz84MzNkIl0sIm5hbWVzIjpbInJlcXVpcmUiXSwibWFwcGluZ3MiOiJBQUFBO0FBRUFBLG1CQUFPLENBQUMsdUVBQUQsQ0FBUCIsImZpbGUiOiIuL3Jlc291cmNlcy9wbHVnaW5zL2N1c3RvbS9rYW5iYW4va2FuYmFuLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gakthbmJhbiBCb2FyZCAtIFZhbmlsbGEgSmF2YXNjcmlwdCBwbHVnaW4gZm9yIG1hbmFnZSBrYW5iYW4gYm9hcmRzOiBodHRwczovL2dpdGh1Yi5jb20vcmlrdGFyL2prYW5iYW5cblxucmVxdWlyZSgnamthbmJhbi9kaXN0L2prYW5iYW4uanMnKTtcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/plugins/custom/kanban/kanban.js\n");
 
 /***/ }),
 
@@ -126,7 +126,7 @@ eval("// jKanban Board - Vanilla Javascript plugin for manage kanban boards: htt
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/fabioferreira/Dev/Valet Websites/laravel-starter/resources/plugins/custom/kanban/kanban.js */"./resources/plugins/custom/kanban/kanban.js");
+module.exports = __webpack_require__(/*! /home/vagrant/laravel/concursos-publicos/resources/plugins/custom/kanban/kanban.js */"./resources/plugins/custom/kanban/kanban.js");
 
 
 /***/ })

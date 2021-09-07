@@ -105,7 +105,7 @@ eval(" // Class definition\n\nvar KTAvatarSingle = function () {\n  // Private f
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/fabioferreira/Dev/Valet Websites/laravel-starter/resources/metronic/js/pages/ktavatarsingle.js */"./resources/metronic/js/pages/ktavatarsingle.js");
+module.exports = __webpack_require__(/*! /home/vagrant/laravel/concursos-publicos/resources/metronic/js/pages/ktavatarsingle.js */"./resources/metronic/js/pages/ktavatarsingle.js");
 
 
 /***/ })

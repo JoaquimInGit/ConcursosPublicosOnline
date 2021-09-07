@@ -1,35 +1,30 @@
-{{-- Topbar --}}
-@if(auth()->user()->can('accessAsUser') && (preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]) == null))
-    <div class="align-left">
-        <a href="{{ url('/') }}">
-            <img alt="Logo" src="{{ asset('media/logos/logo-concursos-online.jpeg') }}" width="150px"/>
-        </a>
-    </div>
-@endif
-<div class="topbar">
 
-    <div class="topbar-item mr-5 hover-opacity-50">
-        <a href="{{ route('contests.index') }}">
-            <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Contests') }}</h3>
-        </a>
-    </div>
-    <div class="topbar-item mr-5 hover-opacity-50">
-        <a href="{{ route('filters.index') }}">
-            <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Filters') }}</h3>
-        </a>
-    </div>
-    <div class="topbar-item mr-5 hover-opacity-50">
-        <a href="{{ route('contest_filters.index') }}">
-            <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Notifications') }}</h3>
-        </a>
-    </div>
-    @if(auth()->user()->can('accessAsUser'))
+
+<div class="topbar">
+    @if((auth()->user()->can('accessAsUser') && \App\Models\User::subscribed() || auth()->user()->can('manageUsers')))
+        <div class="topbar-item mr-5 hover-opacity-50">
+            <a href="{{ route('contests.index') }}">
+                <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Contests') }}</h3>
+            </a>
+        </div>
+        <div class="topbar-item mr-5 hover-opacity-50">
+            <a href="{{ route('filters.index') }}">
+                <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Filters') }}</h3>
+            </a>
+        </div>
+        <div class="topbar-item mr-5 hover-opacity-50">
+            <a href="{{ route('contest_filters.index') }}">
+                <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Notifications') }}</h3>
+            </a>
+        </div>
+    @endif
+    {{--@if(auth()->user()->can('accessAsUser'))
     <div class="topbar-item mr-5 hover-opacity-50">
         <a href="{{ route('entities.show', \App\Models\Entity::getCurrentEntity()) }}">
             <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Entity') }}</h3>
         </a>
     </div>
-    @endif
+    @endif--}}
     @if(auth()->user()->can('manageUsers'))
         <div class="topbar-item mr-5 hover-opacity-50">
             <a href="{{ route('entities.index') }}">

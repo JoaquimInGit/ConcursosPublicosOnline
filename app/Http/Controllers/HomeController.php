@@ -28,7 +28,8 @@ class HomeController extends Controller
         //flash('Message1')->overlay()->error();
         //flash('Message2')->overlay()->warning();
         //flash('Message3')->error()->important();
-        return view('home.home');
+       // return view('home.home');
+        return redirect(route('contests.index'));
     }
 
     /**

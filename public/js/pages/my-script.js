@@ -104,7 +104,7 @@ eval("//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/fabioferreira/Dev/Valet Websites/laravel-starter/resources/metronic/js/pages/my-script.js */"./resources/metronic/js/pages/my-script.js");
+module.exports = __webpack_require__(/*! /home/vagrant/laravel/concursos-publicos/resources/metronic/js/pages/my-script.js */"./resources/metronic/js/pages/my-script.js");
 
 
 /***/ })

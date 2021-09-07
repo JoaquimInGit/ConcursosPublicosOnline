@@ -15,8 +15,8 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Fábio',
-                'email' => 'fabio.ferreira@noop.pt',
+                'name' => 'João',
+                'email' => 'joao.alves@noop.pt',
                 'email_verified_at' => date("Y-m-d H:i:s"),
                 'password' => '$2y$10$MCsGWRkKnp1SmfonLifGd.oCrKJeO5UiaqgQZFc2.YNbEjW3kpdjK', //12345678
                 'created_at' => date("Y-m-d H:i:s"),

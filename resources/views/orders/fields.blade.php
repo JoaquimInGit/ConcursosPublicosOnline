@@ -49,12 +49,12 @@
 <div class="card card-custom gutter-b">
     <div class="card-header">
         <div class="card-title">
-            <a href="{{ URL::previous() }}">
+            {{--<a href="{{ URL::previous() }}">
                 <button class="btn btn-sm btn-light-info font-weight-bold">
                     <img alt="Voltar" src="{{ asset('media/logos/voltar.png') }}" width="25px" class="mr-2 pb-2"/>
                     Voltar &nbsp;&nbsp;
                 </button>
-            </a>
+            </a>--}}
             &nbsp;&nbsp;
             <h3 class="card-label">{{ __('New Subscription') }}</h3>
         </div>

@@ -17,13 +17,15 @@ view()->share('hideSubHeader', true);
         <div class="card-header">
             <div class="card-title">
                 <h3 class="card-label">
-                    <a href="{{ URL::previous() }}">
+                    <a href="{{ route('entities.index') }}" class="btn btn-bg-secondary btn-sm mr-3">
+                        <i class="fas fa-undo-alt"></i>{{__('Back')}}</a>
+                    {{--<a href="{{ route('entities.index') }}">
                         <button class="btn btn-sm btn-light-info font-weight-bold">
                             <img alt="Voltar" src="{{ asset('media/logos/voltar.png') }}" width="25px" class="mr-2 pb-2"/>
                             Voltar &nbsp;&nbsp;
                         </button>
                     </a>
-                    &nbsp;&nbsp;
+                    &nbsp;&nbsp;--}}
                     {{ __('Create Entity') }}
                 </h3>
             </div>

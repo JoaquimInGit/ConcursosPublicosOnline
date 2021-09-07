@@ -130,9 +130,8 @@
 <!-- Pdf Content Field -->
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('pdf_content') }}</th>
-    <td>
-        <pre class="line-height-xl card-label font-size-base" >{{e($contest->pdf_content)}}</pre>
-    </td>
+    <td style="white-space: pre-wrap;word-break: break-all">{!! $contest->pdf_content !!}</td>
+
 </tr>
 
 

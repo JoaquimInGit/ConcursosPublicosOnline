@@ -111,6 +111,7 @@ class OrderItemDataTable extends DataTable
             Column::make('iva')->title($model->getAttributeLabel('iva')),
             Column::make('start_date')->title($model->getAttributeLabel('start_date')),
             Column::make('end_date')->title($model->getAttributeLabel('end_date')),
+            Column::make('created_at')->title($model->getAttributeLabel('created_at')),
             Column::make('status')->title($model->getAttributeLabel('status')),
             Column::computed('action')
                 ->exportable(false)
