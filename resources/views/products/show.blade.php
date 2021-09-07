@@ -3,7 +3,7 @@
  *
  * @var $product \App\Models\Product
  */
-view()->share('pageTitle', $product->id);
+view()->share('pageTitle', $product->name);
 view()->share('hideSubHeader', true);
 ?>
 @extends('layout.default')

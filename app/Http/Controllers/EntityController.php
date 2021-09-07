@@ -100,7 +100,11 @@ class EntityController extends Controller
         if($entity->save()) {
             //flash('Entity updated successfully.');
             //Flash::success('Entity updated successfully.');
-            return redirect(route('entities.show', $entity));
+            if(auth()->user()->can('manageApp')){
+                return redirect(route('entities.show', $entity));
+            }else{
+                return redirect(route('entities.edit', $entity));
+            }
         }else{
             return redirect()->back();
         }

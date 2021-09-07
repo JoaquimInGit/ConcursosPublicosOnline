@@ -102,7 +102,7 @@ class OrderDataTable extends DataTable
             Column::make('invoice_status')->title($model->getAttributeLabel('invoice_status')),
             Column::make('status')->title($model->getAttributeLabel('status')),
             Column::computed('action')
-                ->exportable(false)
+                ->exportable(true)
                 ->printable(false)
                 ->width(120)
                 ->addClass('text-center')

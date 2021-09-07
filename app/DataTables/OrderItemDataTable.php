@@ -114,7 +114,7 @@ class OrderItemDataTable extends DataTable
             Column::make('created_at')->title($model->getAttributeLabel('created_at')),
             Column::make('status')->title($model->getAttributeLabel('status')),
             Column::computed('action')
-                ->exportable(false)
+                ->exportable(true)
                 ->printable(false)
                 ->width(120)
                 ->addClass('text-center')

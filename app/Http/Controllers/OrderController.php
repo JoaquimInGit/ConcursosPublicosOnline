@@ -139,7 +139,11 @@ class OrderController extends Controller
         if($order->save()) {
             //flash('Order updated successfully.');
             //Flash::success('Order updated successfully.');
-            return redirect(route('orders.show', $order));
+            if(auth()->user()->can('manageApp')){
+                return redirect(route('orders.show', $order));
+            }else{
+                return redirect(route('orders.edit', $order));
+            }
         }else{
             return redirect()->back();
         }

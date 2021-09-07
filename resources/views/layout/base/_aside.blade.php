@@ -46,7 +46,7 @@
             {{ Metronic::printAttrs('aside_menu') }}>
 
             <ul class="menu-nav {{ Metronic::printClasses('aside_menu_nav', false) }}">
-                <li class="menu-item {{ request()->routeIs('home') ? "menu-item-active" : "" }}" aria-haspopup="true">
+                {{--<li class="menu-item {{ request()->routeIs('home') ? "menu-item-active" : "" }}" aria-haspopup="true">
                     <a href="{{ route('home') }}" class="menu-link">
                         <span class="svg-icon menu-icon">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
@@ -61,7 +61,7 @@
                         </span>
                         <span class="menu-text">Dashboard</span>
                     </a>
-                </li>
+                </li>--}}
 
                 <li class="menu-section">
                     <h4 class="menu-text">{{ __('General') }}</h4>

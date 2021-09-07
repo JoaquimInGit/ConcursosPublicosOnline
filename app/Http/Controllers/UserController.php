@@ -134,7 +134,12 @@ class UserController extends Controller
         }
         /*else
             $user->de*/
-        return redirect(route('users.show', $user));
+        if(auth()->user()->can('manageApp')){
+            return redirect(route('users.show', $user));
+        }else{
+            return redirect(route('users.edit', $user));
+        }
+
     }
 
     /**

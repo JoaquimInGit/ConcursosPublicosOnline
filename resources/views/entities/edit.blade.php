@@ -4,7 +4,7 @@
  * @var $entity \App\Models\Entity
  * @var $errors Illuminate\View\Middleware\ShareErrorsFromSession
  */
-view()->share('pageTitle', $entity->id);
+view()->share('pageTitle', $entity->name);
 view()->share('hideSubHeader', true);
 ?>
 @extends('layout.default')

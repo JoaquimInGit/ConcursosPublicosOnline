@@ -200,18 +200,19 @@ view()->share('hideSubHeader', true);
         jQuery(document).ready(function() {
             $('#order_items_table_filter').css('display', 'none');
         });
-
         (function(window,$){
             $.fn.dataTable.Buttons.defaults.dom.container.className = '';
             $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-sm btn-default font-weight-bold mr-2';
-            var buttons = new $.fn.dataTable.Buttons(window.LaravelDataTables["orders-table"], {
+            var buttons = new $.fn.dataTable.Buttons(window.LaravelDataTables["order_items-table"], {
                 buttons: [
                     'export',
                 ]
             }).container().appendTo($('#datatable-buttons'));
         })(window,jQuery);
+
         function destroyConfirmation(e){
             var _this =  jQuery(e);
+            console.log(_this);
             swal.fire({
                 title: '{{ __('Are you sure you want to delete this?') }}',
                 text: "{!! __("You won't be able to revert this!") !!}",
@@ -219,6 +220,7 @@ view()->share('hideSubHeader', true);
                 showCancelButton: true,
                 confirmButtonText: "{{ __('Yes, delete it!') }}"
             }).then(function(result) {
+
                 if (result.value) {
                     //jQuery("#"+_this.data('destroy-form-id')).submit();
                     jQuery.ajaxSetup({
@@ -232,7 +234,8 @@ view()->share('hideSubHeader', true);
                         dataType: 'json',
                         data: {_method: 'DELETE'}
                     }).always(function (data) {
-                        jQuery('#orders-table').DataTable().draw(false);
+                        console.log(jQuery('#orders_items-table'));
+                        jQuery('#order_items-table').DataTable().draw(false);
                     });
                 }
             });
