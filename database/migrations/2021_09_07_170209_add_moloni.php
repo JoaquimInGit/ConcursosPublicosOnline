@@ -20,7 +20,7 @@ class AddMoloni extends Migration
             $table->decimal('vat', 12, 2);
         });
 
-        Schema::table('order_items', function (Blueprint $table) {
+        Schema::table('order_item', function (Blueprint $table) {
             $table->decimal('vat', 12, 2);
         });
 
@@ -43,7 +43,7 @@ class AddMoloni extends Migration
             $table->dropColumn('vat');
         });
 
-        Schema::table('order_items', function (Blueprint $table) {
+        Schema::table('order_item', function (Blueprint $table) {
             $table->dropColumn('vat');
         });
 
