@@ -19,14 +19,6 @@ class AddMoloni extends Migration
             $table->string('moloni_tax_id',32)->after('moloni_product_id')->nullable();
             $table->decimal('vat', 12, 2);
         });
-
-        Schema::table('order_item', function (Blueprint $table) {
-            $table->decimal('vat', 12, 2);
-        });
-
-        Schema::table('orders', function (Blueprint $table) {
-            $table->decimal('vat_value', 12, 2);
-        });
     }
 
     /**
@@ -41,14 +33,6 @@ class AddMoloni extends Migration
             $table->dropColumn('moloni_product_id');
             $table->dropColumn('moloni_tax_id');;
             $table->dropColumn('vat');
-        });
-
-        Schema::table('order_item', function (Blueprint $table) {
-            $table->dropColumn('vat');
-        });
-
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('vat_value');
         });
     }
 }
