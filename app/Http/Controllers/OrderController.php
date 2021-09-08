@@ -64,7 +64,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $validatedAttributes = $this->validateForm($request);
 
         if(($model = Order::create($validatedAttributes)) ) {
