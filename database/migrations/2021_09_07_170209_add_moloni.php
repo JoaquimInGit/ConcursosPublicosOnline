@@ -14,7 +14,7 @@ class AddMoloni extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('moloni_category_id',32)->after('sku')->nullable();
+            $table->string('moloni_category_id',32)->nullable();
             $table->string('moloni_product_id',32)->after('moloni_category_id')->nullable();
             $table->string('moloni_tax_id',32)->after('moloni_product_id')->nullable();
             $table->decimal('vat', 12, 2);
