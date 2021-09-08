@@ -85,7 +85,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('products', App\Http\Controllers\ProductController::class)->middleware('can:adminFullApp');
 
-
+    Route::post('/orders/generate-invoice/{order}', 'App\Http\Controllers\OrderController@generateInvoice')->name('orders.generate_invoice')->middleware('can:adminApp');
     Route::resource('orders', App\Http\Controllers\OrderController::class);
 
     Route::resource('contest_filters', App\Http\Controllers\ContestFilterController::class)->middleware('subscribed');

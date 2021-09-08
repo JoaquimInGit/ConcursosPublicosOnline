@@ -40,6 +40,7 @@ class OrderItemDataTable extends DataTable
             })
             ->editColumn('invoice_status', function ($orderItem) {
 
+                \Debugbar::error($orderItem->order);
                 if($orderItem->order->invoice_status == Order::INVOICE_STATUS_WAITING_EMISSION && auth()->user()->can('adminApp')){
                     return  $orderItem->order->invoiceStatusLabel.'<br><a class="btn btn-sm btn-primary" href="#" onclick="event.preventDefault(); document.getElementById(\'generate-invoice-'.$orderItem->order->id.'\').submit();">Faturar</a>
                       <form id="generate-invoice-'.$orderItem->order->id.'" action="'.route('orders.generate_invoice', $orderItem->order).'" method="POST" style="display: none;">
