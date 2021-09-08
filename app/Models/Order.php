@@ -61,6 +61,11 @@ class Order extends Model implements Auditable
     CONST PAYMENT_METHOD_PAYPAL = 1;
     CONST PAYMENT_METHOD_MBWAY = 2;
 
+    const INVOICE_STATUS_WAITING_EMISSION = 0;
+    const INVOICE_STATUS_DRAFT = 1;
+    const INVOICE_STATUS_FINAL = 2;
+    const INVOICE_STATUS_CANCELED = 3;
+
 
     public $fillable = [
         'entity_id',
@@ -168,33 +173,33 @@ class Order extends Model implements Auditable
     {
         return [
             'id' => __('Id'),
-        'entity_id' => __('Entity Id'),
-        'user_id' => __('User Id'),
-        'name' => __('Name'),
-        'email' => __('Email'),
-        'address' => __('Address'),
-        'zip_code' => __('Zip Code'),
-        'mobile_phone' => __('Mobile Phone'),
-        'nif' => __('Nif'),
-        'coupon' => __('Coupon'),
-        'discount' => __('Discount'),
-        'sub_total' => __('Sub Total'),
-        'iva_value' => __('Iva Value'),
-        'payment_method' => __('Payment Method'),
-        'notes' => __('Notes'),
-        'mb_entity' => __('Mb Entity'),
-        'mb_ref' => __('Mb Ref'),
-        'mb_limit_date' => __('Mb Limit Date'),
-        'mbway_ref' => __('Mbway Ref'),
-        'mbway_alias' => __('Mbway Alias'),
-        'payment_ref' => __('Payment Ref'),
-        'invoice_id' => __('Invoice Id'),
-        'invoice_link' => __('Invoice Link'),
-        'payment_limit_date' => __('Payment Limit Date'),
-        'invoice_status' => __('Invoice Status'),
-        'status' => __('Status'),
-        'created_at' => __('Created At'),
-        'updated_at' => __('Updated At')
+            'entity_id' => __('Entity Id'),
+            'user_id' => __('User Id'),
+            'name' => __('Name'),
+            'email' => __('Email'),
+            'address' => __('Address'),
+            'zip_code' => __('Zip Code'),
+            'mobile_phone' => __('Mobile Phone'),
+            'nif' => __('Nif'),
+            'coupon' => __('Coupon'),
+            'discount' => __('Discount'),
+            'sub_total' => __('Sub Total'),
+            'iva_value' => __('Iva Value'),
+            'payment_method' => __('Payment Method'),
+            'notes' => __('Notes'),
+            'mb_entity' => __('Mb Entity'),
+            'mb_ref' => __('Mb Ref'),
+            'mb_limit_date' => __('Mb Limit Date'),
+            'mbway_ref' => __('Mbway Ref'),
+            'mbway_alias' => __('Mbway Alias'),
+            'payment_ref' => __('Payment Ref'),
+            'invoice_id' => __('Invoice Id'),
+            'invoice_link' => __('Invoice Link'),
+            'payment_limit_date' => __('Payment Limit Date'),
+            'invoice_status' => __('Invoice Status'),
+            'status' => __('Status'),
+            'created_at' => __('Created At'),
+            'updated_at' => __('Updated At'),
         ];
     }
 
@@ -394,6 +399,27 @@ class Order extends Model implements Auditable
     {
         $array = self::getPaymentMethodOptions();
         return $array[$this->payment_method];
+    }
+
+    public static function getInvoiceStatusArray()
+    {
+        return [
+            self::INVOICE_STATUS_WAITING_EMISSION =>  __('Waiting Emission'),
+            self::INVOICE_STATUS_DRAFT =>  __('Draft'),
+            self::INVOICE_STATUS_FINAL =>  __('Final'),
+            self::INVOICE_STATUS_CANCELED =>  __('Canceled'),
+        ];
+    }
+
+    public function getInvoiceStatusOptions()
+    {
+        return static::getInvoiceStatusArray();
+    }
+
+    public function getInvoiceStatusLabelAttribute()
+    {
+        $array = self::getInvoiceStatusOptions();
+        return $array[$this->invoice_status];
     }
 
     /**

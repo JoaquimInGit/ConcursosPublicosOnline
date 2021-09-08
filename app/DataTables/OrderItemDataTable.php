@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -36,6 +37,22 @@ class OrderItemDataTable extends DataTable
             })
             ->editColumn('end_date', function ($orderItem){
                 return !empty($orderItem->end_date) ? Carbon::Parse($orderItem->end_date)->format('d-m-Y') : '';
+            })
+            ->editColumn('invoice_status', function ($orderItem) {
+
+                if($orderItem->order->invoice_status == Order::INVOICE_STATUS_WAITING_EMISSION && auth()->user()->can('adminApp')){
+                    return  $orderItem->order->invoiceStatusLabel.'<br><a class="btn btn-sm btn-primary" href="#" onclick="event.preventDefault(); document.getElementById(\'generate-invoice-'.$orderItem->order->id.'\').submit();">Faturar</a>
+                      <form id="generate-invoice-'.$orderItem->order->id.'" action="'.route('orders.generate_invoice', $orderItem->order).'" method="POST" style="display: none;">
+                          '.csrf_field().'
+                      </form>';
+                }else {
+
+                    $html =  $orderItem->order->invoiceStatusLabel;
+                    if(!empty($model->invoice_link)){
+                        $html.='<br><a class="btn btn-sm btn-light" href="'.$orderItem->order->invoice_link.'" target="_blank">'.__('Download').'</a>';
+                    }
+                    return $html;
+                }
             })
             ->editColumn('status', function ($orderItem){
                 if($orderItem->status == 1){
@@ -112,6 +129,7 @@ class OrderItemDataTable extends DataTable
             Column::make('start_date')->title($model->getAttributeLabel('start_date')),
             Column::make('end_date')->title($model->getAttributeLabel('end_date')),
             Column::make('created_at')->title($model->getAttributeLabel('created_at')),
+            Column::make('invoice_status')->title($model->getAttributeLabel('invoice_status')),
             Column::make('status')->title($model->getAttributeLabel('status')),
             Column::computed('action')
                 ->exportable(true)

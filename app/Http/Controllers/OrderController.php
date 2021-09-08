@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\OrderDataTable;
 use App\DataTables\OrderItemDataTable;
 use App\Facades\Eupago;
+use App\Facades\Moloni;
 use App\Facades\Setting;
 use App\Models\Entity;
 use App\Models\OrderItem;
@@ -242,5 +243,24 @@ class OrderController extends Controller
         //&entidade=82307
         //&comissao=0.86
         //&local=demo
+    }
+
+    /**
+     * Generate a invoice for the given order.
+     *
+     * @param  Order  $order
+     * @return Response
+     */
+    public function generateInvoice(Order $order)
+    {
+        //$this->authorize('createInvoice', Order::class);
+        if(!Moloni::isTokenValid()){
+            Moloni::login();
+            \Debugbar::info("faz login");
+        }
+        if($order->invoice_status == Order::INVOICE_STATUS_WAITING_EMISSION){
+            $order->createInvoice();
+        }
+        return redirect()->back();
     }
 }
