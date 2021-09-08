@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class SettingSeeder extends Seeder
@@ -96,6 +97,188 @@ class SettingSeeder extends Seeder
                 ],
             ]);
         }
+        if(!DB::table('settings')->where('slug','moloni_client_id')->exists()) {
+            DB::table('settings')->insert([
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Client ID no Moloni',
+                    'slug' => "moloni_client_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 25,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Email no Moloni',
+                    'slug' => "moloni_email",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 30,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Client Secret no Moloni',
+                    'slug' => "moloni_client_secret",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 35,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Password no Moloni',
+                    'slug' => "moloni_password",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 40,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Company ID no Moloni',
+                    'slug' => "moloni_company_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 45,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Document Set ID no Moloni',
+                    'slug' => "moloni_document_set_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 50,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'IVA 23% no Moloni',
+                    'slug' => "moloni_23_tax_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 55,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'IVA 13% no Moloni',
+                    'slug' => "moloni_13_tax_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 60,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'IVA 6% no Moloni',
+                    'slug' => "moloni_6_tax_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 65,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Multibanco Payment ID no Moloni',
+                    'slug' => "moloni_mb_payment_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 85,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'MBWay Payment ID no Moloni',
+                    'slug' => "moloni_mbway_payment_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 90,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Débito Directo Payment ID no Moloni',
+                    'slug' => "moloni_dd_payment_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 95,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Transferência bancária Payment ID no Moloni',
+                    'slug' => "moloni_wire_transfer_payment_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 100,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Dinheiro Payment ID no Moloni',
+                    'slug' => "moloni_money_payment_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 105,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Paypal Payment ID no Moloni',
+                    'slug' => "moloni_paypal_payment_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 110,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Cartão de crédito Payment ID no Moloni',
+                    'slug' => "moloni_cc_payment_id",
+                    'options' => "",
+                    'value' => '',
+                    'order' => 115,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+            ]);
+        }
+        Cache::forget('setting-params');
+        Cache::forget('setting-options');
 
     }
 }

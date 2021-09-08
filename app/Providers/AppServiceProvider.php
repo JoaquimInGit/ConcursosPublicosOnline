@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\Eupago;
+use App\Helpers\Moloni;
 use App\Helpers\Setting;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind('eupago',function(){
             return new Eupago();
+        });
+        $this->app->bind('moloni',function(){
+            return new Moloni();
         });
     }
 
