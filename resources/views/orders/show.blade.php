@@ -180,8 +180,6 @@ view()->share('hideSubHeader', true);
                     success: function(response) {
                         if(response.success){
                             toastr.info('Referência gerada com sucesso');
-                            $('#mb_button').hide();
-                            $('#phone_number').hide();
                         }else{
                             toastr.warning('Ocorreu um erro. Tente mais tarde.');
                         }
