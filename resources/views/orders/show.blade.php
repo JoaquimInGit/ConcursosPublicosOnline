@@ -126,19 +126,21 @@ view()->share('hideSubHeader', true);
                 </div>
                 <!-- begin: Invoice action-->
                 <div class="row justify-content-center py-8 px-8 py-md-28 px-md-0">
-                    <div class="col-md-9 row">
-                        <div class="col-md-3 row mb-5">
-                            <label for="phone_number">{{__('MbWay Phone Number')}}</label>
-                            <input type="text" id="phone_number" class="form-control" placeholder="{{__('MbWay Phone Number')}}" value="{{!empty($order->entity->mobile_phone) ? $order->entity->mobile_phone : ''}}">
+                    @if(!$order->status == \App\Models\Order::STATUS_PAYED)
+                        <div class="col-md-9 row">
+                            <div class="col-md-3 row mb-5">
+                                <label for="phone_number">{{__('MbWay Phone Number')}}</label>
+                                <input type="text" id="phone_number" class="form-control" placeholder="{{__('MbWay Phone Number')}}" value="{{!empty($order->entity->mobile_phone) ? $order->entity->mobile_phone : ''}}">
+                            </div>
                         </div>
-                        {{--<div class="d-flex font-size-sm flex-wrap">
+                    @endif
 
-                        </div>--}}
-                    </div>
                     <div class="col-md-9">
                         <div class="d-flex font-size-sm flex-wrap">
-                            <button type="button" class="btn btn-primary font-weight-bolder py-4 mr-3 mr-sm-14 my-1" onclick="payWithMbway({{$order->id}})">{{__('MbWay Payment')}}</button>
-                            {{--<button type="button" class="btn btn-light-primary font-weight-bolder mr-3 my-1">Download</button>--}}
+                            @if(!$order->status == \App\Models\Order::STATUS_PAYED)
+                                <button type="button" id="mb_button" class="btn btn-primary font-weight-bolder py-4 mr-3 mr-sm-14 my-1" onclick="payWithMbway({{$order->id}})">{{__('MbWay Payment')}}</button>
+                            @endif
+                                {{--<button type="button" class="btn btn-light-primary font-weight-bolder mr-3 my-1">Download</button>--}}
                             <button type="button" class="btn btn-dark font-weight-bolder ml-sm-auto my-1">{{('Invoice')}}</button>
                         </div>
                     </div>
@@ -178,6 +180,8 @@ view()->share('hideSubHeader', true);
                     success: function(response) {
                         if(response.success){
                             toastr.info('Referência gerada com sucesso');
+                            $('#mb_button').hide();
+                            $('#phone_number').hide();
                         }else{
                             toastr.warning('Ocorreu um erro. Tente mais tarde.');
                         }
