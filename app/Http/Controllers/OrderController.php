@@ -139,11 +139,19 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        dd('aqui');
+        //dd('aqui');
         $validatedAttributes = $this->validateForm($request, $order);
         $order->fill($validatedAttributes);
         if($order->save()) {
-
+            foreach ($order->orderItems as $item){
+                if($order->status == Order::STATUS_PAYED){
+                    $item->status == 2;
+                    $item->save();
+                }elseif($order->status == Order::STATUS_WAITING_PAYMENT){
+                    $item->status == 1;
+                    $item->save();
+                }
+            }
             //flash('Order updated successfully.');
             //Flash::success('Order updated successfully.');
             if(auth()->user()->can('manageApp')){
