@@ -139,9 +139,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        dd('aqui');
         $validatedAttributes = $this->validateForm($request, $order);
         $order->fill($validatedAttributes);
         if($order->save()) {
+
             //flash('Order updated successfully.');
             //Flash::success('Order updated successfully.');
             if(auth()->user()->can('manageApp')){
