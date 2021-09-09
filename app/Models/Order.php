@@ -345,15 +345,15 @@ class Order extends Model implements Auditable
      * @return bool
      */
     public function generateMBWay($phone, $autoSave = false){
-    $response = Eupago::generateMBWay($this->id, $this->total,$phone,'Pagamento Concursos');
-    if (Eupago::checkValidResponse($response)) {
-        $this->mbway_ref = $response->referencia;
-        $this->mbway_alias = $response->alias;
-        if ($autoSave)
-            return $this->saveQuietly();
-    } else {
-        return false;
-    }
+        $response = Eupago::generateMBWay($this->id, $this->iva_value,$phone,'Pagamento Concursos');
+        if (Eupago::checkValidResponse($response)) {
+            $this->mbway_ref = $response->referencia;
+            $this->mbway_alias = $response->alias;
+            if ($autoSave)
+                return $this->saveQuietly();
+        } else {
+            return false;
+        }
     }
 
     public function payments()
