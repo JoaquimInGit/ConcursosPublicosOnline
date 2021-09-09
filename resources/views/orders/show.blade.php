@@ -176,6 +176,11 @@ view()->share('hideSubHeader', true);
                     },
                     data:{order_id: order, phone: $('#phone_number').val()},
                     success: function(response) {
+                        if(response.success){
+                            toastr.info('Referência gerada com sucesso');
+                        }else{
+                            toastr.warning('Ocorreu um erro. Tente mais tarde.');
+                        }
                         console.log(response);
                     }
 
