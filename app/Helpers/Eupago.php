@@ -78,6 +78,7 @@ class Eupago
 
     public function generateMBWay($reference, $value, $phone,$descricao)
     {
+        \Debugbar::error($reference,$value,$phone,$descricao);
         $params = [
             'valor'     => $value,
             'chave'     => $this->_apiKey,
