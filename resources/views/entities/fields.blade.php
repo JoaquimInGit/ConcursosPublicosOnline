@@ -13,21 +13,14 @@
 
 <div class="row">
     <!-- Name Field -->
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-8">
         {!! Form::label('name', $entity->getAttributeLabel('name')) !!}
         {!! Form::text('name', null, ['class' => 'form-control form-control-solid '.($errors->has('name') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
         @error('name')
         <div class="error invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
-    <!-- Email Entity Field -->
-    <div class="form-group col-md-4">
-        {!! Form::label('email_entity', $entity->getAttributeLabel('email_entity')) !!}
-        {!! Form::text('email_entity', null, ['class' => 'form-control form-control-solid '.($errors->has('email_entity') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
-        @error('email_entity')
-        <div class="error invalid-feedback">{{ $message }}</div>
-        @enderror
-    </div>
+
     <!-- Nif Field -->
     <div class="form-group col-md-4">
         {!! Form::label('nif', $entity->getAttributeLabel('nif')) !!}
@@ -37,9 +30,28 @@
         @enderror
     </div>
 </div>
+<div class="row">
+    <!-- Email Entity Field -->
+    <div class="form-group col-md-6">
+        {!! Form::label('email_entity', $entity->getAttributeLabel('email_entity')) !!}
+        {!! Form::text('email_entity', null, ['class' => 'form-control form-control-solid '.($errors->has('email_entity') ? 'is-invalid' : ''),'maxlength' => 255]) !!}
+        @error('email_entity')
+        <div class="error invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+    <!-- Mobile Phone Field -->
+    <div class="form-group col-md-6">
+        {!! Form::label('mobile_phone', $entity->getAttributeLabel('mobile_phone')) !!}
+        {!! Form::text('mobile_phone', null, ['class' => 'form-control form-control-solid '.($errors->has('mobile_phone') ? 'is-invalid' : ''),'maxlength' => 32]) !!}
+        @error('mobile_phone')
+        <div class="error invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
 
 <div class="row">
+
     <!-- Country Field -->
     <div class="form-group col-md-6">
         {!! Form::label('country', $entity->getAttributeLabel('country')) !!}
@@ -78,16 +90,6 @@
         <div class="error invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
-</div>
-
-
-<!-- Mobile Phone Field -->
-<div class="form-group">
-    {!! Form::label('mobile_phone', $entity->getAttributeLabel('mobile_phone')) !!}
-    {!! Form::text('mobile_phone', null, ['class' => 'form-control form-control-solid '.($errors->has('mobile_phone') ? 'is-invalid' : ''),'maxlength' => 32]) !!}
-    @error('mobile_phone')
-        <div class="error invalid-feedback">{{ $message }}</div>
-    @enderror
 </div>
 
 <div class="row">

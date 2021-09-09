@@ -11,6 +11,7 @@ use App\Models\Filter;
 //use Flash;
 //use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class FilterController extends Controller
 {
@@ -59,8 +60,8 @@ class FilterController extends Controller
 
         if(($model = Filter::create($validatedAttributes)) ) {
             //flash(Filter saved successfully.');
-            //Flash::success('Filter saved successfully.');
-            return redirect(route('filters.show', $model));
+            Flash::success('Filter saved successfully.');
+            return redirect(route('filters.edit', $model));
         }else
             return redirect()->back();
     }
@@ -101,8 +102,8 @@ class FilterController extends Controller
         $filter->fill($validatedAttributes);
         if($filter->save()) {
             //flash('Filter updated successfully.');
-            //Flash::success('Filter updated successfully.');
-            return redirect(route('filters.show', $filter));
+            Flash::success('Filter updated successfully.');
+            return redirect(route('filters.edit', $filter));
         }else{
             return redirect()->back();
         }

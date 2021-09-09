@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Contest;
 use App\Models\ContestEntity;
 use App\Models\Entity;
+use App\Models\User;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Yajra\DataTables\Html\Button;
@@ -93,74 +94,78 @@ class ContestDataTable extends DataTable
         $query = $model->newQuery();
 
 
-        if(!empty($num_announcement)){
-            $query = $query->where('num_announcement','LIKE',"{$num_announcement}%");
+        if (!empty($num_announcement)) {
+            $query = $query->where('num_announcement', 'LIKE', "{$num_announcement}%");
         }
-        if(!empty($entity)){
-            $query = $query->where('entity','LIKE',"%{$entity}%");
+        if (!empty($entity)) {
+            $query = $query->where('entity', 'LIKE', "%{$entity}%");
         }
-        if(!empty($description)){
-            $query = $query->where('description','LIKE',"%{$description}%");
+        if (!empty($description)) {
+            $query = $query->where('description', 'LIKE', "%{$description}%");
         }
-        if(!empty($cpv)){
-            $query = $query->where('cpv','LIKE',"%{$cpv}%");
+        if (!empty($cpv)) {
+            $query = $query->where('cpv', 'LIKE', "%{$cpv}%");
         }
-        if(!empty($cpv_description)){
-            $query = $query->where('cpv_description','LIKE',"%{$cpv_description}%");
+        if (!empty($cpv_description)) {
+            $query = $query->where('cpv_description', 'LIKE', "%{$cpv_description}%");
         }
-        if(!empty($type_act)){
-            $query = $query->where('type_act',$type_act);
+        if (!empty($type_act)) {
+            $query = $query->where('type_act', $type_act);
         }
-        if(!empty($type_model)){
-            $query = $query->where('type_model',$type_model);
+        if (!empty($type_model)) {
+            $query = $query->where('type_model', $type_model);
         }
-        if(!empty($type_contract)){
-            $query = $query->where('type_contract',$type_contract);
+        if (!empty($type_contract)) {
+            $query = $query->where('type_contract', $type_contract);
         }
-        if(!empty($publication_date)){
-            if(empty($publication_date_between)){
-                $query = $query->where('publication_date','LIKE',Carbon::Parse($publication_date)->format('Y-m-d'));
-            }else {
-                $query = $query->whereBetween('publication_date',[Carbon::Parse($publication_date)->format('Y-m-d'),Carbon::Parse($publication_date_between)->format('Y-m-d')]);
+        if (!empty($publication_date)) {
+            if (empty($publication_date_between)) {
+                $query = $query->where('publication_date', 'LIKE', Carbon::Parse($publication_date)->format('Y-m-d'));
+            } else {
+                $query = $query->whereBetween('publication_date', [Carbon::Parse($publication_date)->format('Y-m-d'), Carbon::Parse($publication_date_between)->format('Y-m-d')]);
             }
         }
-        if(!empty($deadline_date)){
-            if(empty($deadline_date_between)) {
+        if (!empty($deadline_date)) {
+            if (empty($deadline_date_between)) {
                 $query = $query->where('deadline_date', 'LIKE', Carbon::Parse($deadline_date)->format('Y-m-d'));
-            }else{
-                $query = $query->whereBetween('deadline_date',[Carbon::Parse($deadline_date)->format('Y-m-d'),Carbon::Parse($deadline_date_between)->format('Y-m-d')]);
+            } else {
+                $query = $query->whereBetween('deadline_date', [Carbon::Parse($deadline_date)->format('Y-m-d'), Carbon::Parse($deadline_date_between)->format('Y-m-d')]);
             }
         }
-        if(!empty($min_price)){
-            $query = $query->where('price','>=',$min_price);
+        if (!empty($min_price)) {
+            $query = $query->where('price', '>=', $min_price);
         }
-        if($viewed_at == true){
-            $query = $query->whereIn('id', function($query){
-                    $query->select('contest_id')
-                        ->from('contest_entity')
-                        ->where([['entity_id', Entity::getCurrentEntity()->id],['viewed_at','!=',null]]);
-                });
-        }
-        if($follow == true){
-            $query = $query->whereIn('id', function($query){
+        if ($viewed_at == true) {
+            $query = $query->whereIn('id', function ($query) {
                 $query->select('contest_id')
                     ->from('contest_entity')
-                    ->where([['entity_id', Entity::getCurrentEntity()->id],['follow',1]]);
+                    ->where([['entity_id', Entity::getCurrentEntity()->id], ['viewed_at', '!=', null]]);
             });
         }
-        if($notified == true){
-            $query = $query->whereIn('id', function($query){
+        if ($follow == true) {
+            $query = $query->whereIn('id', function ($query) {
+                $query->select('contest_id')
+                    ->from('contest_entity')
+                    ->where([['entity_id', Entity::getCurrentEntity()->id], ['follow', 1]]);
+            });
+        }
+        if ($notified == true) {
+            $query = $query->whereIn('id', function ($query) {
                 $query->select('contest_id')
                     ->from('contest_filters')
-                    ->whereIn('filter_id', function($query){
+                    ->whereIn('filter_id', function ($query) {
                         $query->select('id')
                             ->from('filters')
                             ->where('entity_id', Entity::getCurrentEntity()->id);
                     });
             });
         }
-
-        return $query;
+        if(User::subscribed()){
+            return $query;
+        }else{
+            return Contest::query()->whereNull('id');
+        }
+        //return User::subscribed() ? $query : null;
     }
 
     /**
@@ -178,7 +183,7 @@ class ContestDataTable extends DataTable
             ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive'rt>ip") // Bfrtip
              //   ->searchCols([ 'type' => "(1|2)"])
             ->initComplete($this->searchJS)
-            ->orderBy([0, 'desc'])
+            ->orderBy([4, 'desc'])
             ->parameters([
                 'buttons' => [],
                 'language' => [

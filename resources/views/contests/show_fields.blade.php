@@ -131,7 +131,6 @@
 <tr>
     <th scope="row">{{ $contest->getAttributeLabel('pdf_content') }}</th>
     <td style="white-space: pre-wrap;word-break: break-all">{!! $contest->pdf_content !!}</td>
-
 </tr>
 
 

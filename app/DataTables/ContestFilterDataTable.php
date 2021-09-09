@@ -42,7 +42,7 @@ class ContestFilterDataTable extends DataTable
                 $filter = Filter::select('filter_name')->where('id', $contestfilter->filter_id)->first();
                 return $filter->filter_name;
             })
-            ->editColumn('entity', function ($contestfilter) {
+            /*->editColumn('entity', function ($contestfilter) {
                 if(auth()->user()->can('accessAsUser')){
                     $filter = Filter::where('id', $contestfilter->filter_id)->first();
                     $entity = Entity::where('id', $filter->entity_id)->first();
@@ -53,7 +53,7 @@ class ContestFilterDataTable extends DataTable
                     $entity = Entity::where('id', $filter->entity_id)->first();
                     return $entity->name;
                 }
-            })
+            })*/
 
             ->addColumn('action', function ($contestfilter) {
                 $contest = Contest::find($contestfilter->contest_id);
@@ -126,7 +126,12 @@ class ContestFilterDataTable extends DataTable
         if(!empty($date)) {
             $query = $query->where('date', 'LIKE', Carbon::Parse($date)->format('Y-m-d'));
         }
-           return $query;
+        if(User::subscribed()){
+            return $query;
+        }else{
+            return ContestFilter::query()->whereNull('id');
+        }
+
 
 
 
@@ -168,7 +173,7 @@ class ContestFilterDataTable extends DataTable
             return[
                 Column::make('contest_id')->title($model->getAttributeLabel(__('Contest'))),
                 Column::make('filter_id')->title($model->getAttributeLabel(__('Filter'))),
-                Column::make('entity')->title(__('Enviado para')),
+                /*Column::make('entity')->title(__('Enviado para')),*/
                 Column::make('date')->title($model->getAttributeLabel(__('Date'))),
                 Column::computed('action')
                     ->exportable(false)

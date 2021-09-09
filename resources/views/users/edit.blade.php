@@ -34,8 +34,12 @@ view()->share('hideSubHeader', true);
                         <!--begin::User-->
                         <div class="d-flex align-items-center">
                             <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                               {{-- <div class="symbol-label" style="background-image:url('{{$entity->user->getFirstMediaUrl('avatar')}}')"></div>--}}
-                                <i class="symbol-badge bg-success"></i>
+                                @if(!empty($entity->user) && $entity->user->hasMedia('avatar'))
+                                    <div class="symbol-label" style="background-image:url('{{$entity->user->getFirstMediaUrl('avatar')}}')"></div>
+                                @else
+                                    <div class="symbol-label"></div>
+                                @endif
+                                    <i class="symbol-badge bg-success"></i>
                             </div>
                             <div>
                                 <a href="#" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary">{{$user->entity->name}}</a>

@@ -25,6 +25,10 @@ class OrderItemDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', '{!! date(\'d-m-Y H:i:s\', strtotime($created_at)) !!}')
+            ->editColumn('entity', function($orderItem) {
+                $entity = !empty($orderItem->order->entity) ? $orderItem->order->entity->name : "";
+                return $entity;
+            })
             ->editColumn('product_id', function($orderItem) {
                 $product = Product::where('id', $orderItem->product_id)->first();
                 return $product->description;
@@ -64,13 +68,28 @@ class OrderItemDataTable extends DataTable
             })
             ->addColumn('action', function ($orderItem) {
                 if(auth()->user()->can('accessAsUser')){
-                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('orders.show', $orderItem->order_id) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>';
+                    if($orderItem->status == 1){
+                        \Debugbar::error('waiting');
+                        return '<a class="btn btn-primary" href="'. route('orders.show', $orderItem->order_id) .'">'. __('Pay') .'</a>';
+                    }elseif($orderItem->status == 2){
+                        if(!empty($orderItem->invoice_link)){
+                            \Debugbar::error('payed com fatura');
+                            return '<a class="btn btn-primary" href="'. $orderItem->invoice_link .'">'. __('Ver Fatura') .'</a><a class="btn" href="'. route('orders.show', $orderItem->order_id) .'">'. __('Detalhes') .'</a>';
+                        }else{
+                            \Debugbar::error('payed sem fatura');
+                            return '<a class="btn" href="'. route('orders.show', $orderItem->order_id) .'">'. __('Detalhes') .'</a>';
+                        }
+                    }else{
+                        \Debugbar::error('canceled');
+                        return '';
+                    }
+
                 }else{
                     return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('orders.show', $orderItem->order_id) .'" title="'. __('View') .'"><i class="la la-eye"></i></a>
                             <a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="'. route('orders.edit', $orderItem->order_id) .'"  title="'. __('Edit') .'"><i class="la la-edit"></i></a>
                         <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-'. $orderItem->order_id .'" data-delete-url="'. route('orders.destroy', $orderItem->order_id) .'" onclick="destroyConfirmation(this)" title="'. __('Delete') .'"><i class="la la-trash"></i></button>';
                 }
-            });
+            })->escapeColumns([]);
             //->editColumn('type', '{{ $this->typeLabel }}')
             /*->editColumn('type', function ($model) {
                               return  $model->typeLabel;
@@ -100,20 +119,38 @@ class OrderItemDataTable extends DataTable
      */
     public function html()
     {
-        return $this->builder()
-            ->setTableId('order_items-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive'rt>ip") // Bfrtip
-             //   ->searchCols([ 'type' => "(1|2)"])
-            ->initComplete($this->searchJS)
-            ->orderBy([0, 'desc'])
-            ->parameters([
-                'buttons' => [],
-                'language' => [
-                    'url' => asset('lang/pt/datatable.json')
-                ]
-            ]);
+        if(auth()->user()->can('manageUsers')){
+            return $this->builder()
+                ->setTableId('order_items-table')
+                ->columns($this->getColumns())
+                ->minifiedAjax()
+                ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive'rt>ip") // Bfrtip
+                //   ->searchCols([ 'type' => "(1|2)"])
+                ->initComplete($this->searchJS)
+                ->orderBy([6, 'desc'])
+                ->parameters([
+                    'buttons' => [],
+                    'language' => [
+                        'url' => asset('lang/pt/datatable.json')
+                    ]
+                ]);
+        }else{
+            return $this->builder()
+                ->setTableId('order_items-table')
+                ->columns($this->getColumns())
+                ->minifiedAjax()
+                ->dom("<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>><'table-responsive'rt>ip") // Bfrtip
+                //   ->searchCols([ 'type' => "(1|2)"])
+                ->initComplete($this->searchJS)
+                ->orderBy([5, 'desc'])
+                ->parameters([
+                    'buttons' => [],
+                    'language' => [
+                        'url' => asset('lang/pt/datatable.json')
+                    ]
+                ]);
+        }
+
     }
 
     /**
@@ -124,21 +161,39 @@ class OrderItemDataTable extends DataTable
     protected function getColumns()
     {
         $model = new OrderItem();
-        return [
-            Column::make('product_id')->title($model->getAttributeLabel('product_id')),
-            Column::make('iva')->title($model->getAttributeLabel('iva')),
-            Column::make('start_date')->title($model->getAttributeLabel('start_date')),
-            Column::make('end_date')->title($model->getAttributeLabel('end_date')),
-            Column::make('created_at')->title($model->getAttributeLabel('created_at')),
-            /*Column::make('invoice_status')->title($model->getAttributeLabel('invoice_status')),*/
-            Column::make('status')->title($model->getAttributeLabel('status')),
-            Column::computed('action')
-                ->exportable(true)
-                ->printable(false)
-                ->width(120)
-                ->addClass('text-center')
-                ->title(__('Action')),
-        ];
+        if(auth()->user()->can('manageUsers')){
+            return [
+                Column::make('entity')->title(__('Entity')),
+                Column::make('product_id')->title(__('Product')),
+                Column::make('iva')->title(__('Total')),
+                Column::make('start_date')->title($model->getAttributeLabel('start_date')),
+                Column::make('end_date')->title($model->getAttributeLabel('end_date')),
+                Column::make('created_at')->title($model->getAttributeLabel('created_at')),
+                /*Column::make('invoice_status')->title($model->getAttributeLabel('invoice_status')),*/
+                Column::make('status')->title($model->getAttributeLabel('status')),
+                Column::computed('action')
+                    ->exportable(true)
+                    ->printable(false)
+                    ->width(120)
+                    ->addClass('text-center')
+                    ->title(__('Action')),
+            ];
+        }else{
+            return [
+                Column::make('product_id')->title(__('Product')),
+                Column::make('iva')->title(__('Total')),
+                Column::make('start_date')->title($model->getAttributeLabel('start_date')),
+                Column::make('end_date')->title($model->getAttributeLabel('end_date')),
+                Column::make('status')->title($model->getAttributeLabel('status')),
+                Column::computed('action')
+                    ->exportable(true)
+                    ->printable(false)
+                    ->width(120)
+                    ->addClass('text-center')
+                    ->title(__('Action')),
+            ];
+        }
+
     }
 
     /**

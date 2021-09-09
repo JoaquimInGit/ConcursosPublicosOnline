@@ -9,10 +9,10 @@
             </a>
         </div>
         <div class="login-signin">
-            <div class="mb-20">
+            {{--<div class="mb-20">
                 <h3>{{ __('Sign In') }}</h3>
                 <!--<div class="text-muted font-weight-bold">Enter your details to login to your account:</div>-->
-            </div>
+            </div>--}}
             <form  method="POST" action="{{ route('login') }}" class="form">
                 @csrf
                 <div class="form-group mb-5">

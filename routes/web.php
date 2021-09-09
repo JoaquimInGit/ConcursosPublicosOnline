@@ -85,6 +85,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('products', App\Http\Controllers\ProductController::class)->middleware('can:adminFullApp');
 
+
+    Route::post('/orders/pay-with-mbway', 'App\Http\Controllers\OrderController@payWithMBWay')->name('orders.pay_with_mbway');
     Route::post('/orders/generate-invoice/{order}', 'App\Http\Controllers\OrderController@generateInvoice')->name('orders.generate_invoice')->middleware('can:adminApp');
     Route::resource('orders', App\Http\Controllers\OrderController::class);
 

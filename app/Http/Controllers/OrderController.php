@@ -10,6 +10,7 @@ use App\Facades\Setting;
 use App\Models\Entity;
 use App\Models\OrderItem;
 use App\Models\Payment;
+use App\Models\User;
 use App\Notifications\FilterNotification;
 use App\Notifications\OrderNotification;
 use Carbon\Carbon;
@@ -54,6 +55,9 @@ class OrderController extends Controller
     {
         $order = new Order();
         $order->loadDefaultValues();
+        if(auth()->user()->can('accessAsUser') && !User::subscribed() && !empty(auth()->user()->orders()->where('status',Order::STATUS_PAYED)->get())){
+            flash()->error( __('A sua subscrição expirou.'));
+        }
         return view('orders.create', compact('order'));
     }
 
@@ -243,6 +247,28 @@ class OrderController extends Controller
         //&entidade=82307
         //&comissao=0.86
         //&local=demo
+    }
+
+    public function payWithMBWay(Request $request){
+        \Debugbar::error($request->all());
+        $order = Order::where('id',$request['order_id'])->first();
+        if(!empty($order)){
+            if(str_contains(substr($request['phone'],0,3),351)) {
+                $phone =substr($request['phone'],2,9);
+            }elseif(str_contains(substr($request['phone'],0,3),'+351')){
+                $phone =substr($request['phone'],3,9);
+            }else{
+                $phone = $request['phone'];
+            }
+            $mbway = $order->generateMBWay($phone,'Pagamento Concursos');
+
+            if($mbway){
+                return ['success' => true, 'mbway' => $order->mbway_alias , 'total' => $order->total];
+            }else{
+                return ['success' => false];
+            }
+
+        }
     }
 
     /**

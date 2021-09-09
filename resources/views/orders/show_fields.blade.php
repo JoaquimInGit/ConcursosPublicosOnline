@@ -39,6 +39,7 @@
 </tr>
 
 
+
 <!-- Sub Total Field -->
 <tr>
     <th scope="row">{{ $order->getAttributeLabel('sub_total') }}</th>

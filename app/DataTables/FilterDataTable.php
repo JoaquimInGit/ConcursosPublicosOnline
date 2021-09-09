@@ -2,8 +2,10 @@
 
 namespace App\DataTables;
 
+use App\Models\Contest;
 use App\Models\Entity;
 use App\Models\Filter;
+use App\Models\User;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Column;
 use App\DataTables\Traits\DatatableColumnSearch;
@@ -32,11 +34,11 @@ class FilterDataTable extends DataTable
             })
             ->addColumn('action', function ($filter) {
                 if(auth()->user()->can('accessAsUser')) {
-                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' . route('filters.show', $filter) . '" title="' . __('View') . '"><i class="la la-eye"></i></a>
-                        <a href="' . route('filters.edit', $filter) . '" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="' . __('Edit') . '"><i class="la la-edit"></i></a>
+                    /*<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' . route('filters.show', $filter) . '" title="' . __('View') . '"><i class="la la-eye"></i></a>*/
+                    return '<a href="' . route('filters.edit', $filter) . '" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="' . __('Edit') . '"><i class="la la-edit"></i></a>
                         <button class="btn btn-sm btn-clean btn-icon btn-icon-md delete-confirmation" data-destroy-form-id="destroy-form-' . $filter->id . '" data-delete-url="' . route('filters.destroy', $filter) . '" onclick="destroyConfirmation(this)" title="' . __('Delete') . '"><i class="la la-trash"></i></button>';
                 }else{
-                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' . route('filters.show', $filter) . '" title="' . __('View') . '"><i class="la la-eye"></i></a>';
+                    return '<a class="btn btn-sm btn-clean btn-icon btn-icon-md" href="' . route('filters.edit', $filter) . '" title="' . __('Edit') . '"><i class="la la-eye"></i></a>';
                 }
             });
             //->editColumn('type', '{{ $this->typeLabel }}')
@@ -58,7 +60,12 @@ class FilterDataTable extends DataTable
             $entity = $model->getEntity();
             $query = $query->where('entity_id',$entity);
         }
-        return $query;
+        if(User::subscribed()){
+            return $query;
+        }else{
+            return Filter::query()->whereNull('id');
+        }
+
     }
 
     /**

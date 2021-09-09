@@ -1,7 +1,8 @@
 
 
 <div class="topbar">
-    @if((auth()->user()->can('accessAsUser') && \App\Models\User::subscribed() || auth()->user()->can('manageUsers')))
+    {{--@if((auth()->user()->can('accessAsUser') && \App\Models\User::subscribed() || auth()->user()->can('manageUsers')))--}}
+    @if((auth()->user()->can('accessAsUser') || auth()->user()->can('manageUsers')))
         <div class="topbar-item mr-5 hover-opacity-50">
             <a href="{{ route('contests.index') }}">
                 <h3 style="font-size: 1.1rem; padding-top: 0.5rem; color:#000">{{ __('Contests') }}</h3>
