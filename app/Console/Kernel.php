@@ -42,7 +42,8 @@ class Kernel extends ConsoleKernel
         })->twiceDaily(7 , 13);
 
 
-        // $schedule->command('inspire')->hourly();
+
+         $schedule->command('subscription:send_warning_email')->dailyAt(0);
         //corre o InsertContests a cada minuto
         /*$schedule->call(function(){
             ContestBusinessLogic::insertContests();

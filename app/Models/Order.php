@@ -477,7 +477,6 @@ class Order extends Model implements Auditable
                 } elseif ($orderItem->product_id == 3) {
                     $orderItem->update(['start_date' => $enddate->end_date, 'end_date' => $enddate->end_date->addYear(), 'status' => 2]);
                 }
-                \Debugbar::ERROR();
             }
         } else {
             //  ddd($enddate->end_date > Carbon::today());
@@ -485,22 +484,63 @@ class Order extends Model implements Auditable
 
                 $orderItem = OrderItem::where('order_id', $order->id)->first();
                 //ddd(($order->status == 2).' '.$orderItem);
+                $lastPayedOrder = Order::where('status',Order::STATUS_PAYED)->where('entity_id',$order->entity_id)->orderBy('created_at','DESC')->first();
+                $flag = false;
                 if ($orderItem->product_id == 1) {
-                    $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addMonth(), 'status' => 2]);
-                    $entity = Entity::where('id', $order->entity_id)->first();
-                    $entity->update(['status' => 1]);
+                    if(!empty($lastPayedOrder) && !empty($lastPayedOrder->orderItems()->first()) && Carbon::today()->lessThan(Carbon::parse($lastPayedOrder->orderItems()->first()->end_date))){
+                        $orderItem->update(['start_date' => Carbon::parse($lastPayedOrder->orderItems()->first()->end_date)->addDay(), 'end_date' => Carbon::parse($lastPayedOrder->orderItems()->first()->end_date)->addDay()->addMonth(), 'status' => 2]);
+                    }else{
+                        $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addMonth(), 'status' => 2]);
+                    }
+                    $flag = true;
                 } elseif ($orderItem->product_id == 2) {
-                    $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addQuarters(2), 'status' => 2]);
-                    $entity = Entity::where('id', $order->entity_id)->first();
-                    $entity->update(['status' => 1]);
+                    if(!empty($lastPayedOrder) && !empty($lastPayedOrder->orderItems()->first()) && Carbon::today()->lessThan(Carbon::parse($lastPayedOrder->orderItems()->first()->end_date))){
+                        $orderItem->update(['start_date' => Carbon::parse($lastPayedOrder->orderItems()->first()->end_date)->addDay(), 'end_date' => Carbon::parse($lastPayedOrder->orderItems()->first()->end_date)->addDay()->addQuarters(), 'status' => 2]);
+                    }else{
+                        $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addQuarters(), 'status' => 2]);
+                    }
+                    $flag = true;
                 } elseif ($orderItem->product_id == 3) {
-                    $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addYear(), 'status' => 2]);
+                    if(!empty($lastPayedOrder) && !empty($lastPayedOrder->orderItems()->first()) && Carbon::today()->lessThan(Carbon::parse($lastPayedOrder->orderItems()->first()->end_date))){
+                        $orderItem->update(['start_date' => Carbon::parse($lastPayedOrder->orderItems()->first()->end_date)->addDay(), 'end_date' => Carbon::parse($lastPayedOrder->orderItems()->first()->end_date)->addDay()->addYear(), 'status' => 2]);
+                    }else{
+                        $orderItem->update(['start_date' => Carbon::today(), 'end_date' => Carbon::today()->addYear(), 'status' => 2]);
+                    }
+                    $flag = true;
+                }
+                if($flag){
                     $entity = Entity::where('id', $order->entity_id)->first();
                     $entity->update(['status' => 1]);
                 }
             }
 
         }
+    }
+
+    public static function createNewSubscription($order,$item){
+        $newOrder = $order->replicate();
+        $newOrder->status = Order::STATUS_WAITING_PAYMENT;
+        $newOrder->mb_entity = null;
+        $newOrder->mb_ref = null;
+        $newOrder->mb_limit_date = null;
+        $newOrder->mbway_ref = null;
+        $newOrder->mbway_alias = null;
+        $newOrder->payment_ref = null;
+        $newOrder->payment_limit_date = null;
+        $newOrder->invoice_status = null;
+        $newOrder->invoice_id = null;
+        $newOrder->invoice_link = null;
+        if($newOrder->save()){
+            $newItem = $item->replicate();
+            $newItem->order_id = $newOrder->id;
+            $newItem->status = 1;
+            $newItem->start_date = null;
+            $newItem->end_date = null;
+            if($newItem->save()){
+                return true;
+            }
+        }
+        return false;
     }
 
 

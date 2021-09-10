@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\LoadDefaults;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Cache;
@@ -34,7 +35,7 @@ use Cache;
  */
 class Entity extends Model implements Auditable
 {
-    use LoadDefaults;
+    use LoadDefaults,Notifiable;
     use \OwenIt\Auditing\Auditable;
 
     public $table = 'entities';
@@ -236,4 +237,7 @@ class Entity extends Model implements Auditable
         return $array;
     }
 
+    public function routeNotificationForMail(){
+        return $this->email_entity;
+    }
 }
