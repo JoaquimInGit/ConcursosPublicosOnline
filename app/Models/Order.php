@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Facades\Eupago;
+use App\Facades\Setting;
 use Carbon\Carbon;
 use Carbon\Doctrine\DateTimeDefaultPrecision;
 use Illuminate\Database\Eloquent\Model;
@@ -541,6 +542,91 @@ class Order extends Model implements Auditable
             }
         }
         return false;
+    }
+
+    /**
+     * Cria uma nova fatura, valida-a automaticamente e envia por email ao cliente
+     * @return boolean
+     */
+    public function createInvoice(){
+
+        $items = [];
+        foreach($this->orderItems as $orderItem){
+            if($orderItem->price > 0){
+                //if is withour vet use execption M07
+                $items[] = [
+                    "product_id" => Setting::getParam('moloni_product_id'),
+                    'name' => $orderItem->product->description,
+                    "summary" => "",
+                    "price" => $orderItem->price,//$this->subtotal,1.23
+                    "qty" => $orderItem->quantity,
+                    'taxes' => [
+                        [
+                            "tax_id"=> Setting::getParam('moloni_23_tax_id'),
+                        ]
+                    ]
+                ];
+            }
+        }
+        $zip = null;
+        \Debugbar::error("ZIP |$this->zip_code|");
+        if(preg_match ( '/^\d{4}-\d{3}$/' , $this->zip_code)){
+            $zip = $this->zip_code;
+            \Debugbar::error("Entrou no zip");
+        }
+        $payment = [
+            [
+                "payment_method_id"=>1036474,
+                "date"=>date('Y-m-d'),
+                "value"=>$this->iva_value
+            ]
+        ];
+
+        if(($customerId = Moloni::getOrInsertCustomer($this->entity->name, empty($this->nif) ? '999999990' : $this->nif , "#$this->id", $this->address, $zip, '', $this->email)) != false){
+            \Debugbar::info("Vai agora criar a fatura");
+            $invoice = Moloni::insertInvoiceReceipt($customerId, $items,$this->id, $payment, 1, true); //1 - invoice final | 0- invoice draft
+            if(isset($invoice['valid']) && $invoice['valid'] == 1){
+                $this->invoice_id = $invoice['document_id'];
+                $this->invoice_status = self::INVOICE_STATUS_FINAL;
+                $pdfData = Moloni::getPDFLink($this->invoice_id);
+                if(!empty($pdfData['url'])){
+                    $this->invoice_link = $pdfData['url'];
+                }
+                if($this->save()){
+                    if($this->invoice_status == self::INVOICE_STATUS_FINAL){
+                        //send ans email with the invoice for the client email
+                        flash('Fatura criada com sucesso')->success()->overlay();
+                        /*if($this->sendEmailInvoice()){
+                            //everything is ok send an email
+                            return true;
+                        }else{
+                            //failed to sent an email with the invoice
+                            \Yii::$app->session->setFlash('danger', "Falhou envio do email");
+                            $this->sendEmailToAdmin("Falhou o envio do email com a fatura", "Ocorreu um erro ao tentar enviar o email com a fatura id=$this->id para o cliente.");
+                            return false;
+                        }*/
+                        return true;
+                    }else{
+                        flash('Fatura não ficou no estado final')->error()->overlay();
+                        //avisar que por algum motivo não foi possivel colocar a fatura com o estado final
+                        //$this->sendEmailToAdmin("Não foi possivel alterar o estado da fatura", "Ocorreu um erro ao tentar alterar o estado da fatura id=$this->id.");
+                        return false;
+                    }
+                }else{
+                    flash('A fatura foi gerada, mas não foi possivel gravar no sistema. Não volte a emitir a fatura caso contrário poderá ficar duplicada.')->error()->overlay();
+                    return false;
+                }
+
+            }else{
+                flash('Fatura não foi emitida. Devido a um erro.')->error()->overlay();
+                return false;
+            }
+
+        }else{
+            flash('Não foi possivel encontrar ou criar um novo cliente no programa de faturação.')->error()->overlay();
+            return false;
+        }
+
     }
 
 
