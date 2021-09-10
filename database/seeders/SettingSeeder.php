@@ -105,7 +105,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Client ID no Moloni',
                     'slug' => "moloni_client_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => 'noopdeveloper',
                     'order' => 25,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -116,7 +116,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Email no Moloni',
                     'slug' => "moloni_email",
                     'options' => "",
-                    'value' => '',
+                    'value' => 'hello@noop.pt',
                     'order' => 30,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -127,7 +127,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Client Secret no Moloni',
                     'slug' => "moloni_client_secret",
                     'options' => "",
-                    'value' => '',
+                    'value' => '610bbd121468fa2a3ef81ce5dae86302b0302773',
                     'order' => 35,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -138,7 +138,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Password no Moloni',
                     'slug' => "moloni_password",
                     'options' => "",
-                    'value' => '',
+                    'value' => 'PmqTX8Uf',
                     'order' => 40,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -149,7 +149,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Company ID no Moloni',
                     'slug' => "moloni_company_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '152862',
                     'order' => 45,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -160,7 +160,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Document Set ID no Moloni',
                     'slug' => "moloni_document_set_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '324539',
                     'order' => 50,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -171,7 +171,7 @@ class SettingSeeder extends Seeder
                     'name' => 'IVA 23% no Moloni',
                     'slug' => "moloni_23_tax_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '2052293',
                     'order' => 55,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -182,7 +182,7 @@ class SettingSeeder extends Seeder
                     'name' => 'IVA 13% no Moloni',
                     'slug' => "moloni_13_tax_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '2052307',
                     'order' => 60,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -193,7 +193,7 @@ class SettingSeeder extends Seeder
                     'name' => 'IVA 6% no Moloni',
                     'slug' => "moloni_6_tax_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '2052300',
                     'order' => 65,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -204,7 +204,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Multibanco Payment ID no Moloni',
                     'slug' => "moloni_mb_payment_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '1036474',
                     'order' => 85,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -215,7 +215,7 @@ class SettingSeeder extends Seeder
                     'name' => 'MBWay Payment ID no Moloni',
                     'slug' => "moloni_mbway_payment_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '1037126',
                     'order' => 90,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -226,7 +226,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Débito Directo Payment ID no Moloni',
                     'slug' => "moloni_dd_payment_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '1037130',
                     'order' => 95,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
@@ -237,7 +237,7 @@ class SettingSeeder extends Seeder
                     'name' => 'Transferência bancária Payment ID no Moloni',
                     'slug' => "moloni_wire_transfer_payment_id",
                     'options' => "",
-                    'value' => '',
+                    'value' => '1036467',
                     'order' => 100,
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")

@@ -149,6 +149,8 @@ view()->share('hideSubHeader', true);
                 <!--end::Invoice-->
             </div>
         </div>
+
+        <button id="invoice">Fatura</button>
     @endif
 @endsection
 @push('scripts')
@@ -188,6 +190,26 @@ view()->share('hideSubHeader', true);
 
                 });
             }
+        }
+
+        function invoice(){
+            $.ajax({
+                url : '{{route('orders.generate_invoice',$order)}}' ,
+                method : "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{order_id: order, phone: $('#phone_number').val()},
+                success: function(response) {
+                    if(response.success){
+                        toastr.info('Referência gerada com sucesso');
+                    }else{
+                        toastr.warning('Ocorreu um erro. Tente mais tarde.');
+                    }
+                    console.log(response);
+                }
+
+            });
         }
 
 
