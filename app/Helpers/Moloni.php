@@ -241,7 +241,7 @@ class Moloni
      * Create a new customer
      * @return boolean or array
      */
-    public function insertCustomer($name, $vat='999999990', $number, $address, $zip=null, $city, $email = null){
+    public function insertCustomer($name, $number, $address, $city, $vat='999999990', $zip=null, $email = null){
         if($this->getToken() == false){
             return false;
         }else{
@@ -303,7 +303,7 @@ class Moloni
      * @param type $email
      * @return boolean | integer
      */
-    public function getOrInsertCustomer($name, $vat='999999990', $number, $address, $zip=null, $city, $email = null){
+    public function getOrInsertCustomer($name, $number, $address, $city , $vat='999999990' ,$zip=null, $email = null){
         $customerId=null;
         if(($customers = $this->getCustomerByNumber($number)) == false){
             \Debugbar::error("Não achou cliente");
@@ -312,7 +312,7 @@ class Moloni
                 \Debugbar::error("Entrou com zip |$zip|");
                 \Debugbar::info("Dados para criar $name, $vat, $number, $address, $zip, $city, $email");
                 //create a user
-                if(($data = $this->insertCustomer($name, $vat, $number, $address, $zip, $city, $email)) == false){
+                if(($data = $this->insertCustomer($name, $number, $address, $city, $vat, $zip, $email)) == false){
                     \Debugbar::error($data);
                     return false;
                 }else{
@@ -343,7 +343,7 @@ class Moloni
         }
         if($customerId == null){
             //create a user
-            if(($data = $this->insertCustomer($name, $vat, $number, $address, $zip, $city, $email)) == false){
+            if(($data = $this->insertCustomer($name, $number, $address, $city, $vat, $zip, $email)) == false){
                 \Debugbar::error($data);
                 return false;
             }else{
@@ -492,7 +492,7 @@ class Moloni
     ];
      * @return boolean or array
      */
-    public function insertInvoiceReceipt($customerId, $products,$orderId=null, $payment, $status=0, $sendEmail=null){
+    public function insertInvoiceReceipt($customerId, $products, $payment,$orderId=null, $status=0, $sendEmail=null){
         if($this->getToken() == false){
             return false;
         }else{
