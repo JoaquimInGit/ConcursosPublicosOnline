@@ -153,7 +153,7 @@ view()->share('hideSubHeader', true);
 
 
     @endif
-    <button id="invoice">Fatura</button>
+    <button id="invoice" onclick="invoice()">Fatura</button>
 @endsection
 @push('scripts')
     <script>
@@ -201,7 +201,6 @@ view()->share('hideSubHeader', true);
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data:{order_id: order, phone: $('#phone_number').val()},
                 success: function(response) {
                     if(response.success){
                         toastr.info('Referência gerada com sucesso');
