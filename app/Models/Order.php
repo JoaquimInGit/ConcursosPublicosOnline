@@ -582,7 +582,7 @@ class Order extends Model implements Auditable
             ]
         ];
 
-        if(($customerId = Moloni::getOrInsertCustomer($this->entity->name, empty($this->nif) ? '999999990' : $this->nif , "#$this->id", $this->address, $zip, '', $this->email)) != false){
+        if(($customerId = Moloni::getOrInsertCustomer($this->entity->name, empty($this->nif) ? '999999990' : $this->nif , "#$this->id", $this->address, $zip, 'x', $this->email)) != false){
             \Debugbar::info("Vai agora criar a fatura");
             $invoice = Moloni::insertInvoiceReceipt($customerId, $items,$this->id, $payment, 1, true); //1 - invoice final | 0- invoice draft
             if(isset($invoice['valid']) && $invoice['valid'] == 1){
