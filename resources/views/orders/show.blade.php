@@ -11,6 +11,7 @@ view()->share('hideSubHeader', true);
     {{ Breadcrumbs::render('orders.show', $order) }}
 @endsection
 @section('content')
+
     @if(auth()->user()->can('manageUsers'))
         <div class="card card-custom">
             <div class="card-header">
@@ -150,8 +151,9 @@ view()->share('hideSubHeader', true);
             </div>
         </div>
 
-        <button id="invoice">Fatura</button>
+
     @endif
+    <button id="invoice">Fatura</button>
 @endsection
 @push('scripts')
     <script>
