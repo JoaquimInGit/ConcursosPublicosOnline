@@ -275,6 +275,28 @@ class SettingSeeder extends Seeder
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
                 ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Category ID',
+                    'slug' => "moloni_category_id",
+                    'options' => "",
+                    'value' => '3008381',
+                    'order' => 120,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
+                [
+                    'type' => Setting::TYPE_TEXTFIELD,
+                    'group' => 'moloni',
+                    'name' => 'Moloni Product ID',
+                    'slug' => "moloni_product_id",
+                    'options' => "",
+                    'value' => '94529135',
+                    'order' => 120,
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'updated_at' => date("Y-m-d H:i:s")
+                ],
             ]);
         }
         Cache::forget('setting-params');
