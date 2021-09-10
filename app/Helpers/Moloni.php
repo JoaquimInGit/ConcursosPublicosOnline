@@ -493,6 +493,7 @@ class Moloni
      * @return boolean or array
      */
     public function insertInvoiceReceipt($customerId, $products, $payment,$orderId=null, $status=0, $sendEmail=null){
+
         if($this->getToken() == false){
             return false;
         }else{

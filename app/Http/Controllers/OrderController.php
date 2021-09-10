@@ -297,6 +297,6 @@ class OrderController extends Controller
         //if($order->invoice_status == Order::INVOICE_STATUS_WAITING_EMISSION){
             $order->createInvoice();
         //}
-        return redirect()->back();
+        return ['success'=>true];
     }
 }

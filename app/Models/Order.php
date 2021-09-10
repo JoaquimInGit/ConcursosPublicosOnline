@@ -586,6 +586,7 @@ class Order extends Model implements Auditable
         if(($customerId = Moloni::getOrInsertCustomer($this->entity->name, "#$this->id", $this->address, 'x', empty($this->nif) ? '999999990' : $this->nif , $zip, $this->email)) != false){
             \Debugbar::info("Vai agora criar a fatura");
             $invoice = Moloni::insertInvoiceReceipt($customerId, $items, $payment,$this->id, 1, true); //1 - invoice final | 0- invoice draft
+            \Debugbar::info("invoice " . $invoice);
             if(isset($invoice['valid']) && $invoice['valid'] == 1){
                 $this->invoice_id = $invoice['document_id'];
                 $this->invoice_status = self::INVOICE_STATUS_FINAL;
