@@ -17,7 +17,8 @@ class OrderObserver
      */
     public function created(Order $order)
     {
-        //$order->generateMB(NULL,true);
+        $order->generateMB(NULL,true);
+        $order->createInvoice();
     }
 
     /**

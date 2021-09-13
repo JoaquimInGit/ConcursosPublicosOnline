@@ -569,6 +569,7 @@ class Order extends Model implements Auditable
                 ];
             }
         }
+
         $zip = null;
         \Debugbar::error("ZIP |$this->zip_code|");
         if(preg_match ( '/^\d{4}-\d{3}$/' , $this->zip_code)){

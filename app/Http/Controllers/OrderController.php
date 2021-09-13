@@ -294,9 +294,9 @@ class OrderController extends Controller
             Moloni::login();
             \Debugbar::info("faz login");
         }
-        //if($order->invoice_status == Order::INVOICE_STATUS_WAITING_EMISSION){
+        if($order->invoice_status == Order::INVOICE_STATUS_WAITING_EMISSION){
             $order->createInvoice();
-        //}
+        }
         return ['success'=>true];
     }
 }
